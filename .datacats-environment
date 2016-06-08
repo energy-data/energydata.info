@@ -1,0 +1,7 @@
+[datacats]
+name = offgrid
+ckan_version = 2.4
+
+[site_primary]
+port = 5102
+
