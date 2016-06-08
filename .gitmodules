@@ -1,0 +1,11 @@
+[submodule "ckan"]
+	path=ckan
+	url=https://github.com/ckan/ckan
+
+[submodule "datapusher"]
+	path=datapusher
+	url=https://github.com/ckan/datapusher
+
+[submodule "ckanext-geojsonview"]
+	path=ckanext-geojsonview
+	url=https://github.com/deniszgonjanin/ckanext-geojsonview
