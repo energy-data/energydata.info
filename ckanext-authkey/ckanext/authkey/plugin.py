@@ -13,5 +13,7 @@ class AuthkeyPlugin(plugins.SingletonPlugin):
             'authkey_exchange',
             '/authkey',
             controller='ckanext.authkey.controller:AuthKeyController',
-            action='exchange')
+            action='exchange',
+            method=['POST']
+        )
         return map

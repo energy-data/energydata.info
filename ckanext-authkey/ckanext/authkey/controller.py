@@ -13,18 +13,13 @@ def _error_response(status_code, msg):
     response.status = status_code
     return msg
 
-def _get_credentials(auth_header):
-    authmeth, token = auth_header.split(' ', 1)
-    if authmeth.lower() == 'basic':
-        try:
-            decoded_token = token.strip().decode('base64')
-        except binascii.Error:
-            return None
-        try:
-            login, password = decoded_token.split(':', 1)
-        except ValueError:
-            return None
-        return {'login': login, 'password': password}
+def _get_credentials(body):
+    login, password = body.split('&', 1)
+    if login and password:
+        login_k, login_v = login.split('=', 1)
+        password_k, password_v = password.split('=', 1)
+        if login_v and password_v and login_k == 'username' and password_k == 'password':
+            return {'login': login_v, 'password': password_v}
     return None
 
 def _get_key(credentials):
@@ -37,20 +32,20 @@ def _get_key(credentials):
         return None
 
 class AuthKeyController(base.BaseController):
-
     def exchange(self):
-        auth_header = toolkit.request.headers.get('Authorization')
-        if auth_header == None:
+        if toolkit.request.method == 'POST':
+            credentials = _get_credentials(toolkit.request.body)
+            if credentials == None:
+                return _error_response(500, 'Could not parse request')
+            apikey = _get_key(credentials)
+            if apikey == None:
+                return _error_response(403, 'Unauthorized')
+
+            response.headers['Content-Type'] = 'application/json'
+            return json.dumps({'user': credentials['login'], 'apikey': apikey})
+
+        else:
             return _error_response(403, 'Unauthorized')
 
-        credentials = _get_credentials(auth_header)
-        if credentials == None:
-            return _error_response(500, 'Could not parse request')
 
-        apikey = _get_key(credentials)
-        if apikey == None:
-            return _error_response(403, 'Unauthorized')
-
-        response.headers['Content-Type'] = 'application/json'
-        return json.dumps({'user': credentials['login'], 'apikey': apikey})
 
