@@ -42,6 +42,7 @@ class AuthKeyController(base.BaseController):
                 return _error_response(403, 'Unauthorized')
 
             response.headers['Content-Type'] = 'application/json'
+            response.headers['Access-Control-Allow-Origin'] = '*'
             return json.dumps({'user': credentials['login'], 'apikey': apikey})
 
         else:
