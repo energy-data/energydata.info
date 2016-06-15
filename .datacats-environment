@@ -2,6 +2,9 @@
 name = offgrid
 ckan_version = 2.4
 
+[deploy]
+target = datacats@command.datacats.com
+
 [site_primary]
 port = 5102
 
