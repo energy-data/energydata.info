@@ -8,10 +8,57 @@ import pylons
 import uuid
 import ckanapi
 
-class MvtPlugin(plugins.SingletonPlugin):
+class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDomainObjectModification, inherit=True)
+    plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
 
+    def _modify_pkg_schema(self, schema):
+        schema['resources'].update({
+            's3url': [
+                toolkit.get_validator('ignore_missing'),
+            ],
+            'checksum': [
+                toolkit.get_validator('ignore_missing'),
+            ],
+        })
+        return schema
+
+    def _show_pkg_schema(self, schema):
+        schema['resources'].update({
+            's3url': [
+                toolkit.get_validator('ignore_missing'),
+            ],
+            'checksum': [
+                toolkit.get_validator('ignore_missing'),
+            ],
+        })
+        return schema
+
+    def is_fallback(self):
+        # Return True to register this plugin as the default handler for
+        # package types not handled by any other IDatasetForm plugin.
+        return True
+
+    def package_types(self):
+        # This plugin doesn't handle any special package types, it just
+        # registers itself as the default (above).
+        return []
+
+    def create_package_schema(self):
+        schema = super(MvtPlugin, self).create_package_schema()
+        schema = self._modify_pkg_schema(schema)
+        return schema
+
+    def update_package_schema(self):
+        schema = super(MvtPlugin, self).update_package_schema()
+        schema = self._modify_pkg_schema(schema)
+        return schema
+
+    def show_package_schema(self):
+        schema = super(MvtPlugin, self).show_package_schema()
+        schema = self._show_pkg_schema(schema)
+        return schema
 
     # IConfigurer
     def update_config(self, config_):
