@@ -1,5 +1,7 @@
 # local files
 development.ini
+.bash_profile
+.bashrc
 
 # local caches
 ckanext-mvt/ckanext/tmp/*
