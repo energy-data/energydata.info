@@ -8,13 +8,14 @@ import shutil
 import hashlib
 import json
 import pickledb
+import logging
+import tempfile
 
 from ckan.plugins import toolkit
 
-import logging
 log = logging.getLogger(__name__)
 
-TEMPDIR = '/tmp'
+TEMPDIR = tempfile.mkdtemp(prefix='ckan')
 
 NotFound = toolkit.ObjectNotFound
 
