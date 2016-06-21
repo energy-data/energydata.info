@@ -7666,14 +7666,12 @@ textarea {
 }
 @media (max-width: 767px) {
   .toolbar .breadcrumb {
-    color: #fff;
     text-shadow: none;
   }
   .toolbar .breadcrumb .home {
     display: none;
   }
   .toolbar .breadcrumb a {
-    color: #fff;
     text-shadow: none;
   }
 }
