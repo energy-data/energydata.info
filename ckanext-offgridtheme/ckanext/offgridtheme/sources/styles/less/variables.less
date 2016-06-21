@@ -1,3 +1,13 @@
+// Custom Variables by DevSeed
+@emPrimaryColor: #22a6f5;
+@emBaseColorLighter: #f2f3f6;
+
+@emFontLight: 300;
+@emFontRegular: 400;
+@emFontBold: 600;
+@emFontBaseWeight: @emFontLight;
+
+
 // Base variables
 @imagePath: "../images";
 @spritePath: "@{imagePath}/sprite-ckan-icons.png";
@@ -5,13 +15,13 @@
 @FontAwesomePath: "../../sources/styles/vendor/font-awesome/font";
 
 // Layout Variables
-@layoutFontFamily: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@layoutFontFamily: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 @layoutTextColor: #444;
 @layoutBoldColor: #000;
-@layoutLinkColor: #187794;
-@layoutBackgroundColor: #eee;
+@layoutLinkColor: @emPrimaryColor;
+@layoutBackgroundColor: @emBaseColorLighter;
 @layoutTrimBackgroundColor: #fff;
-@layoutTrimBorderColor: #ccc;
+@layoutTrimBorderColor: darken(@emBaseColorLighter, 8%);
 
 @navLinkColor: #333;
 @navActiveBackgroundColor: #f6f6f6;
@@ -112,6 +122,7 @@
 @baseFontFamily: @layoutFontFamily;
 @textColor: @layoutTextColor;
 @linkColor: @layoutLinkColor;
+@headingsFontWeight: @emFontBold;
 @iconSpritePath: "../images/bootstrap-glyphicons-halflings.png";
 @iconWhiteSpritePath: "../images/bootstrap-glyphicons-halflings-white.png";
 

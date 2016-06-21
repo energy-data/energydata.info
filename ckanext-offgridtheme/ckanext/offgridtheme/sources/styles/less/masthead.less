@@ -4,7 +4,12 @@
   .clearfix();
   min-height: 30px;
   color: @mastheadTextColor;
-  background: darken(@mastheadBackgroundColor, 10%) url("@{bgPath}");
+  background: @emPrimaryColor;
+
+  .container {
+    padding: 8px 0;
+  }
+
   .account {
     float: right;
     ul {
@@ -12,14 +17,16 @@
       li {
         display: block;
         float: left;
-        border-left: 1px solid darken(@mastheadBackgroundColor, 15%);
         a {
           display: block;
-          color: mix(@mastheadBackgroundColor, @mastheadLinkColor, 25%);
+          color: inherit;
           font-size: 13px;
           font-weight: bold;
           padding: 0 10px;
           line-height: 31px;
+          text-decoration: none;
+          .border-radius(2px);
+
           span.username,
           span.text {
             margin: 0 2px 0 4px;
@@ -32,8 +39,8 @@
           }
           
           &:hover {
-            color: mix(@mastheadBackgroundColor, @mastheadLinkColor, 15%);
-            background-color: darken(@mastheadBackgroundColor, 15%);
+            color: inherit;
+            background-color: darken(@emPrimaryColor, 8%);
             text-decoration: none;
           }
           &.sub {
@@ -52,14 +59,14 @@
           font-size: 12px;
           margin-left: 3px;
           padding: 1px 6px;
-          background-color: darken(@mastheadBackgroundColor, 15%);
-          .border-radius(4px);
-          text-shadow:none;
+          background-color: darken(@emPrimaryColor, 8%);
+          .border-radius(2px);
+          text-shadow: none;
           color: mix(@mastheadBackgroundColor, @mastheadLinkColor, 25%);
         }
         &:hover span {
           color: @mastheadLinkColor;
-          background-color: darken(@mastheadBackgroundColor, 20%);
+          background-color: rgba(0,0,0,0.08);
         }
       }
       &.notifications-important a {
@@ -74,7 +81,7 @@
         padding: 0 6px;
         img {
           vertical-align: -6px;
-          .border-radius(4px);
+          .border-radius(2px);
         }
       }
     }
@@ -85,7 +92,10 @@
   .clearfix();
   min-height: 55px;
   color: @mastheadTextColor;
-  background: @mastheadBackgroundColor url("@{bgPath}");
+  background: @emPrimaryColor;
+  box-shadow: 0 1px 0 0 rgba(255,255,255,0.16);
+  position: relative;
+  z-index: 20;
 
   .container {
     position: relative;
@@ -93,6 +103,7 @@
 
   a {
     color: @mastheadLinkColor;
+    .border-radius(2px) !important;
   }
 
   hgroup {
@@ -128,7 +139,7 @@
   }
 
   input[type="text"] {
-    border-color: darken(@mastheadBackgroundColor, 5);
+    border-color: darken(@emPrimaryColor, 8%);
   }
 
   .navigation {
@@ -138,7 +149,8 @@
       li {
         a:hover,
         &.active a {
-          background-color: darken(@mastheadBackgroundColor, 10%);
+          background-color: darken(@emPrimaryColor, 8%);
+          box-shadow: none;
         }
       }
     }
