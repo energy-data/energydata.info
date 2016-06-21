@@ -195,7 +195,7 @@ body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: #444;
+  color: #50595e;
   background-color: #f2f3f6;
 }
 a {
@@ -1382,7 +1382,7 @@ select:focus:invalid:focus {
 }
 .help-block,
 .help-inline {
-  color: #6a6a6a;
+  color: #738087;
 }
 .help-block {
   display: block;
@@ -5625,7 +5625,7 @@ a.tag:hover {
 }
 .module .read-more {
   font-weight: bold;
-  color: #000;
+  color: #101f28;
 }
 .module .pagination {
   height: 34px;
@@ -6539,7 +6539,7 @@ textarea {
   background-color: #f3f3f3;
 }
 .control-custom.disabled .checkbox {
-  color: #444;
+  color: #50595e;
   text-decoration: none;
 }
 .control-custom .checkbox.btn {
@@ -7022,7 +7022,7 @@ textarea {
   background-color: #f2f3f6;
 }
 .resource-item .heading {
-  color: #000;
+  color: #101f28;
   font-size: 14px;
   font-weight: bold;
 }
@@ -7170,7 +7170,7 @@ textarea {
   height: 50px;
   overflow: hidden;
   margin-right: 10px;
-  color: #444;
+  color: #50595e;
   background-color: #f2f3f6;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -7183,7 +7183,7 @@ textarea {
   line-height: 50px;
 }
 .view-list li a h3 {
-  color: #000;
+  color: #101f28;
   font-weight: bold;
   font-size: 16px;
   margin: 0 0 3px 0;
@@ -7193,7 +7193,7 @@ textarea {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  color: #444;
+  color: #50595e;
 }
 .view-list li a.active,
 .view-list li a:hover {
@@ -7323,12 +7323,12 @@ textarea {
 .search-form h2 {
   font-size: 24px;
   line-height: 1.3;
-  color: #000;
+  color: #101f28;
   margin-bottom: 0;
   margin-top: 20px;
 }
 .search-form .filter-list {
-  color: #444;
+  color: #50595e;
   line-height: 32px;
   margin: 10px 0 0 0;
 }
@@ -7339,7 +7339,7 @@ textarea {
   margin-top: 10px;
   font-size: 18px;
   font-weight: normal;
-  color: #000;
+  color: #101f28;
 }
 .search-form.no-bottom-border {
   border-bottom-width: 0;
@@ -8194,7 +8194,7 @@ h4 small {
   float: left;
   width: 50%;
   margin: 5px 0 0 0;
-  color: #444;
+  color: #50595e;
 }
 .context-info .nums dl dt {
   display: block;
@@ -8589,16 +8589,16 @@ h4 small {
 .site-footer,
 .site-footer label,
 .site-footer small {
-  color: #101f28;
+  color: #50595e;
 }
 .site-footer a {
-  color: #101f28;
+  color: #50595e;
 }
 .footer-links ul li {
   margin-bottom: 5px;
 }
 .attribution small {
-  color: #101f28;
+  color: #50595e;
   font-size: 12px;
 }
 .attribution .ckan-footer-logo {
@@ -8795,7 +8795,7 @@ h4 small {
 .popover .popover-content {
   font-size: 14px;
   line-height: 20px;
-  color: #444;
+  color: #50595e;
   word-break: break-all;
 }
 .popover .popover-content dl {
