@@ -95,6 +95,7 @@ def upload_to_s3(filepath, resource_id, s3config):
         )
 
     tileurl = "s3://{0}/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
+    httptileurl = "https://{0}.s3.amazonaws.com/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
 
     aws_env = os.environ.copy()
     aws_env['AWS_ACCESS_KEY_ID'] = s3config['access_key']
@@ -108,7 +109,7 @@ def upload_to_s3(filepath, resource_id, s3config):
     tilejson = {
         "tilejson": "2.1.0",
         "format": "pbf",
-        "tiles": [tileurl],
+        "tiles": [httptileurl],
         "vector_layers": [{"id": "data_layer"}]
     }
     log.info(json.dumps(tilejson))
@@ -122,7 +123,7 @@ def upload_to_s3(filepath, resource_id, s3config):
         raise S3Exception("{0} could not be uploaded to s3".format(filepath))
 
     else:
-        return "{0}/{1}/data.tilejson".format(bucket, prefix)
+        return "https://{0}.s3.amazonaws.com/{1}/data.tilejson".format(bucket, prefix)
 
 def _update_resource(resource, ckan):
     response = requests.post(
