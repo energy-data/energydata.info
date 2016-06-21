@@ -24,9 +24,14 @@
 @import "datapusher.less";
 
 body {
-  // Using the masthead/footer gradient prevents the color from changing
-  // at the bottom of the window on pages with little content.
-  background: @mastheadBackgroundColor url("@{bgPath}");
+  background: #fff;
+  padding: 0;
+}
+
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none;
 }
 
 [hidden] {

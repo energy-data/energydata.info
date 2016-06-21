@@ -7,7 +7,7 @@
   background: @emPrimaryColor;
 
   .container {
-    padding: 8px 0;
+    padding: 8px 20px;
   }
 
   .account {
@@ -93,12 +93,14 @@
   min-height: 55px;
   color: @mastheadTextColor;
   background: @emPrimaryColor;
-  box-shadow: 0 1px 0 0 rgba(255,255,255,0.16);
+  .box-shadow(0 1px 0 0 rgba(255,255,255,0.16));
   position: relative;
   z-index: 20;
+  margin: 0;
 
   .container {
     position: relative;
+    padding: 0 20px;
   }
 
   a {
@@ -149,7 +151,7 @@
       li {
         a:hover,
         &.active a {
-          background-color: darken(@emPrimaryColor, 8%);
+          background-color: rgba(0,0,0,0.08);
           box-shadow: none;
         }
       }
@@ -180,7 +182,7 @@
   .btn-navbar.active,
   .btn-navbar.disabled,
   .btn-navbar[disabled] {
-    background-color: darken(@mastheadBackgroundColor, 10%);
+    background-color: rgba(0,0,0,0.08);
     background-image: none;
     border:none;
     .box-shadow(none);
@@ -188,6 +190,7 @@
     margin-top:15px;
     .icon-bar {
       margin-right:0;
+      .box-shadow(none);
     }
   }
 
@@ -206,12 +209,6 @@
 }
 
 @media (max-width: 767px) {
-  .account-masthead {
-    margin-left:-20px;
-    margin-right:-20px;
-    padding-left:20px;
-    padding-right:20px;
-  }
   .masthead .section {
     float: none;
     .nav-collapse {
@@ -221,10 +218,6 @@
 }
 @media (max-width: 979px) {
   .masthead {
-    .container {
-      padding-left:20px;
-      padding-right:20px;
-    }
     .site-search {
       display:none;
     }
