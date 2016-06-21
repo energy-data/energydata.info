@@ -8439,9 +8439,28 @@ h4 small {
   -moz-border-radius: 2px;
   border-radius: 2px;
 }
+.header-text-logo {
+  text-transform: uppercase;
+}
+.header-text-logo > a {
+  display: block;
+}
+.header-text-logo > a:hover {
+  opacity: 0.8;
+}
+.site-title {
+  font-size: 24px;
+  line-height: 28px;
+  margin: 0;
+}
+.site-subtitle {
+  font-size: 10px;
+  line-height: 14px;
+  margin: 0;
+  opacity: 0.8;
+}
 .masthead {
   *zoom: 1;
-  min-height: 55px;
   color: #fff;
   background: #22a6f5;
   -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.16);
@@ -8462,34 +8481,13 @@ h4 small {
 }
 .masthead .container {
   position: relative;
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
 }
 .masthead a {
   color: #fff;
   -webkit-border-radius: 2px !important;
   -moz-border-radius: 2px !important;
   border-radius: 2px !important;
-}
-.masthead hgroup h1,
-.masthead hgroup h2 {
-  float: left;
-  font-size: 30px;
-  line-height: 1.5;
-}
-.masthead hgroup h1 {
-  font-weight: 900;
-  letter-spacing: -1px;
-  margin: 3px 0;
-}
-.masthead hgroup h2 {
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  margin: 0;
-  font-size: 15px;
-  font-weight: normal;
-  line-height: 1.2;
-  white-space: nowrap;
 }
 .masthead .nav-collapse {
   padding-top: 10px;
