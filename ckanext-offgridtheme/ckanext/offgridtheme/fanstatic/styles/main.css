@@ -8228,117 +8228,36 @@ h4 small {
   -moz-box-shadow: 0 0 0 1px white;
   box-shadow: 0 0 0 1px white;
 }
-.homepage .row {
-  position: relative;
-}
-.homepage .module-search {
-  padding: 5px;
-  margin: 20px 0 0 0;
+.home-header {
   color: #fff;
-  background: #fff;
+  background: #22a6f5;
+  text-align: center;
 }
-.homepage .module-search .search-giant {
-  margin-bottom: 10px;
+.home-header .container {
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
-.homepage .module-search .search-giant input {
-  border-color: #003f52;
+.home-headline {
+  max-width: 560px;
+  margin: 0 auto 20px auto;
 }
-.homepage .module-search .module-content {
-  -webkit-border-radius: 3px 3px 0 0;
-  -moz-border-radius: 3px 3px 0 0;
-  border-radius: 3px 3px 0 0;
-  background-color: #005d7a;
-  border-bottom: none;
-}
-.homepage .module-search .module-content .heading {
-  margin-top: 0;
-  margin-bottom: 7px;
+.home-title {
   font-size: 24px;
-  line-height: 40px;
-}
-.homepage .module-search .tags {
-  *zoom: 1;
-  padding: 5px 10px 10px 10px;
-  background-color: #003647;
-  -webkit-border-radius: 0 0 3px 3px;
-  -moz-border-radius: 0 0 3px 3px;
-  border-radius: 0 0 3px 3px;
-}
-.homepage .module-search .tags:before,
-.homepage .module-search .tags:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.homepage .module-search .tags:after {
-  clear: both;
-}
-.homepage .module-search .tags h3,
-.homepage .module-search .tags .tag {
-  display: block;
-  float: left;
-  margin: 5px 10px 0 0;
-}
-.homepage .module-search .tags h3 {
-  font-size: 14px;
-  line-height: 20px;
-  padding: 2px 8px;
-}
-.homepage .group-list {
+  line-height: 32px;
   margin: 0;
-}
-.homepage .box .inner {
-  padding: 20px 25px;
-}
-.homepage .stats h3 {
-  margin: 0 0 10px 0;
-}
-.homepage .stats ul {
-  margin: 0;
-  list-style: none;
-  *zoom: 1;
-}
-.homepage .stats ul:before,
-.homepage .stats ul:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.homepage .stats ul:after {
-  clear: both;
-}
-.homepage .stats ul li {
-  float: left;
-  width: 25%;
-  font-weight: 300;
-}
-.homepage .stats ul li a {
-  display: block;
-}
-.homepage .stats ul li a b {
-  display: block;
-  font-size: 35px;
-  line-height: 1.5;
-}
-.homepage .stats ul li a:hover {
-  text-decoration: none;
-}
-.homepage.layout-2 .stats {
-  margin-top: 20px;
 }
 @media (min-width: 768px) {
-  .homepage [role=main] {
-    padding: 20px 0;
+  .home-header .container {
+    padding-top: 120px;
+    padding-bottom: 120px;
   }
-  .homepage.layout-1 .row1 .col2 {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+  .home-headline {
+    margin-bottom: 40px;
   }
-  .homepage.layout-1 .row1 .col2 .module-search {
-    bottom: 0;
-    left: 0;
-    right: 0;
+  .home-title {
+    font-size: 36px;
+    line-height: 44px;
+    margin: 0;
   }
 }
 .account-masthead {

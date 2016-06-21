@@ -1,0 +1,27 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Welcome") }}{% endblock %}
+
+{% block maintag %}{% endblock %}
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+  <section class="homepage">
+    <header class="home-header">
+      <div class="container">
+        <div class="home-headline">
+          <h1 class="home-title">Accessing the energy sector around the globe</h1>
+        </div>
+        <div class="home-cta">
+          <a href="#" title="Visit page" class="btn">View tools</a>
+          <a href="#" title="Visit page" class="btn">View data</a>
+        </div>
+      </div>
+    </header>
+    <div class="home-body">
+      <section class="home-fold home-tools">
+        <h1>Tools</h1>
+      </section>
+    </div>
+  </section>
+{% endblock %}
