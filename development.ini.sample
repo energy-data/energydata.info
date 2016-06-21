@@ -108,10 +108,10 @@ ckanext.mvt.s3.access_key = ACCESS_KEY
 ckanext.mvt.s3.secret_key = SECRET_KEY
 
 ## Front-End Settings
-ckan.site_title = offgrid
+ckan.site_title = Energy Maps
 ckan.site_logo =
 ckan.site_description =
-ckan.favicon = /images/icons/ckan.ico
+ckan.favicon = /meta/favicon.ico
 ckan.gravatar_default = identicon
 ckan.preview.direct = png jpg gif
 ckan.preview.loadable = html htm rdf+xml owl+xml xml n3 n-triples turtle plain atom csv tsv rss txt json
