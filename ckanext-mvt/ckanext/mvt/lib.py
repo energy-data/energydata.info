@@ -10,6 +10,7 @@ import json
 import pickledb
 import logging
 import tempfile
+import boto3
 
 from ckan.plugins import toolkit
 
@@ -78,12 +79,24 @@ def _md5checksum(filepath):
             m.update(data)
     return m.hexdigest()
 
-def upload_to_s3(filepath, s3id, s3config):
+def upload_to_s3(filepath, resource_id, s3config):
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id=s3config['access_key'],
+        aws_secret_access_key=s3config['secret_key']
+    )
+
+    # Upload tiles
     revision = uuid.uuid1();
-    tileurl = "{0}/tiles/{1}-{2}/{{z}}/{{x}}/{{y}}.pbf".format(
-        s3config['bucket'],
-        revision,
-        s3id)
+    bucket = s3config['bucket']
+    prefix = "tiles/{0}-{1}".format(
+        resource_id,
+        revision
+        )
+
+    tileurl = "s3://{0}/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
+    httptileurl = "https://{0}.s3.amazonaws.com/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
+
     aws_env = os.environ.copy()
     aws_env['AWS_ACCESS_KEY_ID'] = s3config['access_key']
     aws_env['AWS_SECRET_ACCESS_KEY'] = s3config['secret_key']
@@ -92,11 +105,25 @@ def upload_to_s3(filepath, s3id, s3config):
         'mapbox-tile-copy', filepath, tileurl
     ], env=aws_env)
 
+    # Upload tilejson
+    tilejson = {
+        "tilejson": "2.1.0",
+        "format": "pbf",
+        "tiles": [httptileurl],
+        "vector_layers": [{"id": "data_layer"}]
+    }
+    log.info(json.dumps(tilejson))
+    tilefile = os.path.join(TEMPDIR, '{0}-{1}'.format(resource_id, revision))
+    with open(tilefile, 'w') as t:
+        json.dump(tilejson, t)
+
+    s3.upload_file(tilefile, bucket, '{0}/data.tilejson'.format(prefix))
+
     if returncode != 0:
         raise S3Exception("{0} could not be uploaded to s3".format(filepath))
 
     else:
-        return tileurl
+        return "https://{0}.s3.amazonaws.com/{1}/data.tilejson".format(bucket, prefix)
 
 def _update_resource(resource, ckan):
     response = requests.post(

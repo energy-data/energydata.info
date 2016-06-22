@@ -79,7 +79,7 @@ class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 s3config = {
                     'bucket': config.get('ckanext.mvt.s3.bucket'),
                     'access_key': config.get('ckanext.mvt.s3.access_key'),
-                    'secret_key': config.get('ckanext.mvt.s3.secret_key')
+                    'secret_key': config.get('ckanext.mvt.s3.secret_key'),
                 }
 
                 celery.send_task(
