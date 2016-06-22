@@ -13,8 +13,8 @@
           <h1 class="home-title">Accessing the energy sector around the globe</h1>
         </div>
         <div class="home-cta">
-          <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:ToolsController', action='view') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View tools</a></li>
-          <a href="#" title="Visit page" class="btn btn-large btn-rev-ghost">View data</a>
+          <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:ToolsController', action='view') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View tools</a>
+          <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View data</a>
         </div>
       </div>
     </header>
@@ -55,19 +55,19 @@
               <li class="tool-wrapper">
                 <article class="tool">
                   <div class="tool-media">
-                    <a href="#" title="Visit tool" class="tool-media-screenshot">
+                    <a href="http://india.nightlights.io/" title="Visit tool" class="tool-media-screenshot">
                       <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-india-lights.jpg" />
                     </a>
                   </div>
                   <div class="tool-copy">
                     <header class="tool-header">
-                      <h1 class="tool-title"><a href="#" title="Visit tool">India Night Lights</a></h1>
+                      <h1 class="tool-title"><a href="http://india.nightlights.io/" title="Visit tool">India Night Lights</a></h1>
                     </header>
                     <div class="tool-body">
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
                     </div>
                     <div class="tool-cta">
-                      <a href="#" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+                      <a href="http://india.nightlights.io/" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
                     </div>
                   </div>
                 </article>
@@ -152,7 +152,7 @@
             </div>
 
             <div class="home-fold-cta">
-              <a href="#" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
+              <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
             </div>
           </div>
         </div>
