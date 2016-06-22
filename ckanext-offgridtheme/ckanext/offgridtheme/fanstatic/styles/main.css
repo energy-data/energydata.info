@@ -8911,6 +8911,7 @@ a.tool-media-screenshot:hover {
   padding: 0 20px 20px 20px;
 }
 .masthead a {
+  font-size: 16px;
   color: #fff;
   font-weight: 600;
   -webkit-border-radius: 2px !important;
@@ -9005,67 +9006,86 @@ a.tool-media-screenshot:hover {
     display: none;
   }
 }
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 .site-footer {
   background: #fff;
   box-shadow: inset 0 1px #e6e8ee;
+  padding: 20px 0;
 }
 .site-footer .container {
-  padding: 20px;
+  padding: 0 20px;
 }
-.site-footer,
-.site-footer label,
-.site-footer small {
-  color: #50595e;
+@media (min-width: 768px) {
+  .site-footer {
+    padding: 40px 0;
+  }
 }
-.site-footer a {
-  color: #50595e;
+.footer-nav {
+  box-shadow: inset 0 -1px #e6e8ee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
-.footer-links ul li {
-  margin-bottom: 5px;
+@media (min-width: 768px) {
+  .footer-nav {
+    text-align: initial;
+    box-shadow: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
 }
-.attribution small {
-  color: #50595e;
-  font-size: 12px;
+.footer-links-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  word-spacing: -0.26rem;
 }
-.attribution .ckan-footer-logo {
+.footer-links-menu li {
+  display: inline-block;
+  vertical-align: top;
+  word-spacing: normal;
+  margin-right: 20px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+.footer-links-menu li:last-child {
+  margin-right: 0;
+}
+.footer-links-menu a:link,
+.footer-links-menu a:visited {
+  color: inherit;
+}
+.footer-links-menu a:hover {
+  color: #22a6f5;
+}
+.footer-attr {
+  text-align: center;
+}
+.footer-attr > *:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 768px) {
+  .footer-attr {
+    text-align: right;
+  }
+}
+.attr-wbg-ifc {
+  margin: 0 0 25px 0;
+}
+.attr-wbg-ifc a {
   display: block;
-  width: 68px;
-  height: 21px;
-  margin-top: 2px;
-  background: url("../images/ckan-logo-footer.png") no-repeat top left;
-  text-indent: -900em;
 }
-.lang-select {
-  *zoom: 1;
+.attr-wbg-ifc a:hover {
+  opacity: 0.64;
 }
-.lang-select:before,
-.lang-select:after {
-  display: table;
-  content: "";
-  line-height: 0;
-}
-.lang-select:after {
-  clear: both;
-}
-.lang-select:before,
-.lang-select:after {
-  content: " ";
-  display: table;
-}
-.lang-select:after {
-  clear: both;
-}
-.lang-select label,
-.lang-select select,
-.lang-select .lang-container {
-  float: left;
-  margin-top: 0;
-}
-.lang-dropdown {
-  color: #000;
-}
-.lang-dropdown li {
-  width: auto;
+.attr-wbg-ifc img {
+  vertical-align: top;
+  max-width: 200px;
+  height: auto;
+  opacity: 0.8;
 }
 .table-selected td {
   background-color: #f5f5f5;
@@ -10078,7 +10098,8 @@ a {
 }
 /* Hide only visually, but have it available for screenreaders */
 .visually-hidden,
-.dataset-tags dt {
+.dataset-tags dt,
+.attr-wbg-ifc span {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;

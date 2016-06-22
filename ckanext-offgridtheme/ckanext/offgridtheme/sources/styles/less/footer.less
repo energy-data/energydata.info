@@ -1,55 +1,97 @@
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
 .site-footer {
   background: #fff;
   box-shadow: inset 0 1px @layoutTrimBorderColor;
+  padding: 20px 0;
 
   .container {
-    padding: 20px;
+    padding: 0 20px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 40px 0;
   }
 }
 
-.site-footer,
-.site-footer label,
-.site-footer small {
-  color: @footerTextColor;
+.footer-nav {
+  box-shadow: inset 0 -1px @layoutTrimBorderColor;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    text-align: initial;
+    box-shadow: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
 }
 
-.site-footer a {
-  color: @footerLinkColor;
+.footer-links-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  word-spacing: -0.26rem;
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+    word-spacing: normal;
+    margin-right: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: @emFontBold;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  a:link, a:visited {
+    color: inherit;
+  }
+
+  a:hover {
+    color: @linkColor;
+  }
 }
 
-.footer-links ul li {
-  margin-bottom: 5px;
+
+.footer-attr {
+  text-align: center;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
+    text-align: right;
+  }
 }
 
-.attribution small {
-  color: @footerTextColor;
-  font-size: 12px;
+.attr-wbg-ifc {
+  margin: 0 0 25px 0;
+
+  a {
+    display: block;
+
+    &:hover {
+      opacity: 0.64;
+    }
+  }
+
+  img {
+    vertical-align: top;
+    max-width: 200px;
+    height: auto;
+    opacity: 0.8;
+  }
+
+  span {
+    &:extend(.visually-hidden);
+  }
 }
 
-.attribution .ckan-footer-logo {
-  display: block;
-  width: 68px;
-  height: 21px;
-  margin-top: 2px;
-  background: url("@{imagePath}/ckan-logo-footer.png") no-repeat top left;
-  text-indent: -900em;
-}
-
-.lang-select {
-  .clearfix;
-}
-
-.lang-select label,
-.lang-select select,
-.lang-select .lang-container {
-  float: left;
-  margin-top: 0;
-}
-
-.lang-dropdown {
-  color: @inputColor;
-}
-
-.lang-dropdown li {
-  width: auto;
-}
