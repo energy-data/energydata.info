@@ -9937,7 +9937,7 @@ iframe {
 }
 .btn-primary-ghost:hover,
 .btn-primary-ghost:focus {
-  background: rgba(34, 166, 245, 0.16);
+  background: rgba(34, 166, 245, 0.08);
   color: #22a6f5;
 }
 /* ==========================================================================
