@@ -1,5 +1,17 @@
 {% extends "page.html" %}
 
-{% block content %}
-meh from tools template!
+{% block subtitle %}{{ _('Tools') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Tools'), controller='ckanext.offgridtheme.controller:ToolsController', action='view' %}</li>
 {% endblock %}
+
+{% block primary %}
+  <article class="module">
+    <div class="module-content">
+      <p>Hello world!</p>
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}
