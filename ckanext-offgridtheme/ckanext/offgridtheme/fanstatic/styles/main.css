@@ -8616,8 +8616,8 @@ h4 small {
   height: 20px;
   line-height: 20px;
   font-size: 40px;
-  background: #e6e8ee;
-  content: '•••';
+  background: url(/images/layout/window-buttons.svg) 8px center no-repeat #f2f3f6;
+  content: '';
   speak: none;
   color: rgba(0, 0, 0, 0.16);
   padding: 0 5px;
@@ -8643,7 +8643,12 @@ a.tool-media-screenshot:hover {
 }
 .tool-header {
   padding-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+@media (min-width: 768px) {
+  .tool-header {
+    margin-bottom: 20px;
+  }
 }
 .tool-title {
   margin: 0;

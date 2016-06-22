@@ -166,8 +166,8 @@
     height: 20px;
     line-height: 20px;
     font-size: 40px;
-    background: darken(@emBaseColorLighter, 4%);;
-    content: '•••';
+    background: url(/images/layout/window-buttons.svg) 8px center no-repeat @emBaseColorLighter;
+    content: '';
     speak: none;
     color: rgba(0,0,0,0.16);
     padding: 0 5px;
@@ -195,7 +195,11 @@ a.tool-media-screenshot {
 
 .tool-header {
   padding-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 20px;
+  }
 }
 
 .tool-title {
