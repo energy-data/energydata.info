@@ -1,11 +1,22 @@
-{% ckan_extends %}
+<footer class="site-footer">
+  <div class="container">
 
-{% block footer_attribution %}
-  <!-- FIXME: I can't even CSS -->
-  <style>
-    .ckan-footer-logo {margin: 2px 0 0 120px}
-    .datacats-footer-logo {margin: -43px 0 0 0}
-  </style>
-  <p>{% trans %}<strong>Powered by</strong> <a class="hide-text ckan-footer-logo"href="http://ckan.org">CKAN</a>{% endtrans %}
-  <img class="datacats-footer-logo" src="{{ h.url_for_static('/datacats/datacats-footer.png') }}"/></p>
-{% endblock %}
+    <div class="row">
+
+      <nav class="span8 footer-nav">
+        <ul class="footer-links-menu">
+          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:ToolsController', action='view') }}" title="Visit page">Tools</a></li>
+          <li><a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page">Datasets</a></li>
+          <li><a href="{{ h.url_for(controller='home', action='about') }}" title="Visit page">About</a></li>
+          <li><a href="#" title="Visit page">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="span4 footer-attr">
+        <p class="attr-wbg-ifc"><a href="http://worldbank.org/" title="Visit page"><img alt="Logo" src="/images/content/wbg-ifc-logo-black.svg" width="430" height="80" /> <span>An innovation by the World Bank Group</span></a></p>
+        <p class="attr-ds">Built by <a href="https://developmentseed.org/" title="Visit page">Development Seed</a></p>
+      </div>
+    </div>
+
+  </div>
+</footer>

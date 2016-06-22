@@ -22,3 +22,26 @@ If you're adding new templates or new functionality to CKAN, you might need to r
 2. `source venv/bin/activate` which will allow you to use the datacats command
 3. `cd /vagrant` (this is the synced folder with the git repo)
 4. `datacats reload` to reload the server
+
+## Styles (Less)
+
+Less is compiled in the local machine, not vagrant.
+The resulting styles should be committed to the repo.
+ 
+#### Requirements
+
+- Node (v4.2.x) & Npm ([nvm](https://github.com/creationix/nvm) usage is advised)
+
+> The versions mentioned are the ones used during development. It could work with newer ones.
+
+After these basic requirements are met, run the following commands in the website's folder:
+```
+npm install
+```
+
+#### Watch for changes
+
+```
+npm run less-watch
+```
+Starts the watcher and recompiles when files change.

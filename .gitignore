@@ -2,6 +2,8 @@
 development.ini
 .bash_profile
 .bashrc
+.vagrant
+node_modules
 
 # local caches
 ckanext-mvt/ckanext/tmp/*

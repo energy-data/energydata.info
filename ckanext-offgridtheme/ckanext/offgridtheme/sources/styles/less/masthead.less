@@ -1,0 +1,229 @@
+@notificationsBg: #C9403A;
+
+.account-masthead {
+  .clearfix();
+  &:extend(.antialiased);
+  min-height: 30px;
+  color: @mastheadTextColor;
+  background: @emPrimaryColor;
+
+  .container {
+    padding: 8px 20px;
+  }
+
+  .account {
+    float: right;
+    ul {
+      .clearfix();
+      li {
+        display: block;
+        float: left;
+        a {
+          display: block;
+          color: inherit;
+          font-size: 13px;
+          font-weight: bold;
+          padding: 0 10px;
+          line-height: 31px;
+          text-decoration: none;
+          .border-radius(2px);
+
+          span.username,
+          span.text {
+            margin: 0 2px 0 4px;
+          }
+          
+          span.text {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+          }
+          
+          &:hover {
+            color: inherit;
+            background-color: darken(@emPrimaryColor, 8%);
+            text-decoration: none;
+          }
+          &.sub {
+            font-weight: 300;
+          }
+          .btn {
+            vertical-align: 1px;
+            margin-left: 3px;
+          }
+        }
+      }
+    }
+    .notifications {
+      a {
+        span.badge {
+          font-size: 12px;
+          margin-left: 3px;
+          padding: 1px 6px;
+          background-color: darken(@emPrimaryColor, 8%);
+          .border-radius(2px);
+          text-shadow: none;
+          color: mix(@mastheadBackgroundColor, @mastheadLinkColor, 25%);
+        }
+        &:hover span {
+          color: @mastheadLinkColor;
+          background-color: rgba(0,0,0,0.08);
+        }
+      }
+      &.notifications-important a {
+        span.badge {
+          color: @mastheadLinkColor;
+          background-color: @notificationsBg;
+        }
+      }
+    }
+    &.authed {
+      .image {
+        padding: 0 6px;
+        img {
+          vertical-align: -6px;
+          .border-radius(2px);
+        }
+      }
+    }
+  }
+}
+
+.header-text-logo {
+  text-transform: uppercase;
+
+  > a {
+    display: block;
+  }
+
+  > a:hover {
+    opacity: 0.8;
+  }
+}
+
+.site-title {
+  font-size: 24px;
+  line-height: 28px;
+  margin: 0;
+}
+
+.site-subtitle {
+  font-size: 10px;
+  line-height: 14px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.masthead {
+  .clearfix();
+  &:extend(.antialiased);
+  color: @mastheadTextColor;
+  background: @emPrimaryColor;
+  .box-shadow(0 1px 0 0 rgba(255,255,255,0.16));
+  position: relative;
+  z-index: 20;
+  margin: 0;
+
+  .container {
+    position: relative;
+    padding: 0 20px 20px 20px;
+  }
+
+  a {
+    font-size: 16px;
+    color: @mastheadLinkColor;
+    font-weight: @emFontBold;
+    .border-radius(2px) !important;
+  }
+
+  .nav-collapse {
+    padding-top: 10px;
+  }
+
+  .section {
+    float: left;
+  }
+
+  input[type="text"] {
+    border-color: darken(@emPrimaryColor, 8%);
+  }
+
+  .navigation {
+    margin-right: 20px;
+    .nav-pills {
+      margin-bottom: 0;
+      li {
+        a:hover,
+        &.active a {
+          background-color: rgba(0,0,0,0.08);
+          box-shadow: none;
+        }
+      }
+    }
+  }
+  .nav > li > a,
+  .nav > li > a:focus,
+  .nav > li > a:hover,
+  .nav > .active > a,
+  .nav > .active > a:hover,
+  .nav > .active > a:focus {
+    color: #fff;
+    text-shadow: none;
+  }
+
+  .site-search {
+    margin: 2px 8px 2px 0;
+    input {
+      width: 200px;
+      padding: 4px 10px;
+    }
+  }
+
+  .btn-navbar,
+  .btn-navbar:hover,
+  .btn-navbar:focus,
+  .btn-navbar:active,
+  .btn-navbar.active,
+  .btn-navbar.disabled,
+  .btn-navbar[disabled] {
+    background-color: rgba(0,0,0,0.08);
+    background-image: none;
+    border:none;
+    .box-shadow(none);
+    text-shadow: none;
+    margin-top:15px;
+    .icon-bar {
+      margin-right:0;
+      .box-shadow(none);
+    }
+  }
+
+  .debug {
+    position: absolute;
+    top: 37px;
+    left: 10px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media (min-width: 980px) {
+  .masthead  .nav-collapse {
+    float:right;
+  }
+}
+
+@media (max-width: 767px) {
+  .masthead .section {
+    float: none;
+    .nav-collapse {
+      margin-bottom: @gutterX;
+    }
+  }
+}
+@media (max-width: 979px) {
+  .masthead {
+    .site-search {
+      display:none;
+    }
+  }
+}

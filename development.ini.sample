@@ -96,7 +96,7 @@ solr_url = http://solr:8080/solr
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datastore resource_proxy text_view recline_grid_view recline_graph_view offgrid_theme geojsonview mvt
+ckan.plugins = datastore resource_proxy text_view recline_grid_view recline_graph_view offgrid_theme geojsonview mvt offgridpages
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
@@ -108,10 +108,10 @@ ckanext.mvt.s3.access_key = ACCESS_KEY
 ckanext.mvt.s3.secret_key = SECRET_KEY
 
 ## Front-End Settings
-ckan.site_title = offgrid
+ckan.site_title = Energy Maps
 ckan.site_logo =
 ckan.site_description =
-ckan.favicon = /images/icons/ckan.ico
+ckan.favicon = /images/meta/favicon.ico
 ckan.gravatar_default = identicon
 ckan.preview.direct = png jpg gif
 ckan.preview.loadable = html htm rdf+xml owl+xml xml n3 n-triples turtle plain atom csv tsv rss txt json

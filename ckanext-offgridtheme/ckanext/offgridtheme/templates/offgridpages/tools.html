@@ -1,0 +1,57 @@
+{% extends "inpage-hub.html" %}
+
+{% block inpage_title %}
+  <h1 class="inpage-title">Tools</h1>
+{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Tools'), controller='ckanext.offgridtheme.controller:ToolsController', action='view' %}</li>
+{% endblock %}
+
+{% block primary %}
+  <div class="container">
+    <ol class="home-tools-list">
+      <li class="tool-wrapper">
+        <article class="tool">
+          <div class="tool-media">
+            <a href="#" title="Visit tool" class="tool-media-screenshot">
+              <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-ogmo.jpg" />
+            </a>
+          </div>
+          <div class="tool-copy">
+            <header class="tool-header">
+              <h1 class="tool-title"><a href="#" title="Visit tool">Off-Grid Market Opportunities</a></h1>
+            </header>
+            <div class="tool-body">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+            </div>
+            <div class="tool-cta">
+              <a href="#" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+            </div>
+          </div>
+        </article>
+      </li>
+
+      <li class="tool-wrapper">
+        <article class="tool">
+          <div class="tool-media">
+            <a href="http://india.nightlights.io/" title="Visit tool" class="tool-media-screenshot">
+              <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-india-lights.jpg" />
+            </a>
+          </div>
+          <div class="tool-copy">
+            <header class="tool-header">
+              <h1 class="tool-title"><a href="http://india.nightlights.io/" title="Visit tool">India Night Lights</a></h1>
+            </header>
+            <div class="tool-body">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+            </div>
+            <div class="tool-cta">
+              <a href="http://india.nightlights.io/" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+            </div>
+          </div>
+        </article>
+      </li>
+    </ol>
+  </div>
+{% endblock %}

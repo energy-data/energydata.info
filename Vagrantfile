@@ -5,6 +5,8 @@ Vagrant.configure("2") do |config|
   config.vm.box = "devseed-datacats"
   config.vm.box_url = "https://s3.amazonaws.com/offgrid-vbox/devseed-datacats.box"
 
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
   config.ssh.forward_agent = true
   config.vm.network "private_network", ip: "192.168.101.99"
 

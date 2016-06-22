@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+a {
+  transition: color 0.16s ease 0s, opacity 0.16s ease 0s, background 0.16s ease 0s;
+}
+
+.btn {
+  &:extend(.antialiased);
+  font-weight: @emFontBold;
+  text-shadow: none;
+  transition: all 0.16s ease 0s;
+}
+
+.btn-rev-ghost {
+  background: none;
+  color: #fff;
+  border: transparent;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.64);
+
+  &:hover,
+  &:focus {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+  }
+}
+
+.btn-primary-ghost {
+  background: none;
+  color: @emPrimaryColor;
+  border: transparent;
+  box-shadow: inset 0 0 0 1px @emPrimaryColor;
+
+  &:hover,
+  &:focus {
+    background: fade(@emPrimaryColor, 8%);
+    color: @emPrimaryColor;
+  }
+}

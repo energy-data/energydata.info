@@ -1,0 +1,9 @@
+{
+   "allowedExtensions":[".less"],
+   "minified": false,
+   "defaults": {
+       "watchFolder": "ckanext-offgridtheme/ckanext/offgridtheme/sources/styles/less",
+       "outputFolder": "ckanext-offgridtheme/ckanext/offgridtheme/fanstatic/styles",
+       "mainFile": "main.less"
+   }
+}

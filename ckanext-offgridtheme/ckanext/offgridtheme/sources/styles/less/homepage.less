@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Homepage
+   ========================================================================== */
+
+/* Header
+   ========================================================================== */
+
+.homepage {
+  .container {
+    padding: 0 20px;
+
+    @media (max-width: 979px) {
+      width: auto;
+    }
+  }
+}
+
+.home-header {
+  &:extend(.antialiased);
+  color: #fff;
+  background: @emPrimaryColor;
+  text-align: center;
+  padding: 40px 0;
+
+  @media (min-width: 768px) {
+    padding: 120px 0;
+  }
+
+}
+
+.home-headline {
+  max-width: 560px;
+  margin: 0 auto 20px auto;
+
+  @media (min-width: 768px) {
+    margin-bottom: 40px;
+  }
+}
+
+.home-title {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    font-size: 44px;
+    line-height: 52px;
+  }
+}
+
+.home-cta {
+  word-spacing: -0.26rem;
+  > * {
+    display: inline-block;
+    vertical-align: top;
+    word-spacing: normal;
+    margin: 5px;
+    min-width: 100px;
+
+    @media (min-width: 768px) {
+      margin: 0 10px;
+    }
+  }
+}
+
+
+/* Fold: Featured Tools
+   ========================================================================== */
+
+.fold.home-featured-tools {
+  background: #fff;
+}
+
+.home-tools-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .tool-wrapper {
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (min-width: 768px) {
+      margin-bottom: 80px;
+    }
+  }
+
+}
+
+.tool {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  @media (min-width: 768px) {
+    display: table;
+  }
+}
+
+.tool-media,
+.tool-copy {
+  vertical-align: top;
+
+  @media (min-width: 768px) {
+    display: table-cell;
+  }
+}
+
+.tool-media {
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 768px) {
+    width: 64%;
+    padding-right: 40px;
+  }
+}
+
+.tool-media-screenshot {
+  .border-radius(4px 4px 2px 2px);
+  position: relative;
+  overflow: hidden;
+  display: block;
+  min-height: 160px;
+  background: @emBaseColorLighter;
+
+  &::before {
+    position: relative;
+    z-index: 2;
+    .box-shadow(0 1px 0 0 rgba(0,0,0,0.08));
+    display: block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    font-size: 40px;
+    background: url(/images/layout/window-buttons.svg) 8px center no-repeat @emBaseColorLighter;
+    content: '';
+    speak: none;
+    color: rgba(0,0,0,0.16);
+    padding: 0 5px;
+  }
+
+  &::after {
+    .border-radius(4px 4px 2px 2px);
+    .box-shadow(inset 0 0 0 1px rgba(0,0,0,0.08));
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    content: '';
+  }
+}
+
+a.tool-media-screenshot {
+  transition: all 0.16s ease 0s;
+  &:hover {
+    transform: translate(0, -5px);
+  }
+}
+
+.tool-header {
+  padding-top: 20px;
+  margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 20px;
+  }
+}
+
+.tool-title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 28px;
+
+  a:link, a:visited {
+    color: inherit;
+  }
+
+  a:hover {
+    color: @linkColor;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+.tool-body {
+  width: 100%;
+  margin-bottom: 20px;
+  color: tint(@emBaseColor, 48%);
+  font-size: 14px;
+  line-height: 24px;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+/* Fold: Recent Datasets
+   ========================================================================== */
+
+.home-datasets-list {
+  overflow: hidden;
+  list-style: none;
+  width: 100%;
+  margin: 0 0 40px 0;
+  padding: 0;
+
+  .dataset-wrapper {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:nth-child(3) {
+      clear: right;
+    }
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+    }
+  }
+
+}
+
+.card-dataset {
+  .card-header {
+    text-align: center;
+  }
+}
+
+.dataset-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  dt {
+    &:extend(.visually-hidden);
+  }
+
+  dd {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+
+    &:not(:last-child)::after {
+      content: ',';
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{% extends "page.html" %}
+
+{% block subtitle %}{{ _("Welcome") }}{% endblock %}
+
+{% block maintag %}{% endblock %}
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+  <section class="homepage">
+    <header class="home-header">
+      <div class="container">
+        <div class="home-headline">
+          <h1 class="home-title">Accessing the energy sector around the globe</h1>
+        </div>
+        <div class="home-cta">
+          <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:ToolsController', action='view') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View tools</a>
+          <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View data</a>
+        </div>
+      </div>
+    </header>
+    <div class="home-body">
+
+      <section class="fold home-featured-tools">
+        <header class="fold-header">
+          <div class="container">
+            <div class="fold-headline">
+              <h1 class="fold-title">Tools</h1>
+            </div>
+          </div>
+        </header>
+        <div class="fold-body">
+          <div class="container">
+            <ol class="home-tools-list">
+              <li class="tool-wrapper">
+                <article class="tool">
+                  <div class="tool-media">
+                    <a href="#" title="Visit tool" class="tool-media-screenshot">
+                      <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-ogmo.jpg" />
+                    </a>
+                  </div>
+                  <div class="tool-copy">
+                    <header class="tool-header">
+                      <h1 class="tool-title"><a href="#" title="Visit tool">Off-Grid Market Opportunities</a></h1>
+                    </header>
+                    <div class="tool-body">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+                    </div>
+                    <div class="tool-cta">
+                      <a href="#" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+
+              <li class="tool-wrapper">
+                <article class="tool">
+                  <div class="tool-media">
+                    <a href="http://india.nightlights.io/" title="Visit tool" class="tool-media-screenshot">
+                      <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-india-lights.jpg" />
+                    </a>
+                  </div>
+                  <div class="tool-copy">
+                    <header class="tool-header">
+                      <h1 class="tool-title"><a href="http://india.nightlights.io/" title="Visit tool">India Night Lights</a></h1>
+                    </header>
+                    <div class="tool-body">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+                    </div>
+                    <div class="tool-cta">
+                      <a href="http://india.nightlights.io/" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="fold home-featured-datasets">
+        <header class="fold-header">
+          <div class="container">
+            <div class="fold-headline">
+              <h1 class="fold-title">Recent Datasets</h1>
+            </div>
+          </div>
+        </header>
+        <div class="fold-body">
+          <div class="container">
+            <div class="row">
+              <ol class="home-datasets-list">
+                <li class="card-wrapper dataset-wrapper span4">
+                  <article class="card card-dataset">
+                    <header class="card-header">
+                      <h1 class="card-title"><a href="#" title="View dataset">Lorem Ipsum Dolor Sit Amet</a></h1>
+                      <p class="card-subtitle"><strong>Category:</strong> Mobile Usage</p>
+                    </header>
+                    <div class="card-body">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+                    </div>
+                    <footer class="card-footer">
+                      <dl class="dataset-tags">
+                        <dt>Tags</dt>
+                        <dd><a href="#" title="View datasets by tag">GeoJson</a></dd>
+                        <dd>XML</dd>
+                        <dd>CVS</dd>
+                      </dl>
+                    </footer>
+                  </article>
+                </li>
+
+                <li class="card-wrapper dataset-wrapper span4">
+                  <article class="card card-dataset">
+                    <header class="card-header">
+                      <h1 class="card-title"><a href="#" title="View dataset">Lorem Ipsum Dolor</a></h1>
+                      <p class="card-subtitle"><strong>Category:</strong> Mobile Usage</p>
+                    </header>
+                    <div class="card-body">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+                    </div>
+                    <footer class="card-footer">
+                      <dl class="dataset-tags">
+                        <dt>Tags</dt>
+                        <dd><a href="#" title="View datasets by tag">GeoJson</a></dd>
+                        <dd>XML</dd>
+                        <dd>CVS</dd>
+                      </dl>
+                    </footer>
+                  </article>
+                </li>
+
+                <li class="card-wrapper dataset-wrapper span4">
+                  <article class="card card-dataset">
+                    <header class="card-header">
+                      <h1 class="card-title"><a href="#" title="View dataset">Lorem Ipsum Dolor Sit Amet Comendur</a></h1>
+                      <p class="card-subtitle"><strong>Category:</strong> Mobile Usage</p>
+                    </header>
+                    <div class="card-body">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
+                    </div>
+                    <footer class="card-footer">
+                      <dl class="dataset-tags">
+                        <dt>Tags</dt>
+                        <dd><a href="#" title="View datasets by tag">GeoJson</a></dd>
+                        <dd>XML</dd>
+                        <dd>CVS</dd>
+                      </dl>
+                    </footer>
+                  </article>
+                </li>
+              </ol>
+            </div>
+
+            <div class="fold-cta">
+              <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </section>
+{% endblock %}

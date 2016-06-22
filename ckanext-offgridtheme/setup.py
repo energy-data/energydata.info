@@ -15,5 +15,6 @@ setup(
     entry_points = """
         [ckan.plugins]
         offgrid_theme = ckanext.offgridtheme.plugins:CustomTheme
+        offgridpages = ckanext.offgridtheme.plugins:OffgridPages
     """
 )
