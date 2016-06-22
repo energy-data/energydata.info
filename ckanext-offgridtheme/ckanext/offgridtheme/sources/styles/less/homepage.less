@@ -16,6 +16,7 @@
 }
 
 .home-header {
+  &:extend(.antialiased);
   color: #fff;
   background: @emPrimaryColor;
   text-align: center;
@@ -44,6 +45,21 @@
   @media (min-width: 768px) {
     font-size: 44px;
     line-height: 52px;
+  }
+}
+
+.home-cta {
+  word-spacing: -0.26rem;
+  > * {
+    display: inline-block;
+    vertical-align: top;
+    word-spacing: normal;
+    margin: 5px;
+    min-width: 100px;
+
+    @media (min-width: 768px) {
+      margin: 0 10px;
+    }
   }
 }
 
@@ -83,6 +99,23 @@
   @media (min-width: 768px) {
     font-size: 32px;
     line-height: 40px;
+  }
+}
+
+.home-fold-body {
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.home-fold-cta {
+  text-align: center;
+  word-spacing: -0.26rem;
+  > * {
+    display: inline-block;
+    vertical-align: top;
+    word-spacing: normal;
+    margin: 0 10px;
   }
 }
 
@@ -236,9 +269,10 @@ a.tool-media-screenshot {
    ========================================================================== */
 
 .home-datasets-list {
+  overflow: hidden;
   list-style: none;
   width: 100%;
-  margin: 0;
+  margin: 0 0 40px 0;
   padding: 0;
 
   .dataset-wrapper {
