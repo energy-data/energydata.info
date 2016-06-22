@@ -8626,6 +8626,8 @@ h4 small {
   position: relative;
   overflow: hidden;
   display: block;
+  min-height: 160px;
+  background: #f2f3f6;
 }
 .tool-media-screenshot::before {
   position: relative;
@@ -8660,8 +8662,11 @@ h4 small {
   pointer-events: none;
   content: '';
 }
+a.tool-media-screenshot {
+  transition: all 0.16s ease 0s;
+}
 a.tool-media-screenshot:hover {
-  opacity: 0.8;
+  transform: translate(0, -5px);
 }
 .tool-header {
   padding-top: 20px;
@@ -9914,6 +9919,9 @@ iframe {
 /* ==========================================================================
    Buttons
    ========================================================================== */
+a {
+  transition: color 0.16s ease 0s, opacity 0.16s ease 0s, background 0.16s ease 0s;
+}
 .btn {
   font-weight: 600;
   text-shadow: none;
