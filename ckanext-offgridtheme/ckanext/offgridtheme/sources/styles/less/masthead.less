@@ -2,6 +2,7 @@
 
 .account-masthead {
   .clearfix();
+  &:extend(.antialiased);
   min-height: 30px;
   color: @mastheadTextColor;
   background: @emPrimaryColor;
@@ -115,6 +116,7 @@
 
 .masthead {
   .clearfix();
+  &:extend(.antialiased);
   color: @mastheadTextColor;
   background: @emPrimaryColor;
   .box-shadow(0 1px 0 0 rgba(255,255,255,0.16));
@@ -129,6 +131,7 @@
 
   a {
     color: @mastheadLinkColor;
+    font-weight: @emFontBold;
     .border-radius(2px) !important;
   }
 

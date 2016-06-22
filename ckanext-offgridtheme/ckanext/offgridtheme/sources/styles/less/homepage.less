@@ -94,7 +94,6 @@
   font-size: 20px;
   line-height: 28px;
   margin: 0;
-  color: @emBaseColor;
 
   @media (min-width: 768px) {
     font-size: 32px;
@@ -239,7 +238,6 @@ a.tool-media-screenshot {
   margin: 0;
   font-size: 20px;
   line-height: 28px;
-  color: @emBaseColor;
 
   a:link, a:visited {
     color: inherit;
@@ -258,6 +256,9 @@ a.tool-media-screenshot {
 .tool-body {
   width: 100%;
   margin-bottom: 20px;
+  color: tint(@emBaseColor, 48%);
+  font-size: 14px;
+  line-height: 24px;
 
   > *:last-child {
     margin-bottom: 0;
