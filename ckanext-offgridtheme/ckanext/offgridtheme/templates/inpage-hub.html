@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{%- block page -%}
+
+  {% block skip %}
+    <div class="hide"><a href="#content">{{ _('Skip to content') }}</a></div>
+  {% endblock %}
+
+  {#
+  Override the header on a page by page basis by extending this block. If
+  making sitewide header changes it is preferable to override the header.html
+  file.
+  #}
+  {%- block header %}
+    {% include "header.html" %}
+  {% endblock -%}
+
+  {# The content block allows you to replace the content of the page if needed #}
+  {%- block content %}
+    <main role="main" class="page-body page-body-hub">
+
+      <section class="inpage">
+        <header class="inpage-header">
+          <div class="container">
+            <div class="inpage-headline">
+              {% block inpage_title %}
+              <h1 class="inpage-title">Page Hub Title</h1>
+              {% endblock %}
+            </div>
+            {% block toolbar %}
+            <div class="toolbar inpage-toolbar">
+              {% block breadcrumb %}
+                {% if self.breadcrumb_content() | trim %}
+                  <ol class="breadcrumb">
+                    {% snippet 'snippets/home_breadcrumb_item.html' %}
+                    {% block breadcrumb_content %}{% endblock %}
+                  </ol>
+                {% endif %}
+              {% endblock %}
+            </div>
+            {% endblock %}
+          </div>
+        </header>
+        <div class="inpage-body">
+          {% block primary %}
+          {% endblock %}
+        </div>
+      </section>
+
+    </main>
+  {% endblock -%}
+
+  {%- block footer %}
+    {% include "footer.html" %}
+  {% endblock -%}
+{%- endblock -%}
+
+{%- block scripts %}
+    {% resource 'base/main' %}
+    {% resource 'base/ckan' %}
+    {% if g.tracking_enabled %}
+      {% resource 'base/tracking.js' %}
+    {% endif %}
+  {{ super() }}
+{% endblock -%}
