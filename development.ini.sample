@@ -96,7 +96,7 @@ solr_url = http://solr:8080/solr
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datastore resource_proxy text_view recline_grid_view recline_graph_view offgrid_theme geojsonview mvt
+ckan.plugins = datastore resource_proxy text_view recline_grid_view recline_graph_view offgrid_theme geojsonview mvt offgridpages
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
