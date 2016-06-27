@@ -85,7 +85,7 @@ solr_url = http://solr:8080/solr
 
 # If cors.origin_allow_all is true, all origins are allowed.
 # If false, the cors.origin_whitelist is used.
-# ckan.cors.origin_allow_all = true
+ckan.cors.origin_allow_all = true
 # cors.origin_whitelist is a space separated list of allowed domains.
 # ckan.cors.origin_whitelist = http://example1.com http://example2.com
 
