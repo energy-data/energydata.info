@@ -16,9 +16,18 @@ from ckan.plugins import toolkit
 
 log = logging.getLogger(__name__)
 
-TEMPDIR = tempfile.mkdtemp(prefix='ckan')
-
 NotFound = toolkit.ObjectNotFound
+
+# From http://joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
+def _md5checksum(filepath):
+    with open(filepath, 'rb') as fh:
+        m = hashlib.md5()
+        while True:
+            data = fh.read(8192)
+            if not data:
+                break
+            m.update(data)
+    return m.hexdigest()
 
 class BadResourceFileException(Exception):
     def __init__(self, extra_msg=None):
@@ -41,166 +50,205 @@ class CKANAPIException(Exception):
     def __str__(self):
         return self.extra_msg
 
-def download_file(url, apikey):
-    tmpname = '{0}.geojson'.format(uuid.uuid1())
-    response = requests.get(url, headers = {
-        'Authorization': apikey
-    }, stream = True)
+class CacheHandler:
+    def __init__(self, tempdir):
+        self.checksums = os.path.join(tempdir, 'checksums.db')
+        self.s3urls = os.path.join(tempdir, 's3urls.db')
 
-    if response.status_code != 200:
-        raise BadResourceFileException("{0} could not be downloaded".format(url))
-    else:
-        print "{0} was downloaded".format(url)
+    def get_checksum(self, resource_id):
+    # Get from pickledb
+        db = pickledb.load(self.checksums, False)
+        try:
+            return db.get(resource_id)
+        except KeyError:
+            return None
 
-    with open(os.path.join(TEMPDIR, tmpname), 'wb') as out_file:
-        shutil.copyfileobj(response.raw, out_file)
+    def set_checksum(self, resource_id, checksum):
+        db = pickledb.load(self.checksums, True)
+        db.set(resource_id, checksum)
 
-    return tmpname
+    def get_s3url(self, resource_id):
+        db = pickledb.load(self.s3urls, False)
+        try:
+            return db.get(resource_id)
+        except KeyError:
+            return None
 
-def generate_mvt(filepath):
-    mvtfile = os.path.join(TEMPDIR, '{0}.mbtiles'.format(filepath))
-    returncode = call([
-        'tippecanoe', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
-    ])
-    if returncode != 0:
-       raise BadResourceFileException("{0} could not be converted to mvt".format(filepath))
+    def set_s3url(self, resource_id, s3url):
+        db = pickledb.load(self.s3urls, True)
+        db.set(resource_id, s3url)
 
-    else:
-        return mvtfile
+    def get_s3url_keys(self):
+        db = pickledb.load(self.s3urls, False)
+        return db.getall()
 
-# From http://joelverhagen.com/blog/2011/02/md5-hash-of-file-in-python/
-def _md5checksum(filepath):
-    with open(filepath, 'rb') as fh:
-        m = hashlib.md5()
-        while True:
-            data = fh.read(8192)
-            if not data:
-                break
-            m.update(data)
-    return m.hexdigest()
+class TileProcessor:
+    """
+    Celery Task Processor for GeoJSON resources
+    * Creates/Updates tiles for current resources
+    * Deletes tiles for deleted resource
+    """
+    def __init__(self, ckan, s3config, tempdir):
+       self.ckan = ckan
+       self.s3config = s3config
+       self.tempdir = tempdir
+       self.cache = CacheHandler(tempdir)
+       print "from celery temdpir is {}".format(tempdir)
+       if not os.path.isdir(tempdir):
+           os.makedirs(tempdir)
 
-def upload_to_s3(filepath, resource_id, s3config):
-    s3 = boto3.client(
-        's3',
-        aws_access_key_id=s3config['access_key'],
-        aws_secret_access_key=s3config['secret_key']
-    )
+    def _download_file(self, url):
+        tmpname = '{0}.geojson'.format(uuid.uuid1())
+        response = requests.get(url, headers = {
+            'Authorization': self.ckan.apikey
+        }, stream = True)
 
-    # Upload tiles
-    revision = uuid.uuid1();
-    bucket = s3config['bucket']
-    prefix = "tiles/{0}-{1}".format(
-        resource_id,
-        revision
+        if response.status_code != 200:
+            raise BadResourceFileException("{0} could not be downloaded".format(url))
+        else:
+            print "{0} was downloaded".format(url)
+
+        with open(os.path.join(self.tempdir, tmpname), 'wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+
+        return tmpname
+
+    def _generate_mvt(self, filepath):
+        """
+        Uses tippecanoe to generate vector tiles from a GeoJSON file
+        TODO Cleanup files
+        """
+        mvtfile = '{0}.mbtiles'.format(filepath)
+        returncode = call([
+            'tippecanoe', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
+        ])
+        if returncode != 0:
+            raise BadResourceFileException("{0} could not be converted to mvt".format(filepath))
+
+        else:
+            return mvtfile
+
+    def _update_resource(self, resource):
+        """
+        Updates a resource's metadata using the CKAN API
+        """
+        response = requests.post(
+            self.ckan.address + '/api/action/resource_update',
+            data = json.dumps(resource),
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': self.ckan.apikey
+            }
+        )
+        if response.status_code not in (201, 200):
+            raise CKANAPIException('CKAN response {0}'.format(response.status_code))
+        else:
+            log.info('{0} update successful'.format(resource['id']))
+
+    def _upload_to_s3(self, filepath, resource_id):
+        """
+        Upload the generated tiles from _generate_mvt to s3
+        This function also stores the url in the cache file
+        """
+        s3 = boto3.client(
+            's3',
+            aws_access_key_id= self.s3config['access_key'],
+            aws_secret_access_key= self.s3config['secret_key']
         )
 
-    tileurl = "s3://{0}/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
-    httptileurl = "https://{0}.s3.amazonaws.com/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
+        # Upload tiles
+        revision = uuid.uuid1();
+        bucket = self.s3config['bucket']
+        prefix = "tiles/{0}-{1}".format(
+            resource_id,
+            revision
+            )
 
-    aws_env = os.environ.copy()
-    aws_env['AWS_ACCESS_KEY_ID'] = s3config['access_key']
-    aws_env['AWS_SECRET_ACCESS_KEY'] = s3config['secret_key']
+        tileurl = "s3://{0}/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
+        httptileurl = "https://{0}.s3.amazonaws.com/{1}/{{z}}/{{x}}/{{y}}.pbf".format(bucket, prefix)
 
-    returncode = call([
-        'mapbox-tile-copy', filepath, tileurl
-    ], env=aws_env)
+        aws_env = os.environ.copy()
+        aws_env['AWS_ACCESS_KEY_ID'] = self.s3config['access_key']
+        aws_env['AWS_SECRET_ACCESS_KEY'] = self.s3config['secret_key']
 
-    # Upload tilejson
-    tilejson = {
-        "tilejson": "2.1.0",
-        "format": "pbf",
-        "tiles": [httptileurl],
-        "vector_layers": [{"id": "data_layer"}]
-    }
-    log.info(json.dumps(tilejson))
-    tilefile = os.path.join(TEMPDIR, '{0}-{1}'.format(resource_id, revision))
-    with open(tilefile, 'w') as t:
-        json.dump(tilejson, t)
+        returncode = call([
+            'mapbox-tile-copy', filepath, tileurl
+        ], env=aws_env)
 
-    s3.upload_file(tilefile, bucket, '{0}/data.tilejson'.format(prefix))
-
-    if returncode != 0:
-        raise S3Exception("{0} could not be uploaded to s3".format(filepath))
-
-    else:
-        return "https://{0}.s3.amazonaws.com/{1}/data.tilejson".format(bucket, prefix)
-
-def _update_resource(resource, ckan):
-    response = requests.post(
-        ckan.address + '/api/action/resource_update',
-        data = json.dumps(resource),
-        headers = {
-            'Content-Type': 'application/json',
-            'Authorization': ckan.apikey
+        # Upload tilejson
+        tilejson = {
+            "tilejson": "2.1.0",
+            "format": "pbf",
+            "tiles": [httptileurl],
+            "vector_layers": [{"id": "data_layer"}]
         }
-    )
-    if response.status_code not in (201, 200):
-        raise CKANAPIException('CKAN response {0}'.format(response.status_code))
-    else:
-        log.info('{0} update successful'.format(resource['id']))
+        log.info(json.dumps(tilejson))
+        tilefile = os.path.join(self.tempdir, '{0}-{1}'.format(resource_id, revision))
+        with open(tilefile, 'w') as t:
+            json.dump(tilejson, t)
 
-def _get_checksum_from_cache(resource_id):
-   # Get from pickledb
-    db = pickledb.load(os.path.join(TEMPDIR, 'checksums.db'), False)
-    try:
-        return db.get(resource_id)
-    except KeyError:
-        return None
+        s3.upload_file(tilefile, bucket, '{0}/data.tilejson'.format(prefix))
 
-def _set_checksum_in_cache(resource_id, checksum):
-    db = pickledb.load(os.path.join(TEMPDIR, 'checksums.db'), True)
-    db.set(resource_id, checksum)
+        if returncode != 0:
+            raise S3Exception("{0} could not be uploaded to s3".format(filepath))
 
-def _get_s3url_from_cache(resource_id):
-    db = pickledb.load(os.path.join(TEMPDIR, 's3urls.db'), False)
-    try:
-        return db.get(resource_id)
-    except KeyError:
-        return None
+        else:
+            return "https://{0}.s3.amazonaws.com/{1}/data.tilejson".format(bucket, prefix)
 
-def _set_s3url_in_cache(resource_id, s3url):
-    db = pickledb.load(os.path.join(TEMPDIR, 's3urls.db'), True)
-    db.set(resource_id, s3url)
+    def update(self, resource_id):
+        """
+        Celery Task to create vector tiles for a new resource,
+         or update the tiles if a resource's content changes.
+        To detect content changes, this function stores a checksum for each
+        resource in a temporary cache file.
+        """
+        try:
+            resource = self.ckan.action.resource_show(id=resource_id)
+            file_format = resource['format'].upper()
 
-def process(ckan, resource_id, s3config):
-    if not os.path.isdir(TEMPDIR):
-        os.makedirs(TEMPDIR)
+            if file_format == 'GEOJSON':
+                # First download the file
+                file = self._download_file(resource['url'])
+                filepath = os.path.join(self.tempdir, file)
 
-    try:
-        resource = ckan.action.resource_show(id=resource_id)
-        file_format = resource['format'].upper()
+                # Checksum the file contents and see if it matches the resource checksum
+                checksum = _md5checksum(filepath)
+                checksum_from_file = self.cache.get_checksum(resource_id)
 
-        if file_format == 'GEOJSON':
-            # First download the file
-            file = download_file(resource['url'], ckan.apikey)
-            filepath = os.path.join(TEMPDIR, file)
+                print "s3url from update: {}".format(self.cache.get_s3url(resource_id))
+                if checksum != checksum_from_file:
+                    log.info("old: {0} != new: {1}".format(checksum_from_file, checksum))
+                    # Update the cache
+                    self.cache.set_checksum(resource_id, checksum)
 
-            # Checksum the file contents and see if it matches the resource checksum
-            checksum = _md5checksum(filepath)
-            checksum_from_file = _get_checksum_from_cache(resource_id)
+                    # Generate tiles
+                    mvtfile = self._generate_mvt(filepath)
+                    s3url = self._upload_to_s3(mvtfile, resource_id)
+                    self.cache.set_s3url(resource_id, s3url)
 
-            # S3URL is either in the cache or nil
-            s3url = _get_s3url_from_cache(resource_id)
+                    # Update the s3url
+                    resource['tilejson'] = s3url
+                    self._update_resource(resource)
+                    new_resource = self.ckan.action.resource_show(id=resource_id)
+                    log.info(new_resource)
 
-            if checksum != checksum_from_file:
-                log.info("old: {0} != new: {1}".format(checksum_from_file, checksum))
-                # Update the file
-                _set_checksum_in_cache(resource_id, checksum)
+                else:
+                    log.info("{0}".format("content hasn't changed"))
 
-                mvtfile = generate_mvt(filepath)
-                s3url =  upload_to_s3(mvtfile, resource_id, s3config)
-                _set_s3url_in_cache(resource_id, s3url)
+        except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
+            print e
+            return
 
-            else:
-                log.info("{0}".format("content hasn't changed"))
-
-            # Update the s3url
-            resource['tilejson'] = s3url
-            _update_resource(resource, ckan)
-            new_resource = ckan.action.resource_show(id=resource_id)
-            log.info(new_resource)
-
-    except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
-        print e
-        return
-
+    def delete(self, resource_id):
+        """
+        Deletes s3 tiles for a resource scheduled for deletion. This function
+        deletes the entry in the cache file.
+        """
+        try:
+            # Check if the URL is in the cache
+            s3url = self.cache.get_s3url(resource_id)
+            if s3url:
+                print s3url
+        except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
+            print e
+            return
