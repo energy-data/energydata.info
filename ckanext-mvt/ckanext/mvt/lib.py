@@ -11,10 +11,15 @@ import pickledb
 import logging
 import tempfile
 import boto3
+import re
 
 from ckan.plugins import toolkit
 
 log = logging.getLogger(__name__)
+
+logging.getLogger('boto3').setLevel(logging.WARNING)
+logging.getLogger('botocore').setLevel(logging.WARNING)
+logging.getLogger('nose').setLevel(logging.WARNING)
 
 NotFound = toolkit.ObjectNotFound
 
@@ -120,7 +125,8 @@ class TileProcessor:
         """
         mvtfile = '{0}.mbtiles'.format(filepath)
         returncode = call([
-            'tippecanoe', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
+            # 12 zoom levels ought to be enough for anybody
+            'tippecanoe', '-z', '12', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
         ])
         if returncode != 0:
             raise BadResourceFileException("{0} could not be converted to mvt".format(filepath))
@@ -157,7 +163,7 @@ class TileProcessor:
         )
 
         # Upload tiles
-        revision = uuid.uuid1();
+        revision = uuid.uuid4();
         bucket = self.s3config['bucket']
         prefix = "tiles/{0}-{1}".format(
             resource_id,
@@ -195,6 +201,21 @@ class TileProcessor:
         else:
             return "https://{0}.s3.amazonaws.com/{1}/data.tilejson".format(bucket, prefix)
 
+    def _delete_old_tiles(self, tilejson_url):
+        matches = re.search('(.*)/tiles/(.*)/data.tilejson', tilejson_url)
+        if matches and len(matches.groups()) == 2:
+            old_resource_url = matches.group(2) #resoure_id-revision
+            s3 = boto3.resource(
+                's3',
+                aws_access_key_id= self.s3config['access_key'],
+                aws_secret_access_key= self.s3config['secret_key']
+            )
+            bucket = s3.Bucket(self.s3config['bucket'])
+            bucket.objects.filter(Prefix='tiles/{}'.format(old_resource_url)).delete()
+        else:
+            log.info("Could not match {}".format(tilejson_url))
+
+
     def update(self, resource_id):
         """
         Celery Task to create vector tiles for a new resource,
@@ -215,8 +236,11 @@ class TileProcessor:
                 checksum = _md5checksum(filepath)
                 checksum_from_file = self.cache.get_checksum(resource_id)
 
-                print "s3url from update: {}".format(self.cache.get_s3url(resource_id))
                 if checksum != checksum_from_file:
+                    # If an s3url exists, we want to delete the tiles there and
+                    # push at another url
+                    old_url = self.cache.get_s3url(resource_id)
+
                     log.info("old: {0} != new: {1}".format(checksum_from_file, checksum))
                     # Update the cache
                     self.cache.set_checksum(resource_id, checksum)
@@ -230,10 +254,14 @@ class TileProcessor:
                     resource['tilejson'] = s3url
                     self._update_resource(resource)
                     new_resource = self.ckan.action.resource_show(id=resource_id)
-                    log.info(new_resource)
+
+                    # Delete the old tiles
+                    if old_url:
+                        log.info("Deleting {0}".format(old_url))
+                        self._delete_old_tiles(old_url)
 
                 else:
-                    log.info("{0}".format("content hasn't changed"))
+                    log.info("content hasn't changed")
 
         except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
             print e
@@ -248,7 +276,10 @@ class TileProcessor:
             # Check if the URL is in the cache
             s3url = self.cache.get_s3url(resource_id)
             if s3url:
-                print s3url
+                log.info("Deleting {0}".format(s3url))
+                self._delete_old_tiles(s3url)
+                # TODO delete tilejson and checksum from cache
+
         except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
             print e
             return
