@@ -61,7 +61,6 @@ class CacheHandler:
         self.s3urls = os.path.join(tempdir, 's3urls.db')
 
     def get_checksum(self, resource_id):
-    # Get from pickledb
         db = pickledb.load(self.checksums, False)
         try:
             return db.get(resource_id)
@@ -87,6 +86,12 @@ class CacheHandler:
         db = pickledb.load(self.s3urls, False)
         return db.getall()
 
+    def delete(self, resource_id):
+        db = pickledb.load(self.s3urls, True)
+        db.rem(resource_id)
+        db = pickledb.load(self.checksums, True)
+        db.rem(resource_id)
+
 class TileProcessor:
     """
     Celery Task Processor for GeoJSON resources
@@ -103,7 +108,7 @@ class TileProcessor:
            os.makedirs(tempdir)
 
     def _download_file(self, url):
-        tmpname = '{0}.geojson'.format(uuid.uuid1())
+        tmpname = '{0}.geojson'.format(uuid.uuid4())
         response = requests.get(url, headers = {
             'Authorization': self.ckan.apikey
         }, stream = True)
@@ -121,7 +126,6 @@ class TileProcessor:
     def _generate_mvt(self, filepath):
         """
         Uses tippecanoe to generate vector tiles from a GeoJSON file
-        TODO Cleanup files
         """
         mvtfile = '{0}.mbtiles'.format(filepath)
         returncode = call([
@@ -156,7 +160,7 @@ class TileProcessor:
         Upload the generated tiles from _generate_mvt to s3
         This function also stores the url in the cache file
         """
-        s3 = boto3.client(
+        s3 = boto3.resource(
             's3',
             aws_access_key_id= self.s3config['access_key'],
             aws_secret_access_key= self.s3config['secret_key']
@@ -189,11 +193,8 @@ class TileProcessor:
             "vector_layers": [{"id": "data_layer"}]
         }
         log.info(json.dumps(tilejson))
-        tilefile = os.path.join(self.tempdir, '{0}-{1}'.format(resource_id, revision))
-        with open(tilefile, 'w') as t:
-            json.dump(tilejson, t)
-
-        s3.upload_file(tilefile, bucket, '{0}/data.tilejson'.format(prefix))
+        key = s3.Object(bucket_name=bucket, key='{0}/data.tilejson'.format(prefix))
+        key.put(Body=json.dumps(tilejson))
 
         if returncode != 0:
             raise S3Exception("{0} could not be uploaded to s3".format(filepath))
@@ -255,6 +256,9 @@ class TileProcessor:
                     self._update_resource(resource)
                     new_resource = self.ckan.action.resource_show(id=resource_id)
 
+                    # Delete the local vector tiles
+                    os.remove(mvtfile)
+
                     # Delete the old tiles
                     if old_url:
                         log.info("Deleting {0}".format(old_url))
@@ -262,6 +266,10 @@ class TileProcessor:
 
                 else:
                     log.info("content hasn't changed")
+
+                # Delete the downloaded resource
+                os.remove(filepath)
+
 
         except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
             print e
@@ -278,7 +286,7 @@ class TileProcessor:
             if s3url:
                 log.info("Deleting {0}".format(s3url))
                 self._delete_old_tiles(s3url)
-                # TODO delete tilejson and checksum from cache
+                self.cache.delete(resource_id)
 
         except (S3Exception, BadResourceFileException, NotFound, CKANAPIException) as e:
             print e
