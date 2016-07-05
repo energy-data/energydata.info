@@ -89,61 +89,27 @@
           <div class="container">
             <div class="row">
               <ol class="home-datasets-list">
-                <li class="card-wrapper dataset-wrapper span4">
-                  <article class="card card-dataset">
-                    <header class="card-header">
-                      <h1 class="card-title"><a href="/dataset/transmission-network" title="View dataset">Transmission Network</a></h1>
-                      <p class="card-subtitle"><strong>Category:</strong> Energy Access</p>
-                    </header>
-                    <div class="card-body">
-                      <p>A demo dataset with Low, Medium and High Voltage lines in Africa.</p>
-                    </div>
-                    <footer class="card-footer">
-                      <dl class="dataset-tags">
-                        <dt>Tags</dt>
-                        <dd><a href="#" title="View datasets by tag">GeoJSON</a></dd>
-                      </dl>
-                    </footer>
-                  </article>
-                </li>
-
-                <li class="card-wrapper dataset-wrapper span4">
-                  <article class="card card-dataset">
-                    <header class="card-header">
-                      <h1 class="card-title"><a href="/dataset/protected-areas" title="View dataset">Protected Areas</a></h1>
-                      <p class="card-subtitle"><strong>Category:</strong> Land Use</p>
-                    </header>
-                    <div class="card-body">
-                      <p>A demo dataset with Natural Parks and Nature Reserves.</p>
-                    </div>
-                    <footer class="card-footer">
-                      <dl class="dataset-tags">
-                        <dt>Tags</dt>
-                        <dd><a href="#" title="View datasets by tag">GeoJSON</a></dd>
-                      </dl>
-                    </footer>
-                  </article>
-                </li>
-
-                <li class="card-wrapper dataset-wrapper span4">
-                  <article class="card card-dataset">
-                    <header class="card-header">
-                      <h1 class="card-title"><a href="#" title="View dataset">Lorem Ipsum Dolor Sit Amet Comendur</a></h1>
-                      <p class="card-subtitle"><strong>Category:</strong> Mobile Usage</p>
-                    </header>
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
-                    </div>
-                    <footer class="card-footer">
-                      <dl class="dataset-tags">
-                        <dt>Tags</dt>
-                        <dd><a href="#" title="View datasets by tag">GeoJSON</a></dd>
-                        <dd>XML</dd>
-                        <dd>CSV</dd>
-                      </dl>
-                    </footer>
-                  </article>
-                </li>
+                {% for dataset in h.custom_theme_most_recent_datasets() %}
+                  <li class="card-wrapper dataset-wrapper span4">
+                      <article class="card card-dataset">
+                          <header class="card-header">
+                              <h1 class="card-title"><a href="/dataset/{{ dataset.name }}" title="View dataset"> {{ dataset.title }}</a></h1>
+                              <p class="card-subtitle"><strong>Category:</strong> Energy Access</p>
+                          </header>
+                          <div class="card-body">
+                              <p>{{ dataset.notes }}</p>
+                          </div>
+                          <footer class="card-footer">
+                              <dl class="dataset-tags">
+                                  <dt>Tags</dt>
+                                  {% for group in dataset.resources|groupby('format') %}
+                                     <dd>{{group.grouper}}</dd>
+                                  {% endfor %}
+                              </dl>
+                          </footer>
+                      </article>
+                  </li>
+                {% endfor %}
               </ol>
             </div>
 

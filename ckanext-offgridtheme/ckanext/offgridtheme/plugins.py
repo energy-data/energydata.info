@@ -1,12 +1,27 @@
-from ckan.plugins import toolkit, IConfigurer, SingletonPlugin, IRoutes, implements
+from ckan.plugins import toolkit, IConfigurer, ITemplateHelpers, SingletonPlugin, IRoutes, implements
+
+def most_recent_datasets():
+    ''' Returns three most recently modified datasets'''
+    datasets = toolkit.get_action('current_package_list_with_resources')(data_dict={
+        'limit': 3
+    })
+    print datasets
+    return datasets
 
 class CustomTheme(SingletonPlugin):
     implements(IConfigurer)
+    implements(ITemplateHelpers)
 
     def update_config(self, config):
         toolkit.add_template_directory(config, "templates")
         toolkit.add_public_directory(config, "static")
         toolkit.add_resource('fanstatic', 'offgridtheme')
+
+    def get_helpers(self):
+        '''
+        Registers the most_recent_datasets function as a template helper function
+        '''
+        return {'custom_theme_most_recent_datasets': most_recent_datasets}
 
 class OffgridPages(SingletonPlugin):
     """
