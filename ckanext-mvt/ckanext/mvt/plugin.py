@@ -7,11 +7,41 @@ import pylons.config as config
 import pylons
 import uuid
 import ckanapi
+import tempfile
+import os
+
+import lib
+
+def _celery_task(resource_id, action, tempdir):
+    site_url = config.get('ckan.site_url', 'http://localhost/')
+    apikey = model.User.get('default').apikey
+    s3config = {
+        'bucket': config.get('ckanext.mvt.s3.bucket'),
+        'access_key': config.get('ckanext.mvt.s3.access_key'),
+        'secret_key': config.get('ckanext.mvt.s3.secret_key'),
+    }
+
+    if action == 'create' or action == 'update' or action == 'delete':
+        celery.send_task(
+            'mvt.process_resource',
+            args=[
+                resource_id,
+                site_url,
+                apikey,
+                s3config,
+                tempdir,
+                action
+            ],
+            task_id='{}-{}'.format(str(uuid.uuid4()), action)
+        )
+
 
 class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
-    plugins.implements(plugins.IDomainObjectModification, inherit=True)
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IResourceController, inherit=True)
+
+    TEMPDIR = os.path.join(os.path.dirname(__file__), '..', 'tmp')
 
     def _modify_pkg_schema(self, schema):
         schema['resources'].update({
@@ -66,24 +96,18 @@ class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'mvt')
 
-    # IDomainObjectModification
-    def notify(self, entity, operation = None):
-        # Check if we have a resource
-        if isinstance(entity, model.Resource):
+    # IResourceController
+    def after_create(self, context, resource):
+        _celery_task(resource['id'], 'create', MvtPlugin.TEMPDIR)
 
-            resource_id = entity.id
-            if (operation == model.domain_object.DomainObjectOperation.changed or
-                operation == model.domain_object.DomainObjectOperation.new):
-                site_url = config.get('ckan.site_url', 'http://localhost/')
-                apikey = model.User.get('default').apikey
-                s3config = {
-                    'bucket': config.get('ckanext.mvt.s3.bucket'),
-                    'access_key': config.get('ckanext.mvt.s3.access_key'),
-                    'secret_key': config.get('ckanext.mvt.s3.secret_key'),
-                }
+    def after_update(self, context, resource):
+        _celery_task(resource['id'], 'update', MvtPlugin.TEMPDIR)
 
-                celery.send_task(
-                    'mvt.process_resource',
-                    args=[resource_id, site_url, apikey, s3config],
-                    task_id='{}-{}'.format(str(uuid.uuid4()), operation)
-                )
+    def before_delete(self, context, resource, resources):
+        _celery_task(resource['id'], 'delete', MvtPlugin.TEMPDIR)
+
+    def before_show(self, data_dict):
+        cache = lib.CacheHandler(MvtPlugin.TEMPDIR)
+        s3url = cache.get_s3url(data_dict.get('id'))
+        data_dict['tilejson'] = s3url
+        return data_dict
