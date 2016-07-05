@@ -90,6 +90,7 @@
             <div class="row">
               <ol class="home-datasets-list">
                 {% for dataset in h.custom_theme_most_recent_datasets() %}
+                  {% set notes = h.markdown_extract(dataset.notes, extract_length=180) %}
                   <li class="card-wrapper dataset-wrapper span4">
                       <article class="card card-dataset">
                           <header class="card-header">
@@ -97,13 +98,20 @@
                               <p class="card-subtitle"><strong>Category:</strong> Energy Access</p>
                           </header>
                           <div class="card-body">
-                              <p>{{ dataset.notes }}</p>
+                             {% if notes %}
+                              <p>{{ notes|urlize }}</p>
+                              {% else %}
+                              <p class="empty">{{ _("This dataset has no description") }}</p>
+                             {% endif %}
                           </div>
+
                           <footer class="card-footer">
                               <dl class="dataset-tags">
                                   <dt>Tags</dt>
-                                  {% for group in dataset.resources|groupby('format') %}
-                                     <dd>{{group.grouper}}</dd>
+                                  {% for resource in h.dict_list_reduce(dataset.resources, 'format') %}
+                                  <li>
+                                      <dd><a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}" data-format="{{ resource.lower() }}">{{ resource }}</a></dd>
+                                  </li>
                                   {% endfor %}
                               </dl>
                           </footer>

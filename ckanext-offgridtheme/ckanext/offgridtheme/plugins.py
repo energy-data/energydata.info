@@ -5,7 +5,6 @@ def most_recent_datasets():
     datasets = toolkit.get_action('current_package_list_with_resources')(data_dict={
         'limit': 3
     })
-    print datasets
     return datasets
 
 class CustomTheme(SingletonPlugin):
