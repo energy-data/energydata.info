@@ -243,8 +243,6 @@ class TileProcessor:
                     old_url = self.cache.get_s3url(resource_id)
 
                     log.info("old: {0} != new: {1}".format(checksum_from_file, checksum))
-                    # Update the cache
-                    self.cache.set_checksum(resource_id, checksum)
 
                     # Generate tiles
                     mvtfile = self._generate_mvt(filepath)
@@ -254,7 +252,9 @@ class TileProcessor:
                     # Update the s3url
                     resource['tilejson'] = s3url
                     self._update_resource(resource)
-                    new_resource = self.ckan.action.resource_show(id=resource_id)
+
+                    # Update the checksum if everything works
+                    self.cache.set_checksum(resource_id, checksum)
 
                     # Delete the local vector tiles
                     os.remove(mvtfile)
