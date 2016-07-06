@@ -77,6 +77,8 @@
         </div>
       </section>
 
+      {% set most_recent_datasets = h.custom_theme_most_recent_datasets() %}
+      {% if most_recent_datasets %}
       <section class="fold home-featured-datasets">
         <header class="fold-header">
           <div class="container">
@@ -87,73 +89,43 @@
         </header>
         <div class="fold-body">
           <div class="container">
-            <div class="row">
-              <ol class="home-datasets-list">
-                <li class="card-wrapper dataset-wrapper span4">
+            <ol class="home-datasets-list">
+              {% for dataset in most_recent_datasets %}
+                {% set notes = h.markdown_extract(dataset.notes, extract_length=180) %}
+                <li class="card-wrapper dataset-wrapper">
                   <article class="card card-dataset">
                     <header class="card-header">
-                      <h1 class="card-title"><a href="/dataset/transmission-network" title="View dataset">Transmission Network</a></h1>
+                      <h1 class="card-title"><a href="/dataset/{{ dataset.name }}" title="View dataset"> {{ dataset.title }}</a></h1>
                       <p class="card-subtitle"><strong>Category:</strong> Energy Access</p>
                     </header>
                     <div class="card-body">
-                      <p>A demo dataset with Low, Medium and High Voltage lines in Africa.</p>
+                      {% if notes %}
+                      <p>{{ notes|urlize }}</p>
+                      {% else %}
+                      <p class="empty">{{ _("This dataset has no description") }}</p>
+                      {% endif %}
                     </div>
                     <footer class="card-footer">
                       <dl class="dataset-tags">
                         <dt>Tags</dt>
-                        <dd><a href="#" title="View datasets by tag">GeoJSON</a></dd>
+                        {% for resource in h.dict_list_reduce(dataset.resources, 'format') %}
+                        <li>
+                          <dd><a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}" data-format="{{ resource.lower() }}">{{ resource }}</a></dd>
+                        </li>
+                        {% endfor %}
                       </dl>
                     </footer>
                   </article>
                 </li>
-
-                <li class="card-wrapper dataset-wrapper span4">
-                  <article class="card card-dataset">
-                    <header class="card-header">
-                      <h1 class="card-title"><a href="/dataset/protected-areas" title="View dataset">Protected Areas</a></h1>
-                      <p class="card-subtitle"><strong>Category:</strong> Land Use</p>
-                    </header>
-                    <div class="card-body">
-                      <p>A demo dataset with Natural Parks and Nature Reserves.</p>
-                    </div>
-                    <footer class="card-footer">
-                      <dl class="dataset-tags">
-                        <dt>Tags</dt>
-                        <dd><a href="#" title="View datasets by tag">GeoJSON</a></dd>
-                      </dl>
-                    </footer>
-                  </article>
-                </li>
-
-                <li class="card-wrapper dataset-wrapper span4">
-                  <article class="card card-dataset">
-                    <header class="card-header">
-                      <h1 class="card-title"><a href="#" title="View dataset">Lorem Ipsum Dolor Sit Amet Comendur</a></h1>
-                      <p class="card-subtitle"><strong>Category:</strong> Mobile Usage</p>
-                    </header>
-                    <div class="card-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque aliquet felis justo, nec congue est placerat ac. Curabitur gravida varius sagittis. Sed dapibus sagittis tincidunt. Mauris hendrerit convallis bibendum.</p>
-                    </div>
-                    <footer class="card-footer">
-                      <dl class="dataset-tags">
-                        <dt>Tags</dt>
-                        <dd><a href="#" title="View datasets by tag">GeoJSON</a></dd>
-                        <dd>XML</dd>
-                        <dd>CSV</dd>
-                      </dl>
-                    </footer>
-                  </article>
-                </li>
-              </ol>
-            </div>
-
+              {% endfor %}
+            </ol>
             <div class="fold-cta">
               <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
             </div>
           </div>
         </div>
       </section>
-
+      {% endif %}
     </div>
   </section>
 {% endblock %}
