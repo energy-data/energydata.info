@@ -1,0 +1,201 @@
+// Columns with Gutters
+.col(@ratios: 1, @offset: 0, @cycle: 0, @uncycle: 0, @gutter: @jeet-gutter) {
+	@side: ~`(function () {return (String('@{jeet-layout-direction}') == 'RTL')? 'right' : 'left';})()`;
+	@other-side: ~`(function (direction) {var opposite_of = {left: 'right',right: 'left',ltr: 'rtl',rtl: 'ltr',top: 'bottom',bottom: 'top'};return opposite_of[direction];})('@{side}')`;
+	@column_widths: ~`(function (_ratios, _g) {var ratios = String(_ratios || 1).split(' ');var g = _g || Number('@{jeet-gutter}');if (!Boolean('@{jeet-parent-first}')) {ratios.reverse();}var w = 100;for(var i in ratios) {var ratio = ratios[i];g = (g / w) * 100;w = (100 * ratio) - g + (ratio * g);}return [w, g].join(' ');})('@{ratios}','@{gutter}')`;
+	.cf();
+	float: @side;
+	clear: none;
+	text-align: inherit;
+	padding-left: 0;
+	padding-right: 0;
+	@width: ~`(function (list, index) {return String(list).split(' ')[index-1];})('@{column_widths}',1)`;
+	width: ~`@{width} + '%'`;
+
+	@margin_l: ~`(function (variant, offset, column_widths) {var get_column = function(_ratios, _g) {var ratios = String(_ratios || 1).split(' ');var g = _g || Number('@{jeet-gutter}');if (!Boolean('@{jeet-parent-first}')) {ratios.reverse();}var w = 100;for(var i in ratios) {var ratio = ratios[i];g = (g / w) * 100;w = (100 * ratio) - g + (ratio * g);}return [w, g].join(' ');};var nth = function(list, index) {return String(list).split(' ')[index-1];};var margin_l = 0;var margin_r = nth(column_widths, 2);var margin_last = 0;if (offset < 0) {offset = -offset;offset = nth(get_column(offset, nth(column_widths, 2)), 1);margin_last = offset + nth(column_widths, 2) * 2;margin_r = margin_last;}if (offset > 0) {offset = nth(get_column(offset, nth(column_widths, 2)), 1);margin_l = offset + nth(column_widths, 2);}return {left: margin_l,right: margin_r,last: margin_last}[variant];})('left','@{offset}','@{column_widths}')`;
+	@margin_r: ~`(function (variant, offset, column_widths) {var get_column = function(_ratios, _g) {var ratios = String(_ratios || 1).split(' ');var g = _g || Number('@{jeet-gutter}');if (!Boolean('@{jeet-parent-first}')) {ratios.reverse();}var w = 100;for(var i in ratios) {var ratio = ratios[i];g = (g / w) * 100;w = (100 * ratio) - g + (ratio * g);}return [w, g].join(' ');};var nth = function(list, index) {return String(list).split(' ')[index-1];};var margin_l = 0;var margin_r = nth(column_widths, 2);var margin_last = 0;if (offset < 0) {offset = -offset;offset = nth(get_column(offset, nth(column_widths, 2)), 1);margin_last = offset + nth(column_widths, 2) * 2;margin_r = margin_last;}if (offset > 0) {offset = nth(get_column(offset, nth(column_widths, 2)), 1);margin_l = offset + nth(column_widths, 2);}return {left: margin_l,right: margin_r,last: margin_last}[variant];})('right','@{offset}','@{column_widths}')`;
+	@margin_last: ~`(function (variant, offset, column_widths) {var get_column = function(_ratios, _g) {var ratios = String(_ratios || 1).split(' ');var g = _g || Number('@{jeet-gutter}');if (!Boolean('@{jeet-parent-first}')) {ratios.reverse();}var w = 100;for(var i in ratios) {var ratio = ratios[i];g = (g / w) * 100;w = (100 * ratio) - g + (ratio * g);}return [w, g].join(' ');};var nth = function(list, index) {return String(list).split(' ')[index-1];};var margin_l = 0;var margin_r = nth(column_widths, 2);var margin_last = 0;if (offset < 0) {offset = -offset;offset = nth(get_column(offset, nth(column_widths, 2)), 1);margin_last = offset + nth(column_widths, 2) * 2;margin_r = margin_last;}if (offset > 0) {offset = nth(get_column(offset, nth(column_widths, 2)), 1);margin_l = offset + nth(column_widths, 2);}return {left: margin_l,right: margin_r,last: margin_last}[variant];})('last','@{offset}','@{column_widths}')`;
+
+	margin-@{side}: ~`@{margin_l} + '%'`;
+	margin-@{other-side}: ~`@{margin_r} + '%'`;
+
+	& when not (@uncycle = 0) {
+		&:nth-child(@{uncycle}n) {
+			margin-@{other-side}: ~`@{margin_r} + '%'`;
+			float: @side;
+		}
+		&:nth-child(@{uncycle}n + 1) {
+			clear: none;
+		}
+	}
+
+	& when not (@cycle = 0) {
+		&:nth-child(@{cycle}n) {
+			margin-@{other-side}: ~`@{margin_last} + '%'`;
+			float: @other-side;
+		}
+		&:nth-child(@{cycle}n + 1) {
+			clear: both;
+		}
+	}
+	& when (@cycle = 0) {
+		&:last-child {
+			margin-@{other-side}: ~`@{margin_last} + '%'`;
+		}
+	}
+}
+
+// Columns without Gutters
+.span(@ratio: 1, @offset: 0) {
+	@side: ~`(function () {return (String('@{jeet-layout-direction}') == 'RTL')? 'right' : 'left';})()`;
+	@other-side: ~`(function (direction) {var opposite_of = {left: 'right',right: 'left',ltr: 'rtl',rtl: 'ltr',top: 'bottom',bottom: 'top'};return opposite_of[direction];})('@{side}')`;
+	@span_width: ~`(function (_ratio) {var ratio = _ratio || 1;return ratio * 100;})('@{ratio}')`;
+
+	.cf();
+	float: @side;
+	clear: none;
+	padding-left: 0;
+	padding-right: 0;
+	text-align: inherit;
+	width: @span_width * 1%;
+
+	margin-@{side}: ~`Math.max(0, @{offset}) * 100`;
+	margin-@{other-side}: ~`Math.abs(@{offset}) * 100`;
+}
+
+// Source Ordering
+.shift(@ratios: 0, @col_or_span: column, @gutter: @jeet-gutter) {
+	@side: ~`(function () {return (String('@{jeet-layout-direction}') == 'RTL')? 'right' : 'left';})()`;
+	position: relative;
+	left: ~`(function (side, ratios, col_or_span) {var get_span = function(_ratio) {var ratio = _ratio || 1;return ratio * 100;};var get_column = function(_ratios, _g) {var ratios = String(_ratios || 1).split(' ');var g = _g || Number('@{jeet-gutter}');if (!Boolean('@{jeet-parent-first}')) {ratios.reverse();}var w = 100;for(var i in ratios) {var ratio = ratios[i];g = (g / w) * 100;w = (100 * ratio) - g + (ratio * g);}return [w, g].join(' ');};var nth = function(list, index) {return String(list).split(' ')[index-1];};var replace_nth = function(list, index, value) {list = String(list).split(' ');list[index-1] = value;return list.join(' ');};var translate = '';if (side == 'right') {ratios = replace_nth(ratios, 0, nth(ratios, 1) * -1); /*BUG: won't 0 break this?*/}if (col_or_span == 'column' || col_or_span == 'col' || col_or_span == 'c') {var column_widths = get_column(ratios, gutter);translate = nth(column_widths, 1) + nth(column_widths, 2);} else {translate: get_span(ratios);}return translate + '%';})('@{side}','@{ratios}','@{col_or_span}')`;
+}
+
+.unshift() {
+	position: static;
+	left: 0;
+}
+
+// Edit Mode
+.edit() {
+	* {
+		background: fade(black, 5%);
+	}
+}
+
+// Horizontal Centering Block Elements
+.center(@max_width: 1410px, @pad: 0) {
+	.cf();
+	width: auto;
+	max-width: @max_width;
+	float: none;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left: @pad;
+	padding-right: @pad;
+}
+
+// Uncenter Elements
+.uncenter() {
+	max-width: none;
+	margin-right: 0;
+	margin-left: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+// Stacking/Unstacking Elements
+.stack(@pad: 0, @align: false) {
+	@side: ~`(function () {return (String('@{jeet-layout-direction}') == 'RTL')? 'right' : 'left';})()`;
+	display: block;
+	clear: both;
+	float: none;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	&:first-child {
+		margin-@{side}: auto;
+	}
+	&:last-child {
+		@other-side: ~`(function (direction) {var opposite_of = {left: 'right',right: 'left',ltr: 'rtl',rtl: 'ltr',top: 'bottom',bottom: 'top'};return opposite_of[direction];})('@{side}')`;
+		margin-@{other-side}: auto;
+	}
+	& when not (@pad = 0) {
+		padding-left: @pad;
+		padding-right: @pad;
+	}
+	& when (@align = center), (@align = c) {
+		text-align: center;
+	}
+	& when (@align = left), (@align = l) {
+		text-align: left;
+	}
+	& when (@align = right), (@align = r) {
+		text-align: right;
+	}
+}
+.unstack() {
+	@side: ~`(function () {return (String('@{jeet-layout-direction}') == 'RTL')? 'right' : 'left';})()`;
+	display: inline;
+	clear: none;
+	width: auto;
+	margin-left: 0;
+	margin-right: 0;
+	&:first-child {
+		margin-@{side}: 0;
+	}
+	&:last-child {
+		@other-side: ~`(function (direction) {var opposite_of = {left: 'right',right: 'left',ltr: 'rtl',rtl: 'ltr',top: 'bottom',bottom: 'top'};return opposite_of[direction];})('@{side}')`;
+		margin-@{other-side}: 0;
+	}
+	& when (@jeet-layout-direction = RTL) {
+		text-align: right;
+	}
+	& when not (@jeet-layout-direction = RTL) {
+		text-align: left;
+	}
+}
+
+// Horizontal/Vertical/Both Alignment - Parent container needs position relative. IE9+
+.align(@direction: both) {
+	position: absolute;
+	.jeet-prefixer(transform-style, preserve-3d);
+
+	@isHorizontal: ~`('@{direction}' == 'horizontal') || ('@{direction}' == 'h')`;
+	@isVertical: ~`('@{direction}' == 'vertical') || ('@{direction}' == 'v')`;
+
+	& when (@isHorizontal) {
+		left: 50%;
+		.jeet-prefixer(transform, translateX(-50%));
+	}
+	& when (@isVertical) {
+		top: 50%;
+		.jeet-prefixer(transform, translateY(-50%));
+	}
+	& when not (@isHorizontal) and not (@isVertical) {
+		top: 50%;
+		left: 50%;
+		.jeet-prefixer(transform, translate(-50%, -50%))
+	}
+}
+
+// Clearfix
+.cf() {
+	*zoom: 1;
+	&:before, &:after {
+		content: '';
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+// Define a rule with all vendor-specific prefixes
+.jeet-prefixer(@name, @arguments) {
+	-webkit-@{name}: @arguments;
+	    -ms-@{name}: @arguments;
+	   -moz-@{name}: @arguments;
+	     -o-@{name}: @arguments;
+	        @{name}: @arguments;
+}

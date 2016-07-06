@@ -5586,6 +5586,19 @@ a.badge:focus {
     overflow: visible !important;
   }
 }
+/*  Syntax Quick Reference
+  --------------------------
+  .col(@ratios: 1, @offset: 0, @cycle: 0, @uncycle: 0, @gutter: @jeet-gutter)
+  .span(@ratio: 1, @offset: 0)
+  .shift(@ratios: 0, @col_or_span: column, @gutter: @jeet-gutter)
+  .unshift()
+  .edit()
+  .center(@max_width: 1410px, @pad: 0)
+  .stack(@pad: 0, @align: false)
+  .unstack()
+  .align(@direction: both)
+  .cf()
+*/
 .break-word {
   -ms-word-break: break-all;
   word-break: break-all;
@@ -8673,7 +8686,27 @@ a.tool-media-screenshot:hover {
 }
 @media (min-width: 768px) {
   .home-datasets-list .dataset-wrapper {
+    *zoom: 1;
+    float: left;
+    clear: none;
+    text-align: inherit;
+    padding-left: 0;
+    padding-right: 0;
+    width: 31.33333333333333%;
+    margin-left: 0%;
+    margin-right: 3%;
     margin-bottom: 0;
+  }
+  .home-datasets-list .dataset-wrapper:before,
+  .home-datasets-list .dataset-wrapper:after {
+    content: '';
+    display: table;
+  }
+  .home-datasets-list .dataset-wrapper:after {
+    clear: both;
+  }
+  .home-datasets-list .dataset-wrapper:last-child {
+    margin-right: 0%;
   }
 }
 .card-dataset .card-header {
