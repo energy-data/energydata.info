@@ -77,6 +77,8 @@
         </div>
       </section>
 
+      {% set most_recent_datasets = h.custom_theme_most_recent_datasets() %}
+      {% if most_recent_datasets %}
       <section class="fold home-featured-datasets">
         <header class="fold-header">
           <div class="container">
@@ -88,7 +90,7 @@
         <div class="fold-body">
           <div class="container">
             <ol class="home-datasets-list">
-              {% for dataset in h.custom_theme_most_recent_datasets() %}
+              {% for dataset in most_recent_datasets %}
                 {% set notes = h.markdown_extract(dataset.notes, extract_length=180) %}
                 <li class="card-wrapper dataset-wrapper">
                   <article class="card card-dataset">
@@ -123,7 +125,7 @@
           </div>
         </div>
       </section>
-
+      {% endif %}
     </div>
   </section>
 {% endblock %}
