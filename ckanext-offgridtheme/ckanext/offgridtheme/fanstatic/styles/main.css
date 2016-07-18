@@ -8467,6 +8467,14 @@ h4 small {
 /* ==========================================================================
    Homepage
    ========================================================================== */
+/* Generic fold styles
+   ========================================================================== */
+.fold-prose {
+  margin-bottom: 20px;
+}
+.fold-prose > *:last-child {
+  margin-bottom: 0;
+}
 /* Header
    ========================================================================== */
 .homepage .container {
@@ -8666,6 +8674,16 @@ a.tool-media-screenshot:hover {
 .tool-body > *:last-child {
   margin-bottom: 0;
 }
+/* Fold: Contribute
+   ========================================================================== */
+.home-contribute {
+  background: #22a6f5;
+  color: #fff;
+}
+.home-contribute .fold-prose {
+  margin: 0 auto 20px auto;
+  max-width: 550px;
+}
 /* Fold: Recent Datasets
    ========================================================================== */
 .home-datasets-list {
@@ -8858,6 +8876,15 @@ a.tool-media-screenshot:hover {
   line-height: 14px;
   margin: 0;
   opacity: 0.9;
+}
+.site-beta-tag {
+  background: rgba(80, 89, 94, 0.32);
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px;
+  vertical-align: 4px;
 }
 .masthead {
   *zoom: 1;
