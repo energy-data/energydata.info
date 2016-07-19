@@ -8475,6 +8475,10 @@ h4 small {
 .fold-prose > *:last-child {
   margin-bottom: 0;
 }
+.fold-prose p {
+  font-size: 14px;
+  line-height: 24px;
+}
 /* Header
    ========================================================================== */
 .homepage .container {
@@ -8676,11 +8680,11 @@ a.tool-media-screenshot:hover {
 }
 /* Fold: Contribute
    ========================================================================== */
-.home-contribute {
+.fold.home-contribute {
   background: #22a6f5;
   color: #fff;
 }
-.home-contribute .fold-prose {
+.fold.home-contribute .fold-prose {
   margin: 0 auto 20px auto;
   max-width: 550px;
 }
