@@ -8581,6 +8581,9 @@ h4 small {
     display: table-cell;
   }
 }
+.tool-media {
+  margin-bottom: 20px;
+}
 .tool-media img {
   display: block;
   width: 100%;
@@ -8590,6 +8593,7 @@ h4 small {
   .tool-media {
     width: 64%;
     padding-right: 40px;
+    margin-bottom: 0;
   }
 }
 @media (min-width: 768px) {
@@ -9047,7 +9051,7 @@ a.tool-media-screenshot:hover {
 }
 @media (min-width: 768px) {
   .footer-nav {
-    text-align: initial;
+    text-align: left;
     box-shadow: none;
     padding-bottom: 0;
     margin-bottom: 0;
