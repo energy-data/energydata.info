@@ -9651,6 +9651,9 @@ blockquote p {
 iframe {
   border: none;
 }
+main {
+  display: block;
+}
 .embedded-content h1 {
   font-size: 1.4em;
 }
