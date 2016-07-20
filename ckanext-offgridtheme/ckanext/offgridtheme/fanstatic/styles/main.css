@@ -8583,13 +8583,19 @@ h4 small {
 }
 .tool-media img {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 @media (min-width: 768px) {
   .tool-media {
     width: 64%;
     padding-right: 40px;
+  }
+}
+@media (min-width: 768px) {
+  .tool-copy {
+    width: 36%;
+    vertical-align: middle;
   }
 }
 .tool-media-screenshot {
@@ -8603,11 +8609,11 @@ h4 small {
   background: #f2f3f6;
 }
 .tool-media-screenshot::before {
-  position: relative;
-  z-index: 2;
   -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.08);
   -moz-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.08);
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 2;
   display: block;
   width: 100%;
   height: 20px;
@@ -8642,7 +8648,6 @@ a.tool-media-screenshot:hover {
   transform: translate(0, -5px);
 }
 .tool-header {
-  padding-top: 20px;
   margin-bottom: 10px;
 }
 @media (min-width: 768px) {
