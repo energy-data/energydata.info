@@ -1,6 +1,6 @@
 [submodule "ckan"]
 	path=ckan
-	url=https://github.com/ckan/ckan
+	url=https://github.com/developmentseed/ckan
 
 [submodule "datapusher"]
 	path=datapusher
