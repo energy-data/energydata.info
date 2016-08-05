@@ -2,6 +2,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.model as model
 from ckan.lib.celery_app import celery
+import ckan.lib.datapreview as datapreview
 
 import pylons.config as config
 import pylons
@@ -9,8 +10,10 @@ import uuid
 import ckanapi
 import tempfile
 import os
-
+import logging
 import lib
+
+log = logging.getLogger(__name__)
 
 def _celery_task(resource_id, action, tempdir):
     site_url = config.get('ckan.site_url', 'http://localhost/')
@@ -38,11 +41,11 @@ def _celery_task(resource_id, action, tempdir):
 
 class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
-    plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IResourceController, inherit=True)
 
     TEMPDIR = os.path.join(os.path.dirname(__file__), '..', 'tmp')
 
+    #IDatasetForm
     def _modify_pkg_schema(self, schema):
         schema['resources'].update({
             's3url': [
@@ -90,11 +93,6 @@ class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         schema = self._show_pkg_schema(schema)
         return schema
 
-    # IConfigurer
-    def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'mvt')
 
     # IResourceController
     def after_create(self, context, resource):
@@ -111,3 +109,42 @@ class MvtPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         s3url = cache.get_s3url(data_dict.get('id'))
         data_dict['tilejson'] = s3url
         return data_dict
+
+class MvtViewPlugin(plugins.SingletonPlugin):
+
+    plugins.implements(plugins.IConfigurer, inherit=True)
+    plugins.implements(plugins.IResourceView, inherit=True)
+
+    # IConfigurer
+
+    def update_config(self, config_):
+        toolkit.add_template_directory(config_, 'templates')
+
+    # IResourceView
+
+    def info(self):
+        return {
+            'name': 'mvt_view',
+            'title': 'Map View',
+            'icon': 'globe',
+            'iframed': True,
+            'always_available': False
+        }
+
+    def setup_template_variables(self, context, data_dict):
+        return {
+            'tilejson': data_dict['resource'].get('tilejson', '')
+        }
+
+
+    def can_view(self, data_dict):
+        return data_dict['resource'].get('format', '').lower() == 'geojson'
+
+    def view_template(self, context, data_dict):
+        return 'mvtview.html'
+
+    def after_update(self, context, data_dict):
+        self.add_default_views(context, data_dict)
+
+    def after_create(self, context, data_dict):
+        self.add_default_views(context, data_dict)

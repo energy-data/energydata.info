@@ -12,6 +12,7 @@ import logging
 import tempfile
 import boto3
 import re
+import sqlite3
 
 from ckan.plugins import toolkit
 
@@ -130,7 +131,7 @@ class TileProcessor:
         mvtfile = '{0}.mbtiles'.format(filepath)
         returncode = call([
             # 12 zoom levels ought to be enough for anybody
-            'tippecanoe', '-z', '12', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
+            'tippecanoe', '-r', '1.5', '-z', '12', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
         ])
         if returncode != 0:
             raise BadResourceFileException("{0} could not be converted to mvt".format(filepath))
@@ -155,7 +156,7 @@ class TileProcessor:
         else:
             log.info('{0} update successful'.format(resource['id']))
 
-    def _upload_to_s3(self, filepath, resource_id):
+    def _upload_to_s3(self, filepath, extent, resource_id):
         """
         Upload the generated tiles from _generate_mvt to s3
         This function also stores the url in the cache file
@@ -192,6 +193,9 @@ class TileProcessor:
             "tiles": [httptileurl],
             "vector_layers": [{"id": "data_layer"}]
         }
+        bounds = extent.split(',')
+        if len(bounds) == 4:
+            tilejson['bounds'] = [float(x) for x in bounds]
         log.info(json.dumps(tilejson))
         key = s3.Object(bucket_name=bucket, key='{0}/data.tilejson'.format(prefix))
         key.put(Body=json.dumps(tilejson))
@@ -216,6 +220,14 @@ class TileProcessor:
         else:
             log.info("Could not match {}".format(tilejson_url))
 
+    def _get_extent(self, mvtfile):
+        conn = sqlite3.connect(mvtfile)
+        cursor = conn.cursor()
+        cursor.execute('''
+        select value from METADATA where name='bounds';
+        ''')
+        row = cursor.fetchone()
+        return row[0]
 
     def update(self, resource_id):
         """
@@ -246,7 +258,8 @@ class TileProcessor:
 
                     # Generate tiles
                     mvtfile = self._generate_mvt(filepath)
-                    s3url = self._upload_to_s3(mvtfile, resource_id)
+                    extent = self._get_extent(mvtfile)
+                    s3url = self._upload_to_s3(mvtfile, extent, resource_id)
                     self.cache.set_s3url(resource_id, s3url)
 
                     # Update the s3url

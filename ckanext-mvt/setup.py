@@ -79,6 +79,7 @@ setup(
     entry_points='''
         [ckan.plugins]
         mvt=ckanext.mvt.plugin:MvtPlugin
+        mvt_view=ckanext.mvt.plugin:MvtViewPlugin
         [ckan.celery_task]
         tasks=ckanext.mvt.celery_import:task_imports
     ''',
