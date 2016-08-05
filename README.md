@@ -45,3 +45,15 @@ npm install
 npm run less-watch
 ```
 Starts the watcher and recompiles when files change.
+
+
+## Deploy instructions
+To deploy a new version of the data platform to the production environment, follow these steps:
+
+1. ssh into the machine
+2. `cd wbg-energydata`
+3. `git checkout master`
+4. `git pull origin master`
+5. [only if you enable a new plugin] `datacats install`
+6. `datacats reload -p`
+7. `datacats paster -d celeryd`
