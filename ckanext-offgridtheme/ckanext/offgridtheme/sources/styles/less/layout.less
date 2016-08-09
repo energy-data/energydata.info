@@ -25,9 +25,13 @@
 
 [role=main], .main {
   position: relative;
-  padding: 20px;
   z-index: 10;
   background: @layoutBackgroundColor;
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    padding: 40px 20px;
+  }
 }
 
 [role=main] {

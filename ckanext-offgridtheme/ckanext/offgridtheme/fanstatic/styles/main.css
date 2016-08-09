@@ -8224,9 +8224,15 @@ h4 small {
 [role=main],
 .main {
   position: relative;
-  padding: 20px;
   z-index: 10;
   background: #f2f3f6;
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  [role=main],
+  .main {
+    padding: 40px 20px;
+  }
 }
 [role=main] {
   min-height: 350px;
@@ -9107,6 +9113,9 @@ a.tool-media-screenshot:hover {
   max-width: 200px;
   height: auto;
   opacity: 0.8;
+}
+.attr-ds {
+  font-size: 0.75rem;
 }
 .table-selected td {
   background-color: #f5f5f5;
@@ -10144,12 +10153,12 @@ a {
 /* ==========================================================================
    Inpage
    ========================================================================== */
-.page-body-hub {
+.page-body-contained {
   padding: 20px;
   margin: 0;
 }
 @media (min-width: 768px) {
-  .page-body-hub {
+  .page-body-contained {
     padding: 40px 20px;
   }
 }
@@ -10161,9 +10170,61 @@ a {
     margin-bottom: 40px;
   }
 }
+.inpage-headline > *:last-child {
+  margin-bottom: 0;
+}
 .inpage-toolbar {
   margin: 0;
   padding: 0;
+}
+/* Prose
+   ========================================================================== */
+.inpage-body .prose {
+  font-size: 16px;
+  line-height: 24px;
+}
+.inpage-body .prose > h1:not(:first-child),
+.inpage-body .prose > h2:not(:first-child),
+.inpage-body .prose > h3:not(:first-child),
+.inpage-body .prose > h4:not(:first-child),
+.inpage-body .prose > h5:not(:first-child),
+.inpage-body .prose > h6:not(:first-child) {
+  margin-top: 40px;
+}
+.inpage-body .prose > h1 + h2:not(:first-child),
+.inpage-body .prose > h2 + h3:not(:first-child),
+.inpage-body .prose > h3 + h4:not(:first-child),
+.inpage-body .prose > h4 + h5:not(:first-child),
+.inpage-body .prose > h5 + h6:not(:first-child) {
+  margin-top: 0;
+}
+.inpage-body .prose > * {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+.inpage-body .prose > *:first-child {
+  margin-top: 0;
+}
+.inpage-body .prose > *:last-child {
+  margin-bottom: 0;
+}
+@media (min-width: 768px) {
+  .inpage-body .prose {
+    max-width: 768px;
+    font-size: 18px;
+    line-height: 32px;
+  }
+  .inpage-body .prose > h1:not(:first-child),
+  .inpage-body .prose > h2:not(:first-child),
+  .inpage-body .prose > h3:not(:first-child),
+  .inpage-body .prose > h4:not(:first-child),
+  .inpage-body .prose > h5:not(:first-child),
+  .inpage-body .prose > h6:not(:first-child) {
+    margin-top: 56px;
+  }
+  .inpage-body .prose > * {
+    margin-bottom: 28px;
+  }
 }
 /* ==========================================================================
    Utilities
@@ -10201,7 +10262,7 @@ a {
 .visually-hidden,
 .dataset-tags dt,
 .attr-wbg-ifc span,
-.inpage-title {
+.inpage-hub .inpage-title {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);
   height: 1px;

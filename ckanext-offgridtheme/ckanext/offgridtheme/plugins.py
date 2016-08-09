@@ -34,10 +34,14 @@ class OffgridPages(SingletonPlugin):
         toolkit.add_template_directory(config_, 'templates')
 
     def before_map(self, map):
-        map.connect('tools', '/tools',
-          controller='ckanext.offgridtheme.controller:ToolsController',
+        map.connect('apps', '/apps',
+          controller='ckanext.offgridtheme.controller:AppsController',
           action='view')
 
+        map.connect('terms', '/terms',
+          controller='ckanext.offgridtheme.controller:TermsController',
+          action='view')
+        
         # To add anoher page
         # map.connect('another', '/another',
         #   controller='ckanext.offgridtheme.controller:AnotherController',
