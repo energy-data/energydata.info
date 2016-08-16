@@ -131,7 +131,7 @@ class TileProcessor:
         mvtfile = '{0}.mbtiles'.format(filepath)
         returncode = call([
             # 12 zoom levels ought to be enough for anybody
-            'tippecanoe', '-r', '1.1', '-z', '12', '-l', 'data_layer', '-q', '-o', mvtfile, filepath
+            'tippecanoe', '-r', '1.1', '-z', '12', '-l', 'data_layer', '-q', '-b', '0', '-pp', '-o', mvtfile, filepath
         ])
         if returncode != 0:
             raise BadResourceFileException("{0} could not be converted to mvt".format(filepath))
