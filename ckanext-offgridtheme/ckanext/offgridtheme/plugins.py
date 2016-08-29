@@ -12,7 +12,6 @@ def most_recent_datasets():
 def resource_url_fix(resource_url):
     '''Returns the resource URL relative to the config file'''
     url_path = urlparse(resource_url).path
-    print config.get('ckan.site_url')
     return config.get('ckan.site_url') + url_path
 
 class CustomTheme(SingletonPlugin):
