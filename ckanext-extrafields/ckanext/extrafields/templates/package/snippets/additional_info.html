@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block extras %}
+  {% if pkg_dict.country_code %}
+    <tr>
+      <th scope="row" class="dataset-label">{{ _("Country") }}</th>
+      <td class="dataset-details">{{ pkg_dict.country_code }}</td>
+    </tr>
+  {% endif %}
+{% endblock %}
