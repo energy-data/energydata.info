@@ -19,6 +19,7 @@ class CustomTheme(SingletonPlugin):
     implements(ITemplateHelpers)
 
     def update_config(self, config):
+        # Override the templates according to http://docs.ckan.org/en/latest/theming/templates.html
         toolkit.add_template_directory(config, "templates")
         toolkit.add_public_directory(config, "static")
         toolkit.add_resource('fanstatic', 'offgridtheme')
