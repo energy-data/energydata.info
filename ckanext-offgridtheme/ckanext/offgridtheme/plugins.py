@@ -1,4 +1,6 @@
 from ckan.plugins import toolkit, IConfigurer, ITemplateHelpers, SingletonPlugin, IRoutes, implements
+from urlparse import urlparse
+import pylons.config as config
 
 def most_recent_datasets():
     ''' Returns three most recently modified datasets'''
@@ -7,11 +9,17 @@ def most_recent_datasets():
     })
     return datasets
 
+def resource_url_fix(resource_url):
+    '''Returns the resource URL relative to the config file'''
+    url_path = urlparse(resource_url).path
+    return config.get('ckan.site_url') + url_path
+
 class CustomTheme(SingletonPlugin):
     implements(IConfigurer)
     implements(ITemplateHelpers)
 
     def update_config(self, config):
+        # Override the templates according to http://docs.ckan.org/en/latest/theming/templates.html
         toolkit.add_template_directory(config, "templates")
         toolkit.add_public_directory(config, "static")
         toolkit.add_resource('fanstatic', 'offgridtheme')
@@ -20,7 +28,10 @@ class CustomTheme(SingletonPlugin):
         '''
         Registers the most_recent_datasets function as a template helper function
         '''
-        return {'custom_theme_most_recent_datasets': most_recent_datasets}
+        return {
+            'custom_theme_most_recent_datasets': most_recent_datasets,
+            'custom_theme_resource_url_fix': resource_url_fix,
+        }
 
 class OffgridPages(SingletonPlugin):
     """
@@ -34,8 +45,12 @@ class OffgridPages(SingletonPlugin):
         toolkit.add_template_directory(config_, 'templates')
 
     def before_map(self, map):
-        map.connect('tools', '/tools',
-          controller='ckanext.offgridtheme.controller:ToolsController',
+        map.connect('apps', '/apps',
+          controller='ckanext.offgridtheme.controller:AppsController',
+          action='view')
+
+        map.connect('terms', '/terms',
+          controller='ckanext.offgridtheme.controller:TermsController',
           action='view')
 
         # To add anoher page

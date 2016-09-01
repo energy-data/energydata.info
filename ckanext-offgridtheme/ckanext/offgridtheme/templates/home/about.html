@@ -1,0 +1,23 @@
+{% extends "inpage-article.html" %}
+
+{% block inpage_title %}
+  <h1 class="inpage-title">{{ _('About') }}</h1>
+{% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('About'), controller='home', action='about' %}</li>
+{% endblock %}
+
+{% block primary %}
+  <div class="container">
+    <div class="prose">
+      {% block about %}
+        {% if g.site_about %}
+          {{ h.render_markdown(g.site_about) }}
+        {% else %}
+          {% snippet 'home/snippets/about_text.html' %}
+        {% endif %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

@@ -2,7 +2,7 @@
    Inpage
    ========================================================================== */
 
-.page-body-hub {
+.page-body-contained {
   padding: 20px;
   margin: 0;
 
@@ -19,11 +19,76 @@
   }
 }
 
-.inpage-title {
+.inpage-headline {
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.inpage-hub .inpage-title {
   &:extend(.visually-hidden);
 }
 
 .inpage-toolbar {
   margin: 0;
   padding: 0;
+}
+
+
+/* Prose
+   ========================================================================== */
+
+.inpage-body .prose {
+  font-size: 16px;
+  line-height: 24px;
+
+  > h1:not(:first-child),
+  > h2:not(:first-child),
+  > h3:not(:first-child),
+  > h4:not(:first-child),
+  > h5:not(:first-child),
+  > h6:not(:first-child) {
+    margin-top: 40px;
+  }
+
+  > h1 + h2:not(:first-child),
+  > h2 + h3:not(:first-child),
+  > h3 + h4:not(:first-child),
+  > h4 + h5:not(:first-child),
+  > h5 + h6:not(:first-child) {
+    margin-top: 0;
+  }
+
+  > * {
+    margin-top: 0;
+    margin-bottom: 24px;
+  }
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 768px;
+    font-size: 18px;
+    line-height: 32px;
+
+    > h1:not(:first-child),
+    > h2:not(:first-child),
+    > h3:not(:first-child),
+    > h4:not(:first-child),
+    > h5:not(:first-child),
+    > h6:not(:first-child) {
+      margin-top: 56px;
+    }
+
+    > * {
+      margin-bottom: 28px;
+    }
+
+  }
 }

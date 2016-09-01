@@ -1,11 +1,11 @@
 {% extends "inpage-hub.html" %}
 
 {% block inpage_title %}
-  <h1 class="inpage-title">Tools</h1>
+  <h1 class="inpage-title">{{ _('Apps') }}</h1>
 {% endblock %}
 
 {% block breadcrumb_content %}
-  <li class="active">{% link_for _('Tools'), controller='ckanext.offgridtheme.controller:ToolsController', action='view' %}</li>
+  <li class="active">{% link_for _('Apps'), controller='ckanext.offgridtheme.controller:AppsController', action='view' %}</li>
 {% endblock %}
 
 {% block primary %}
@@ -26,7 +26,7 @@
               <p>Identify market opportunities for off-grid energy services in Sub-Saharan Africa.</p>
             </div>
             <div class="tool-cta">
-              <a href="#" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+              <a href="#" title="Visit tool" class="btn btn-large btn-primary-ghost">View app</a>
             </div>
           </div>
         </article>
@@ -47,7 +47,7 @@
               <p>Monitor rural electrification in 600,000 villages over twenty years. From space.</p>
             </div>
             <div class="tool-cta">
-              <a href="http://india.nightlights.io/" title="Visit tool" class="btn btn-large btn-primary-ghost">View tool</a>
+              <a href="http://india.nightlights.io/" title="Visit tool" class="btn btn-large btn-primary-ghost">View app</a>
             </div>
           </div>
         </article>

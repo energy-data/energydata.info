@@ -1,10 +1,17 @@
 import ckan.lib.base as base
 render = base.render
 
-class ToolsController(base.BaseController):
+class AppsController(base.BaseController):
 
     def view(self):
-        return render('offgridpages/tools.html')
+        return render('offgridpages/apps.html')
+
+
+class TermsController(base.BaseController):
+
+    def view(self):
+        return render('offgridpages/terms.html')
+
 
 # One controller per page.
 # class AnotherController(base.BaseController):
