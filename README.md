@@ -63,17 +63,19 @@ Starts the watcher and recompiles when files change.
 ## Deploy instructions
 This assumes a base OS of Ubuntu 16.04
 
-1 To install all the dependencies required for CKAN, clone this repository on the target machine and follow the instructions in `build-box/build_box.sh`
-2. Copy `development.ini.sample` to `development.ini`
-3. Change variables in development.ini:
+1. Clone this repo on the target machine
+2. Follow the instructions in `build-box/build_box.sh`, changing `vagrant` to this repository's source directory
+3. Copy `development.ini.sample` to `development.ini`
+4. Change variables in development.ini:
    - beaker.session.secret
    - app.instance.uuid
    - ckanext.s3.*
    - Configure smtp for email
-4. `cd wbg-energydata`
-5. `datacats init` and choose an admin password
-6. `datacats reload -p`
-7. `datacats paster -d celeryd`
+5. `cd wbg-energydata`
+6. `datacats init` and choose an admin password
+7. `datacats reload -p`
+8. `datacats paster -d celeryd`
+9. For HTTPS, install Let's Encrypt and uncomment the HTTPS section of the nginx configuration
 
 ### New iteration
 To deploy a new iteration of the data platform to the production environment, follow these steps:
