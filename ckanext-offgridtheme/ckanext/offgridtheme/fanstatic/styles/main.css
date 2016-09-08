@@ -6585,6 +6585,15 @@ textarea {
   font-size: 22px;
   margin-right: 15px;
 }
+.icon-block.terms {
+  display: block;
+  font-size: 14px;
+  text-align: center;
+}
+.icon-block.terms .icon-info-sign {
+  float: none;
+  font-size: 14px;
+}
 .form-horizontal .info-block a {
   color: #aaa;
   text-decoration: underline;
