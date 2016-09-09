@@ -6579,6 +6579,25 @@ textarea {
 .form-horizontal .info-inline:before {
   top: 8px;
 }
+@media (min-width: 481px) {
+  .terms-service label {
+    margin-left: 180px;
+  }
+}
+@media (min-width: 768px) {
+  .terms-service label {
+    margin-left: 130px;
+  }
+}
+.terms-service input {
+  top: 0;
+}
+.terms-service label:after {
+  content: '';
+}
+.terms-service .error--terms {
+  margin-top: 16px;
+}
 .info-block .icon-large,
 .info-inline .icon-large {
   float: left;

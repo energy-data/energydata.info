@@ -1,6 +1,6 @@
 {% import "macros/form.html" as form %}
 
-<form class="form-horizontal" action="" method="post">
+<form class="form-horizontal" action="" method="post" id="register-form">
   {{ form.errors(error_summary) }}
   {{ form.input("name", id="field-username", label=_("Username"), placeholder=_("username"), value=data.name, error=errors.name, classes=["control-medium"]) }}
   {{ form.input("fullname", id="field-fullname", label=_("Full Name"), placeholder=_("Joe Bloggs"), value=data.fullname, error=errors.fullname, classes=["control-medium"]) }}
@@ -12,12 +12,28 @@
     {% snippet "user/snippets/recaptcha.html", public_key=g.recaptcha_publickey %}
   {% endif %}
 
+  <div class="terms-service">
+    <label for="field-terms-agree">
+      <input type="checkbox" id="field-terms-agree" name="field-terms-agree" value="agree"> I agree to the <a href="/terms">Terms of Use</a>
+    </label>
+    <div class="error-explanation alert alert-error error--terms" style="display: none;">
+      <p>You have to agree with the terms of use in order to register.</p>
+    </div>
+  </div>
+
   <div class="form-actions">
     {% block form_actions %}
-    <span class="info-block terms">
-      <i class="icon-info-sign"></i>By signing up, you agree to our <a href="/terms">Terms of Use</a>
-    </span>
     <button class="btn btn-primary" type="submit" name="save">{{ _("Create Account") }}</button>
     {% endblock %}
   </div>
 </form>
+
+<script>
+  document.getElementById('register-form').addEventListener('submit', function (e) {
+    var cb = document.getElementById('field-terms-agree');
+    if (!cb.checked) {
+      e.preventDefault();
+      document.querySelector(".error--terms").style.display = 'block';
+    }
+  });
+</script>
