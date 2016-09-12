@@ -183,7 +183,7 @@ class TileProcessor:
         aws_env['AWS_SECRET_ACCESS_KEY'] = self.s3config['secret_key']
 
         returncode = call([
-            'mapbox-tile-copy', filepath, tileurl
+            'mapbox-tile-copy', '--timeout', '10000', filepath, tileurl
         ], env=aws_env)
 
         # Upload tilejson
