@@ -195,12 +195,48 @@ textarea {
   top: 8px;
 }
 
+// Terms of service
+.terms-service label {
+  // padding-left: 120px;
+}
+@media (min-width: 481px) {
+  .terms-service label {
+    margin-left: 180px;
+  }
+}
+@media (min-width: 768px) {
+  .terms-service label {
+    margin-left: 130px;
+  }
+}
+
+.terms-service input {
+  top: 0;
+}
+.terms-service label:after {
+  content: '';
+}
+
+.terms-service .error--terms {
+  margin-top: 16px;
+}
+
 .info-block,
 .info-inline {
   .icon-large {
     float: left;
     font-size: 22px;
     margin-right: @gutterSmallX;
+  }
+}
+
+.icon-block.terms {
+  display: block;
+  font-size: 14px;
+  text-align: center;
+  .icon-info-sign {
+    float: none;
+    font-size: 14px;
   }
 }
 
