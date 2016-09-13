@@ -4,7 +4,7 @@
 
 [submodule "datapusher"]
 	path=datapusher
-	url=https://github.com/ckan/datapusher
+	url=https://github.com/energy-data/datapusher
 
 [submodule "ckanext-geojsonview"]
 	path=ckanext-geojsonview
