@@ -8535,7 +8535,7 @@ h4 small {
   }
 }
 .home-headline {
-  max-width: 560px;
+  max-width: 600px;
   margin: 0 auto 20px auto;
 }
 @media (min-width: 768px) {
@@ -8694,7 +8694,7 @@ a.tool-media-screenshot:hover {
   }
 }
 .tool-title {
-  margin: 0;
+  margin: 0 0 10px 0;
   font-size: 20px;
   line-height: 28px;
 }
@@ -8710,6 +8710,12 @@ a.tool-media-screenshot:hover {
     font-size: 24px;
     line-height: 32px;
   }
+}
+.tool-subtitle {
+  font-size: 12px;
+  line-height: 16px;
+  color: #838b8f;
+  text-transform: uppercase;
 }
 .tool-body {
   width: 100%;
@@ -10097,7 +10103,6 @@ a {
   font-size: 12px;
   line-height: 16px;
   color: #838b8f;
-  font-style: italic;
 }
 .card-subtitle > strong {
   font-weight: inherit;
