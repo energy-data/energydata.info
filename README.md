@@ -10,6 +10,7 @@
 
 ### Initial provisioning
 1. Clone this repo
+2. `git submodule update --init --recursive` 
 2. Copy `development.ini.sample` to `development.ini`
 3. Change variables in development.ini:
    - beaker.session.secret
