@@ -6,6 +6,10 @@
 	path=datapusher
 	url=https://github.com/energy-data/datapusher
 
-[submodule "ckanext-geojsonview"]
-	path=ckanext-geojsonview
-	url=https://github.com/deniszgonjanin/ckanext-geojsonview
+[submodule "ckanext-authkey"]
+	path = ckanext-authkey
+	url = https://github.com/developmentseed/ckanext-authkey
+
+[submodule "ckanext-mvt"]
+	path = ckanext-mvt
+	url = https://github.com/developmentseed/ckanext-mvt
