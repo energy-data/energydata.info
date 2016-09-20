@@ -1,4 +1,0 @@
-ckanapi
-celery
-pickledb
-boto3
