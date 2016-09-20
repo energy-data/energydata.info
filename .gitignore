@@ -6,6 +6,7 @@ development.ini
 node_modules
 .datacats-environment
 .bash_history
+*.box
 
 # local caches
 ckanext-mvt/ckanext/tmp/*
