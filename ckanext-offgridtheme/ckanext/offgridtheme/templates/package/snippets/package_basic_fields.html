@@ -89,16 +89,11 @@
         <label for="field-private" class="control-label">{{ _('Visibility') }}</label>
         <div class="controls">
           <select id="field-private" name="private">
-            {% for option in [('True', _('Private')), ('False', _('Public'))] %}
-            <option value="{{ option[0] }}" {% if option[0] == data.private|trim %}selected="selected"{% endif %}>{{ option[1] }}</option>
-            {% endfor %}
+            <!-- {% for option in [('True', _('Private')), ('False', _('Public'))] %} -->
+            <!-- <option value="{{ option[0] }}" {% if option[0] == data.private|trim %}selected="selected"{% endif %}>{{ option[1] }}</option> -->
+            <!-- {% endfor %} -->
+            <option value="False">{{_('Public')}}</option>
           </select>
-          <span class="info-block info-inline">
-            <i class="icon-info-sign"></i>
-            {% trans %}
-              A private dataset is only visible to other members in the organization.
-            {% endtrans %}
-          </span>
         </div>
       </div>
     {% endblock %}
