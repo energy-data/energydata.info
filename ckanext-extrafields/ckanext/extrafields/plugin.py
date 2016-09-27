@@ -9,6 +9,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IFacets)
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -54,3 +55,8 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def package_types(self):
         return []
+
+    # IFacets
+    def dataset_facets(self, facets_dict, package_type):
+        facets_dict['country_code'] = plugins.toolkit._('Countries')
+        return facets_dict
