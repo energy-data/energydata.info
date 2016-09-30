@@ -72,7 +72,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def show_package_schema(self):
         schema = super(ExtrafieldsPlugin, self).show_package_schema()
 
-        schema['tags']['__extras'].append(tk.get_converter('free_tags_only'))
+        schema['tags']['__extras'].append(toolkit.get_converter('free_tags_only'))
 
         schema.update({
             'country_code': [
