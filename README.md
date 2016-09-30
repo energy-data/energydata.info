@@ -74,7 +74,7 @@ This assumes a base OS of Ubuntu 16.04
    - Configure smtp for email
 5. `cd wbg-energydata`
 6. `datacats init` and choose an admin password
-7. `datacats reload -p`
+7. `datacats reload`
 8. `datacats paster -d celeryd`
 9. For HTTPS, install Let's Encrypt and uncomment the HTTPS section of the nginx configuration
 
@@ -86,5 +86,5 @@ To deploy a new iteration of the data platform to the production environment, fo
 3. `git checkout master`
 4. `git pull origin master`
 5. [only if you enable a new plugin] `datacats install`
-6. `datacats reload -p`
+6. `datacats reload`
 7. `datacats paster -d celeryd`
