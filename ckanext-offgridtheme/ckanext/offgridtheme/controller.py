@@ -12,6 +12,10 @@ class TermsController(base.BaseController):
     def view(self):
         return render('offgridpages/terms.html')
 
+class PrivacyController(base.BaseController):
+
+    def view(self):
+        return render('offgridpages/privacy-policy.html')
 
 # One controller per page.
 # class AnotherController(base.BaseController):
