@@ -10241,6 +10241,9 @@ a {
 .inpage-body .prose > *:last-child {
   margin-bottom: 0;
 }
+.inpage-body .prose li {
+  line-height: 24px;
+}
 @media (min-width: 768px) {
   .inpage-body .prose {
     max-width: 768px;
@@ -10257,6 +10260,9 @@ a {
   }
   .inpage-body .prose > * {
     margin-bottom: 28px;
+  }
+  .inpage-body .prose li {
+    line-height: 32px;
   }
 }
 /* ==========================================================================

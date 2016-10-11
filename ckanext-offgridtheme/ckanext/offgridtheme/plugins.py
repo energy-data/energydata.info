@@ -53,6 +53,10 @@ class OffgridPages(SingletonPlugin):
           controller='ckanext.offgridtheme.controller:TermsController',
           action='view')
 
+        map.connect('privacy', '/privacy-policy',
+          controller='ckanext.offgridtheme.controller:PrivacyController',
+          action='view')
+
         # To add anoher page
         # map.connect('another', '/another',
         #   controller='ckanext.offgridtheme.controller:AnotherController',
