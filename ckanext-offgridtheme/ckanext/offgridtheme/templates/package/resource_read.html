@@ -1,7 +1,7 @@
 {% extends "package/base.html" %}
 
 {% set res = c.resource %}
-{% set resource_url = h.custom_theme_resource_url_fix(res.url) %}
+{% set resource_url = h.custom_theme_resource_url_fix(res.url, res.on_same_domain) %}
 
 {% block head_extras -%}
   {{ super() }}
