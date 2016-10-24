@@ -9,10 +9,16 @@ def most_recent_datasets():
     })
     return datasets
 
-def resource_url_fix(resource_url):
-    '''Returns the resource URL relative to the config file'''
-    url_path = urlparse(resource_url).path
-    return config.get('ckan.site_url') + url_path
+def resource_url_fix(resource_url, same_domain):
+    '''
+        Returns the resource URL relative to the config file if the URL is on
+        same domain.
+    '''
+    if same_domain == True:
+        url_path = urlparse(resource_url).path
+        return config.get('ckan.site_url') + url_path
+    else:
+        return resource_url
 
 class CustomTheme(SingletonPlugin):
     implements(IConfigurer)
