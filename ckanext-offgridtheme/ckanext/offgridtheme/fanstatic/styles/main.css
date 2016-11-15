@@ -8252,7 +8252,6 @@ h4 small {
 [role=main],
 .main {
   position: relative;
-  z-index: 10;
   background: #f2f3f6;
   padding: 20px;
 }
@@ -8947,7 +8946,6 @@ a.tool-media-screenshot:hover {
   -moz-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.16);
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.16);
   position: relative;
-  z-index: 20;
   margin: 0;
 }
 .masthead:before,
