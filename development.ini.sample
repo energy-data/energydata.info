@@ -56,7 +56,7 @@ ckan.datastore.default_fts_index_method = gist
 
 ## Site Settings
 
-ckan.site_url =
+ckan.site_url = 192.169.101.99
 #ckan.use_pylons_response_cleanup_middleware = true
 
 ## Authorization Settings
@@ -96,7 +96,7 @@ ckan.cors.origin_allow_all = true
 #       Add ``datapusher`` to enable DataPusher
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
-ckan.plugins = datastore datapusher resource_proxy text_view recline_grid_view recline_graph_view offgrid_theme geojsonview mvt authkey offgridpages mvt_view extrafields
+ckan.plugins = datastore resource_proxy text_view recline_grid_view recline_graph_view offgrid_theme mvt authkey offgridpages mvt_view extrafields dcat dcat_json_harvester harvest ckan_harvester
 
 # Define which views should be created by default
 # (plugins must be loaded in ckan.plugins)
