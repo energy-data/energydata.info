@@ -14,7 +14,7 @@ def country_names():
     except toolkit.ObjectNotFound: # It doesn't exist, create the vocab
         data = {'name': country_vocab}
         vocab = toolkit.get_action('vocabulary_create')(context, data)
-        country_names = [country.name for country in list(pycountry.countries)]
+        country_names = [country.alpha_3 for country in list(pycountry.countries)]
         for name in country_names:
             data = {'name': name, 'vocabulary_id': vocab['id']}
             toolkit.get_action('tag_create')(context, data)
