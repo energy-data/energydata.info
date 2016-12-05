@@ -125,6 +125,9 @@ ckan.preview.loadable = html htm rdf+xml owl+xml xml n3 n-triples turtle plain a
 #licenses_group_url = http://licenses.opendefinition.org/licenses/groups/ckan.json
 # ckan.template_footer_end =
 
+## harvester settings
+ckan.harvest.mq.type = redis
+ckan.harvest.mq.hostname = redis
 
 ## Internationalisation Settings
 ckan.locale_default = en

@@ -23,16 +23,6 @@
 7. `cd /vagrant`
 8. `datacats init` to initialize the environment and choose an admin password
 
-### Setting up the harvester
-1. `cd /vagrant`
-2. `datacats tweak --add-redis`
-3. `datacats reload`
-4. `cd ckanext-harvest`
-5. `datacats paster harvester initdb`
-6. `datacats paster -d harvester gather_consumer`
-7. `datacats paster -d harvester fetch_consumer`
-8. Read the ckanext-harvest README to create a harvest job. 
-
 ### Booting
 1. In the repo directory `vagrant up`. 
 2. Point your web browser to 192.168.101.99 (the address of the VM)
@@ -45,7 +35,7 @@ If you're adding new templates or new functionality to CKAN, you might need to r
 1. `vagrant ssh` to ssh into the VM
 2. `source venv/bin/activate` which will allow you to use the datacats command
 3. `cd /vagrant` (this is the synced folder with the git repo)
-4. `datacats reload` to reload the server
+4. `./reload-server.sh` to reload the server
 
 ### Styles (Less)
 
@@ -96,5 +86,19 @@ To deploy a new iteration of the data platform to the production environment, fo
 3. `git checkout master`
 4. `git pull origin master`
 5. [only if you enable a new plugin] `datacats install`
-6. `datacats reload`
-7. `datacats paster -d celeryd`
+6. `./reload-server.sh` to restart the server
+
+### Setting up the harvester
+1. `cd wbg-energydata`
+2. `datacats tweak --add-redis`
+3. `datacats reload`
+4. `cd ckanext-harvest`
+5. `datacats paster harvester initdb`
+6. `datacats paster -d harvester gather_consumer`
+7. `datacats paster -d harvester fetch_consumer`
+
+## Adding a new DCAT-JSON ArcGIS harvest source
+1. `cd wbg-energydata/ckanext-harvest`
+2. `datacats paster harvester source energy-gis-arcgis http://data.energy-gis.opendata.arcgis.com/data.json dcat-json "Energy Sector GIS Working Group" true energy-sector-gis-working-group`
+3. `datacats paster harvester job-all` to create and run a harvest job
+

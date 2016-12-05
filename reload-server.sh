@@ -1,4 +1,4 @@
-#!/usr/sh
+#!/bin/bash
 
 datacats reload
 datacats paster -d celeryd
