@@ -23,6 +23,16 @@
 7. `cd /vagrant`
 8. `datacats init` to initialize the environment and choose an admin password
 
+### Setting up the harvester
+1. `cd /vagrant`
+2. `datacats tweak --add-redis`
+3. `datacats reload`
+4. `cd ckanext-harvest`
+5. `datacats paster harvester initdb`
+6. `datacats paster -d harvester gather_consumer`
+7. `datacats paster -d harvester fetch_consumer`
+8. Read the ckanext-harvest README to create a harvest job. 
+
 ### Booting
 1. In the repo directory `vagrant up`. 
 2. Point your web browser to 192.168.101.99 (the address of the VM)

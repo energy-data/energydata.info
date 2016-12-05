@@ -6,6 +6,14 @@
 	path=datapusher
 	url=https://github.com/energy-data/datapusher
 
+[submodule "ckanext-dcat"]
+  path=ckanext-dcat
+  url=https://github.com/ckan/ckanext-dcat
+
+[submodule "ckanext-harvest"]
+  path=ckanext-harvest
+  url=https://github.com/ckan/ckanext-harvest
+
 [submodule "ckanext-authkey"]
 	path = ckanext-authkey
 	url = https://github.com/developmentseed/ckanext-authkey
