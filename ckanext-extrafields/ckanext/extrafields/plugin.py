@@ -14,17 +14,18 @@ def country_names():
     except toolkit.ObjectNotFound: # It doesn't exist, create the vocab
         data = {'name': country_vocab}
         vocab = toolkit.get_action('vocabulary_create')(context, data)
-        country_names = [country.alpha3 for country in list(pycountry.countries)]
+        country_names = [country.alpha_3 for country in list(pycountry.countries)]
         for name in country_names:
             data = {'name': name, 'vocabulary_id': vocab['id']}
             toolkit.get_action('tag_create')(context, data)
-
     try:
         countries = toolkit.get_action('tag_list')(data_dict={'vocabulary_id': country_vocab})
         return countries
-    except:
-        toolkit.ObjectNotFound
+    except toolkit.ObjectNotFound:
         logging.debug('Could not find vocabulary')
+
+def country_code_to_name(country_code):
+    return pycountry.countries.get(alpha_3=country_code).name
 
 class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
@@ -41,7 +42,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # ITemplateHelpers
     def get_helpers(self):
-        return {'country_codes': country_names}
+        return {'country_codes': country_names, 'country_code_to_name': country_code_to_name}
 
     # IConfigurer
     def update_config(self, config_):
