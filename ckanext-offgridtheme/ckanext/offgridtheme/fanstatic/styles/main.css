@@ -8586,7 +8586,13 @@ h4 small {
 }
 @media (min-width: 768px) {
   .home-tools-list .tool-wrapper {
+    float: left;
     margin-bottom: 80px;
+    margin-right: 2%;
+    width: 49%;
+  }
+  .home-tools-list .tool-wrapper:nth-child(2n) {
+    margin-right: 0;
   }
 }
 .tool {
@@ -8599,20 +8605,9 @@ h4 small {
 .tool *::after {
   box-sizing: inherit;
 }
-@media (min-width: 768px) {
-  .tool {
-    display: table;
-  }
-}
 .tool-media,
 .tool-copy {
   vertical-align: top;
-}
-@media (min-width: 768px) {
-  .tool-media,
-  .tool-copy {
-    display: table-cell;
-  }
 }
 .tool-media {
   margin-bottom: 20px;
@@ -8621,19 +8616,6 @@ h4 small {
   display: block;
   width: 100%;
   height: auto;
-}
-@media (min-width: 768px) {
-  .tool-media {
-    width: 64%;
-    padding-right: 40px;
-    margin-bottom: 0;
-  }
-}
-@media (min-width: 768px) {
-  .tool-copy {
-    width: 36%;
-    vertical-align: middle;
-  }
 }
 .tool-media-screenshot {
   -webkit-border-radius: 4px 4px 2px 2px;
