@@ -102,10 +102,16 @@ ckan.plugins = datastore resource_proxy text_view recline_grid_view recline_grap
 # (plugins must be loaded in ckan.plugins)
 ckan.views.default_views = image_view text_view recline_view mvt_view
 
+## MVT extension
 # s3 config
 ckanext.mvt.s3.bucket = s3://BUCKET
 ckanext.mvt.s3.access_key = ACCESS_KEY
 ckanext.mvt.s3.secret_key = SECRET_KEY
+# The Mapbox config for the baselayers. It's possible to specify a list of map styles and labels, separated by space
+ckanext.mvt.mapbox.account = MAPBOX_ORGANIZATION
+ckanext.mvt.mapbox.key = MAPBOX_KEY
+ckanext.mvt.mapbox.style = cir6ljf470006bsmehhstmxeh cioenuwii001maznontujohu8
+ckanext.mvt.mapbox.style_label = Light Colored
 
 ## Front-End Settings
 ckan.site_title = Energy Maps
