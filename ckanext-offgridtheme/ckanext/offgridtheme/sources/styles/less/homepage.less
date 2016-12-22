@@ -99,12 +99,16 @@
     &:last-child {
       margin-bottom: 0;
     }
-
     @media (min-width: 768px) {
+      float: left;
       margin-bottom: 80px;
+      margin-right: 8%;
+      width: 46%;
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
     }
   }
-
 }
 
 .tool {
@@ -117,19 +121,11 @@
   *::after {
     box-sizing: inherit;
   }
-
-  @media (min-width: 768px) {
-    display: table;
-  }
 }
 
 .tool-media,
 .tool-copy {
   vertical-align: top;
-
-  @media (min-width: 768px) {
-    display: table-cell;
-  }
 }
 
 .tool-media {
@@ -140,19 +136,6 @@
     width: 100%;
     height: auto;
   }
-
-  @media (min-width: 768px) {
-    width: 64%;
-    padding-right: 40px;
-    margin-bottom: 0;
-  }
-}
-
-.tool-copy {
-  @media (min-width: 768px) {
-    width: 36%;
-    vertical-align: middle;
-  } 
 }
 
 .tool-media-screenshot {
