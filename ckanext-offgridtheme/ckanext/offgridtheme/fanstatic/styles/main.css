@@ -9075,6 +9075,7 @@ a.tool-media-screenshot:hover {
     box-shadow: none;
     padding-bottom: 0;
     margin-bottom: 0;
+    max-width: 560px;
   }
 }
 .footer-links-menu {
