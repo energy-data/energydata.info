@@ -10247,6 +10247,30 @@ a {
   }
 }
 /* ==========================================================================
+   Organization
+   ========================================================================== */
+/* Index
+   ========================================================================== */
+.primary-org-index .media-grid *,
+.primary-org-index .media-grid *::before,
+.primary-org-index .media-grid *::after {
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .primary-org-index .media-grid {
+    margin-left: -23px;
+  }
+}
+.primary-org-index .media-item {
+  text-align: center;
+  width: calc(100% - 30px);
+}
+@media (min-width: 768px) {
+  .primary-org-index .media-item {
+    width: calc(50% - 23px);
+  }
+}
+/* ==========================================================================
    Utilities
    ========================================================================== */
 /* Font smoothing
