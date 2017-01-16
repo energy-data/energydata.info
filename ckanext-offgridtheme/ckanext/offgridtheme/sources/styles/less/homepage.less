@@ -94,16 +94,22 @@
   padding: 0;
 
   .tool-wrapper {
-    margin-bottom: 40px;
+    margin-top: 40px;
 
-    &:last-child {
-      margin-bottom: 0;
+    &:first-child {
+      margin-top: 0;
     }
+
     @media (min-width: 768px) {
       float: left;
-      margin-bottom: 80px;
-      margin-right: 8%;
-      width: 46%;
+      margin-top: 80px;
+      margin-right: 4%;
+      width: 48%;
+
+      &:nth-child(2) {
+        margin-top: 0;
+      }
+
       &:nth-child(2n) {
         margin-right: 0;
       }

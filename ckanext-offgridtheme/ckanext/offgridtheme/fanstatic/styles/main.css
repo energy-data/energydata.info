@@ -8579,17 +8579,20 @@ h4 small {
   padding: 0;
 }
 .home-tools-list .tool-wrapper {
-  margin-bottom: 40px;
+  margin-top: 40px;
 }
-.home-tools-list .tool-wrapper:last-child {
-  margin-bottom: 0;
+.home-tools-list .tool-wrapper:first-child {
+  margin-top: 0;
 }
 @media (min-width: 768px) {
   .home-tools-list .tool-wrapper {
     float: left;
-    margin-bottom: 80px;
-    margin-right: 8%;
-    width: 46%;
+    margin-top: 80px;
+    margin-right: 4%;
+    width: 48%;
+  }
+  .home-tools-list .tool-wrapper:nth-child(2) {
+    margin-top: 0;
   }
   .home-tools-list .tool-wrapper:nth-child(2n) {
     margin-right: 0;
