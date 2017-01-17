@@ -3,9 +3,14 @@
 {% block meta %}
   {{ super() }}
 
-  <meta name="description" content="energydata.info is an innovation from the World Bank Group providing open data and open source analytics for a sustainable energy future." />
-  <meta name="twitter:image:src" content="https://energydata.info/images/meta/default-meta-image.png" />
+  <meta name="description" content="{{ g.site_description }}" />
+
+  <meta property="og:title" content="{{ g.site_title }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ h.full_current_url() }}" />
+  <meta property="og:description" content="{{ g.site_description }}" />
   <meta property="og:image" content="https://energydata.info/images/meta/default-meta-image.png" />
+  <meta name="twitter:image:src" content="https://energydata.info/images/meta/default-meta-image.png" />
 
   <link rel="apple-touch-icon" href="/images/meta/apple-touch-icon.png" />
   <link rel="apple-touch-icon" sizes="57x57" href="/images/meta/apple-touch-icon-57x57.png" />
