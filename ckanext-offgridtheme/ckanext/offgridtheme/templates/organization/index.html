@@ -30,7 +30,7 @@
   {% block organizations_list %}
     {% if c.page.items or request.params %}
       {% if c.page.items %}
-        {% snippet "organization/snippets/organization_list.html", organizations=c.page.items %}
+        {% snippet "organization/snippets/organization_list.html", organizations=h.custom_theme_exclude_orgs(c.page.items) %}
       {% endif %}
     {% else %}
       <p class="empty">
