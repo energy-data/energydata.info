@@ -30,7 +30,7 @@ def most_recent_datasets():
     return datasets
 
 def exclude_orgs_from_template(orgs):
-    orgs = [org for org in orgs if not is_excluded(org['display_name'])]
+    orgs = [org for org in orgs if not is_excluded(org['name'])]
     return orgs
 
 def resource_url_fix(resource_url, same_domain):
@@ -57,7 +57,7 @@ class CustomTheme(SingletonPlugin, toolkit.DefaultDatasetForm):
     def after_search(self, search_results, search_params):
         if (search_results['search_facets'].has_key('organization')):
             organizations = search_results['search_facets']['organization']['items']
-            new_orgs = [org for org in organizations if not is_excluded(org['display_name'])]
+            new_orgs = [org for org in organizations if not is_excluded(org['name'])]
             search_results['search_facets']['organization']['items'] = new_orgs
         return search_results
 
