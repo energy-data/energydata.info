@@ -9075,6 +9075,7 @@ a.tool-media-screenshot:hover {
     box-shadow: none;
     padding-bottom: 0;
     margin-bottom: 0;
+    max-width: 560px;
   }
 }
 .footer-links-menu {
@@ -10243,6 +10244,30 @@ a {
   }
   .inpage-body .prose li {
     line-height: 32px;
+  }
+}
+/* ==========================================================================
+   Organization
+   ========================================================================== */
+/* Index
+   ========================================================================== */
+.primary-org-index .media-grid *,
+.primary-org-index .media-grid *::before,
+.primary-org-index .media-grid *::after {
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .primary-org-index .media-grid {
+    margin-left: -23px;
+  }
+}
+.primary-org-index .media-item {
+  text-align: center;
+  width: calc(100% - 30px);
+}
+@media (min-width: 768px) {
+  .primary-org-index .media-item {
+    width: calc(50% - 23px);
   }
 }
 /* ==========================================================================

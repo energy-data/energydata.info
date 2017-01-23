@@ -1,6 +1,26 @@
-from ckan.plugins import toolkit, IConfigurer, ITemplateHelpers, SingletonPlugin, IRoutes, implements
+from ckan.plugins import toolkit, IConfigurer, ITemplateHelpers, SingletonPlugin, IRoutes, implements, IActions, IPackageController
 from urlparse import urlparse
+from ckan.logic import check_access
+from ckan.logic.action.get import _group_or_org_list
+
 import pylons.config as config
+
+import ckan.plugins.toolkit as toolkit
+
+def is_excluded(org):
+    exclusion_list = config.get('ckanext.theme.excluded_org_list').split(' ')
+    for item in exclusion_list:
+        if (item == org):
+            return True
+    return False
+
+def organization_list(context, data_dict):
+    check_access('organization_list', context, data_dict)
+    data_dict['groups'] = data_dict.pop('organizations', [])
+    data_dict.setdefault('type', 'organization')
+    org_list = _group_or_org_list(context, data_dict, is_org=True)
+    org_list = [org for org in org_list if not is_excluded(org)]
+    return org_list
 
 def most_recent_datasets():
     ''' Returns three most recently modified datasets'''
@@ -8,6 +28,10 @@ def most_recent_datasets():
         'limit': 3
     })
     return datasets
+
+def exclude_orgs_from_template(orgs):
+    orgs = [org for org in orgs if not is_excluded(org['display_name'])]
+    return orgs
 
 def resource_url_fix(resource_url, same_domain):
     '''
@@ -20,9 +44,22 @@ def resource_url_fix(resource_url, same_domain):
     else:
         return resource_url
 
-class CustomTheme(SingletonPlugin):
+
+class CustomTheme(SingletonPlugin, toolkit.DefaultDatasetForm):
     implements(IConfigurer)
     implements(ITemplateHelpers)
+    implements(IActions)
+    implements(IPackageController, inherit=True)
+
+    def before_search(self, search_params):
+        return search_params
+
+    def after_search(self, search_results, search_params):
+        if (search_results['search_facets'].has_key('organization')):
+            organizations = search_results['search_facets']['organization']['items']
+            new_orgs = [org for org in organizations if not is_excluded(org['display_name'])]
+            search_results['search_facets']['organization']['items'] = new_orgs
+        return search_results
 
     def update_config(self, config):
         # Override the templates according to http://docs.ckan.org/en/latest/theming/templates.html
@@ -37,6 +74,12 @@ class CustomTheme(SingletonPlugin):
         return {
             'custom_theme_most_recent_datasets': most_recent_datasets,
             'custom_theme_resource_url_fix': resource_url_fix,
+            'custom_theme_exclude_orgs': exclude_orgs_from_template
+        }
+
+    def get_actions(self):
+        return {
+            'organization_list': organization_list
         }
 
 class OffgridPages(SingletonPlugin):

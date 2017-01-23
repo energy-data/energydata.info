@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Organization
+   ========================================================================== */
+
+
+/* Index
+   ========================================================================== */
+
+.primary-org-index {
+
+  .media-grid {
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    @media (min-width: 768px) {
+      margin-left: -23px;
+    }
+  }
+
+  .media-item {
+    text-align: center;
+    width: ~"calc(100% - 30px)";
+
+    @media (min-width: 768px) {
+      width: ~"calc(50% - 23px)";
+    }
+  }
+}
