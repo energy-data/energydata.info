@@ -56,7 +56,7 @@ ckan.datastore.default_fts_index_method = gist
 
 ## Site Settings
 
-ckan.site_url = 192.169.101.99
+ckan.site_url = https://energydata.info
 #ckan.use_pylons_response_cleanup_middleware = true
 
 ## Authorization Settings
@@ -117,9 +117,9 @@ ckanext.mvt.mapbox.style_label = Light Colored
 ckanext.theme.excluded_org_list = test test2
 
 ## Front-End Settings
-ckan.site_title = Energy Maps
+ckan.site_title = Energy Data
 ckan.site_logo =
-ckan.site_description =
+ckan.site_description = Open data and analytics for a sustainable energy future. Energy Data is an innovation of the World Bank Group.
 ckan.favicon = /images/meta/favicon.ico
 ckan.gravatar_default = identicon
 ckan.preview.direct = png jpg gif
