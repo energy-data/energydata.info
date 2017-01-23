@@ -5,11 +5,12 @@
 
       <nav class="span8 footer-nav">
         <ul class="footer-links-menu">
-          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="View the apps page">Apps</a></li>
-          <li><a href="{{ h.url_for(controller='package', action='search') }}" title="View the datasets">Datasets</a></li>
+          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="View Apps">Apps</a></li>
+          <li><a href="{{ h.url_for(controller='package', action='search') }}" title="View Fatasets">Datasets</a></li>
+          <li><a href="{{ h.url_for(controller='organization', action='index') }}" title="View Organizations">Organizations</a></li>
           <li><a href="{{ h.url_for(controller='home', action='about') }}" title="About energydata.info">About</a></li>
-          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:TermsController', action='view') }}" title="Read the Terms of Use">Terms of Use</a></li>
-          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:PrivacyController', action='view') }}" title="View the Privacy Policy">Privacy Policy</a></li>
+          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:TermsController', action='view') }}" title="Read Terms of Use">Terms of Use</a></li>
+          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:PrivacyController', action='view') }}" title="View Privacy Policy">Privacy Policy</a></li>
           <li><a href="https://github.com/energy-data" title="Follow us on GitHub" target="_blank"><i class="icon-large icon-github"></i> GitHub</a></li>
         </ul>
       </nav>
