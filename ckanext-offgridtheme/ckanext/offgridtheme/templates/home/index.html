@@ -20,6 +20,99 @@
     </header>
     <div class="home-body">
 
+      <!-- Datasets -->
+      <section class="fold home-featured-datasets">
+        <header class="fold-header">
+          <div class="container">
+            <div class="fold-headline">
+              <h1 class="fold-title">Featured Datasets</h1>
+            </div>
+          </div>
+        </header>
+        <div class="fold-body">
+          <div class="container">
+            <ol class="home-datasets-list">
+              <li class="card-wrapper dataset-wrapper">
+                <article class="card card-dataset">
+                  <div class="card-inner">
+                    <div class="card-media">
+                      <div class="card-media-map">
+                        <!-- map goes here -->
+                      </div>
+                    </div>
+                    <div class="card-copy">
+                      <header class="card-header">
+                        <h1 class="card-title"><a href="https://energydata.info/dataset/ssa-aicd-electricity-transmission-network" title="View dataset">Sub-Saharan Africa - Electricity Transmission Network (2007)</a></h1>
+                        <p class="card-subtitle">Published by <a href="https://energydata.info/organization/world-bank-grou" title="View organization">World Bank Group</a></p>
+                      </header>
+                      <div class="card-body">
+                        <p>The Africa Infrastructure Country Diagnostic (AICD) was an unprecedented knowledge program on Africa’s infrastructure that grew out of the pledge by the G8 Summit of 2005 at Gleneagles to substantially increase ODA assistance to Africa...</p>
+                      </div>
+                      <div class="dataset-cta">
+                        <a href="https://energydata.info/dataset/ssa-aicd-electricity-transmission-network" title="View datset" class="btn btn-medium btn-primary-ghost">View dataset</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </li>
+
+              <li class="card-wrapper dataset-wrapper">
+                <article class="card card-dataset">
+                  <div class="card-inner">
+                    <div class="card-media">
+                      <div class="card-media-map">
+                        <!-- map goes here -->
+                      </div>
+                    </div>
+                    <div class="card-copy">
+                      <header class="card-header">
+                        <h1 class="card-title"><a href="https://energydata.info/dataset/kano-electricity-distribution-plc-kedco-mv-lines-2016" title="View dataset">Nigeria - Kano Electricity Distribution Company - Grid Map (2016)</a></h1>
+                        <p class="card-subtitle">Published by <a href="https://energydata.info/organization/columbia-university-earth-institute" title="View organization">Columbia University Earth Institute</a></p>
+                      </header>
+                      <div class="card-body">
+                        <p>Data collected as input to the geospatial least-cost planning for universal electricity access by 2030 developed as part of the ESMAP funded World Bank Nigeria Electricity Access Project (NEAP).</p>
+                      </div>
+                      <div class="dataset-cta">
+                        <a href="https://energydata.info/dataset/kano-electricity-distribution-plc-kedco-mv-lines-2016" title="View datset" class="btn btn-medium btn-primary-ghost">View dataset</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </li>
+
+              <li class="card-wrapper dataset-wrapper">
+                <article class="card card-dataset">
+                  <div class="card-inner">
+                    <div class="card-media">
+                      <a href="https://energydata.info/dataset/making-power-affordable-for-africa-and-viable-for-its-utilities" title="View dataset" class="card-media-screenshot">
+                        <img alt="Dataset screenshot" width="1188" height="668" src="/images/content/dataset-thumb-ssa-utilities.jpg" />
+                      </a>
+                    </div>
+                    <div class="card-copy">
+                      <header class="card-header">
+                        <h1 class="card-title"><a href="https://energydata.info/dataset/making-power-affordable-for-africa-and-viable-for-its-utilities" title="View dataset">Sub-Saharan Africa - Utilities Technical, Financial, and Tariff Databases (2016)</a></h1>
+                        <p class="card-subtitle">Published by <a href="https://energydata.info/organization/world-bank-grou" title="View organization">World Bank Group</a></p>
+                      </header>
+                      <div class="card-body">
+                        <p>The databases contain all the technical, financial, and tariff data collected through the study "Making power affordable in Africa and viable for its utilities."</p>
+                      </div>
+                      <div class="dataset-cta">
+                        <a href="https://energydata.info/dataset/making-power-affordable-for-africa-and-viable-for-its-utilities" title="View datset" class="btn btn-medium btn-primary-ghost">View dataset</a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            </ol>
+            <div class="fold-cta">
+              <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--/ Datasets -->
+
+      <!-- Apps -->
       <section class="fold home-featured-tools">
         <header class="fold-header">
           <div class="container">
@@ -47,7 +140,7 @@
                       <p>Open source application to estimate market opportunities for off-grid energy services in Sub-Saharan Africa.</p>
                     </div>
                     <div class="tool-cta">
-                      <a href="http://offgrid.energydata.info" title="Visit Off-Grid Market Opportunities Tool" target="_blank" class="btn btn-large btn-primary-ghost">View app</a>
+                      <a href="http://offgrid.energydata.info" title="Visit Off-Grid Market Opportunities Tool" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
                     </div>
                   </div>
                 </article>
@@ -69,7 +162,7 @@
                       <p>Access solar power potential globally and perform simple electricity output calculation for any given location.</p>
                     </div>
                     <div class="tool-cta">
-                      <a href="http://globalsolaratlas.info/" title="Visit the Global Solar Atlas" target="_blank" class="btn btn-large btn-primary-ghost">View app</a>
+                      <a href="http://globalsolaratlas.info/" title="Visit the Global Solar Atlas" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
                     </div>
                   </div>
                 </article>
@@ -91,7 +184,7 @@
                       <p>Estimate the mix of technologies that will provide universal electricity access at the lowest cost. Works only on Chrome, Firefox and Safari.</p>
                     </div>
                     <div class="tool-cta">
-                      <a href="http://un-desa-modelling.github.io/electrification-paths-visualisation/" target="_blank" title="Visit the Electrification Paths Visualization" class="btn btn-large btn-primary-ghost">View app</a>
+                      <a href="http://un-desa-modelling.github.io/electrification-paths-visualisation/" target="_blank" title="Visit the Electrification Paths Visualization" class="btn btn-medium btn-primary-ghost">View app</a>
                     </div>
                   </div>
                 </article>
@@ -113,7 +206,7 @@
                       <p>Monitor rural electrification in 600,000 villages over twenty years. From space.</p>
                     </div>
                     <div class="tool-cta">
-                      <a href="http://india.nightlights.io/" title="Visit India Night Lights" target="_blank" class="btn btn-large btn-primary-ghost">View app</a>
+                      <a href="http://india.nightlights.io/" title="Visit India Night Lights" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
                     </div>
                   </div>
                 </article>
@@ -122,7 +215,9 @@
           </div>
         </div>
       </section>
+      <!--/ Apps -->
 
+      <!-- Contribute -->
       <section class="fold home-contribute">
         <header class="fold-header">
           <div class="container">
@@ -142,56 +237,8 @@
           </div>
         </div>
       </section>
+      <!--/ Contribute -->
 
-      {% set most_recent_datasets = h.custom_theme_most_recent_datasets() %}
-      {% if most_recent_datasets %}
-      <section class="fold home-featured-datasets">
-        <header class="fold-header">
-          <div class="container">
-            <div class="fold-headline">
-              <h1 class="fold-title">Recent Datasets</h1>
-            </div>
-          </div>
-        </header>
-        <div class="fold-body">
-          <div class="container">
-            <ol class="home-datasets-list">
-              {% for dataset in most_recent_datasets %}
-                {% set notes = h.markdown_extract(dataset.notes, extract_length=180) %}
-                <li class="card-wrapper dataset-wrapper">
-                  <article class="card card-dataset">
-                    <header class="card-header">
-                      <h1 class="card-title"><a href="/dataset/{{ dataset.name }}" title="View dataset"> {{ dataset.title }}</a></h1>
-                      <!-- <p class="card-subtitle"><strong>Category:</strong> Energy Access</p> -->
-                    </header>
-                    <div class="card-body">
-                      {% if notes %}
-                      <p>{{ notes|urlize }}</p>
-                      {% else %}
-                      <p class="empty">{{ _("This dataset has no description") }}</p>
-                      {% endif %}
-                    </div>
-                    <footer class="card-footer">
-                      <dl class="dataset-tags">
-                        <dt>Tags</dt>
-                        {% for resource in h.dict_list_reduce(dataset.resources, 'format') %}
-                        <li>
-                          <dd><a href="{{ h.url_for(controller='package', action='read', id=dataset.name) }}" data-format="{{ resource.lower() }}">{{ resource }}</a></dd>
-                        </li>
-                        {% endfor %}
-                      </dl>
-                    </footer>
-                  </article>
-                </li>
-              {% endfor %}
-            </ol>
-            <div class="fold-cta">
-              <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      {% endif %}
     </div>
   </section>
 {% endblock %}
