@@ -20,6 +20,9 @@
     </header>
     <div class="home-body">
 
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
+
       <!-- Datasets -->
       <section class="fold home-featured-datasets">
         <header class="fold-header">
@@ -37,7 +40,7 @@
                   <div class="card-inner">
                     <div class="card-media">
                       <div class="card-media-map">
-                        <!-- map goes here -->
+                        <div id="ssa-aicd-electricity-map" class="data-map"></div>
                       </div>
                     </div>
                     <div class="card-copy">
@@ -61,7 +64,11 @@
                   <div class="card-inner">
                     <div class="card-media">
                       <div class="card-media-map">
-                        <!-- map goes here -->
+
+                        <div id="kano-electricity-distribution-map" class="data-map"></div>
+
+                        <script src="/scripts/maps.js"></script>
+
                       </div>
                     </div>
                     <div class="card-copy">

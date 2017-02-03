@@ -8845,6 +8845,10 @@ a.tool-media-screenshot:hover {
 .card-body > *:last-child {
   margin-bottom: 0;
 }
+.data-map {
+  width: 100%;
+  height: 100%;
+}
 .account-masthead {
   *zoom: 1;
   min-height: 30px;
