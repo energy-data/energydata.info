@@ -2,6 +2,86 @@
 
 {% block subtitle %}{{ _("Welcome") }}{% endblock %}
 
+{% block scripts %}
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZ3NkcG0iLCJhIjoiY2lqbmN5eG9mMDBndHVmbTU5Mmg1djF6MiJ9.QqFCD7tcmccysN8GUClW8w';
+
+  var dataset_1 = 'https://test-offgrid-mvt.s3.amazonaws.com/tiles/9ed80b03-c9d0-4938-b261-0272569ab7ec-c62c2369-2a54-4536-a249-d920571b2b3f/data.tilejson';
+  var dataset_2 = 'https://test-offgrid-mvt.s3.amazonaws.com/tiles/1cc8fa80-49ba-4e66-b696-f99843a5f540-9987da1a-123e-4d38-8986-f465c1864a88/data.tilejson';
+
+  var map_1 = new mapboxgl.Map({
+      container: 'ssa-aicd-electricity-map',
+      style: 'mapbox://styles/mapbox/light-v9',
+      center: [60, 2.867],
+      zoom: 1.5
+  })
+
+  var map_2 = new mapboxgl.Map({
+      container: 'kano-electricity-distribution-map',
+      style: 'mapbox://styles/mapbox/light-v9',
+      center: [60, 2.867],
+      zoom: 1.5
+  })
+
+  attachDataToMap(map_1, dataset_1)
+  attachDataToMap(map_2, dataset_2)
+
+  function attachDataToMap(map_id, tilejson) {
+    map_id.on('load', function () {
+      fetch(tilejson)
+      .then(function (response) {
+        return response.json()
+      }).then(function (tilejson) {
+        layer = tilejson;
+        layer.type = 'vector'
+        addData(map_id);
+      })
+    });
+  }
+
+  function addData(map_id) {
+    map_id.addSource('data', layer);
+    map_id.fitBounds([[layer.bounds[0], layer.bounds[1]], [layer.bounds[2], layer.bounds[3]]], {padding: 20})
+  }
+
+  map_1.on('source.load', function (e) {
+    addToMap(map_1)
+  })
+  map_2.on('source.load', function (e) {
+    addToMap(map_2)
+  })
+
+  function addToMap(map_id){
+    map_id.addLayer({
+      "id": "data",
+      "type": "line",
+      "source": "data",
+      "source-layer": "data_layer",
+      "layout": {
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      "paint": {
+        "line-color": "rgb(34, 166, 245)",
+        "line-width": 1
+      }
+    });
+    map_id.addLayer({
+      "id": "points",
+      "type": "circle",
+      "source": "data",
+      "source-layer": "data_layer",
+      "filter": ["==", "$type", "Point"],
+      "paint": {
+        "circle-color": "#ff69b4",
+        "circle-radius": 2
+      }
+    });
+  }
+</script>
+
+{% endblock %}
+
 {% block maintag %}{% endblock %}
 {% block toolbar %}{% endblock %}
 
@@ -66,8 +146,6 @@
                       <div class="card-media-map">
 
                         <div id="kano-electricity-distribution-map" class="data-map"></div>
-
-                        <script src="/scripts/maps.js"></script>
 
                       </div>
                     </div>
