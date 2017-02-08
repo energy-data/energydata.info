@@ -117,9 +117,9 @@ ckanext.mvt.mapbox.style_label = Light Colored
 ckanext.theme.excluded_org_list = test test2
 
 ## Front-End Settings
-ckan.site_title = Energy Data
+ckan.site_title = energydata.info
 ckan.site_logo =
-ckan.site_description = Open data and analytics for a sustainable energy future. Energy Data is an innovation of the World Bank Group.
+ckan.site_description = Open data and analytics for a sustainable energy future. energydata.info is an innovation of the World Bank Group.
 ckan.favicon = /images/meta/favicon.ico
 ckan.gravatar_default = identicon
 ckan.preview.direct = png jpg gif
