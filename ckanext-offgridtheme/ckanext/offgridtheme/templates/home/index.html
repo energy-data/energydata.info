@@ -26,57 +26,47 @@
   attachDataToMap(map_1, dataset_1)
   attachDataToMap(map_2, dataset_2)
 
-  function attachDataToMap(map_id, tilejson) {
-    map_id.on('load', function () {
+  function attachDataToMap(theMap, tilejson) {
+    theMap.on('load', function () {
       fetch(tilejson)
       .then(function (response) {
         return response.json()
       }).then(function (tilejson) {
         layer = tilejson;
         layer.type = 'vector'
-        addData(map_id);
+        theMap.addSource('data', layer)
+        theMap.fitBounds([[layer.bounds[0], layer.bounds[1]], [layer.bounds[2], layer.bounds[3]]], {padding: 20})
       })
-    });
-  }
+    })
 
-  function addData(map_id) {
-    map_id.addSource('data', layer);
-    map_id.fitBounds([[layer.bounds[0], layer.bounds[1]], [layer.bounds[2], layer.bounds[3]]], {padding: 20})
-  }
-
-  map_1.on('source.load', function (e) {
-    addToMap(map_1)
-  })
-  map_2.on('source.load', function (e) {
-    addToMap(map_2)
-  })
-
-  function addToMap(map_id){
-    map_id.addLayer({
-      "id": "data",
-      "type": "line",
-      "source": "data",
-      "source-layer": "data_layer",
-      "layout": {
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "rgb(34, 166, 245)",
-        "line-width": 1
-      }
-    });
-    map_id.addLayer({
-      "id": "points",
-      "type": "circle",
-      "source": "data",
-      "source-layer": "data_layer",
-      "filter": ["==", "$type", "Point"],
-      "paint": {
-        "circle-color": "#ff69b4",
-        "circle-radius": 2
-      }
-    });
+    theMap.on('source.load', function (e) {
+      if (!theMap.getSource('data')) return
+      theMap.addLayer({
+        'id': 'data',
+        'type': 'line',
+        'source': 'data',
+        'source-layer': 'data_layer',
+        'layout': {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        'paint': {
+          'line-color': 'rgb(34, 166, 245)',
+          'line-width': 1
+        }
+      })
+      theMap.addLayer({
+        'id': 'points',
+        'type': 'circle',
+        'source': 'data',
+        'source-layer': 'data_layer',
+        'filter': ['==', '$type', 'Point'],
+        'paint': {
+          'circle-color': '#ff69b4',
+          'circle-radius': 2
+        }
+      })
+    })
   }
 </script>
 
