@@ -8767,6 +8767,7 @@ a.tool-media-screenshot:hover {
 .card-media {
   position: relative;
   overflow: hidden;
+  margin: -1px;
 }
 .card-media img {
   position: relative;
@@ -8774,6 +8775,15 @@ a.tool-media-screenshot:hover {
   width: 100%;
   height: auto;
   display: block;
+}
+.card-media::before {
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  content: '';
 }
 @media (min-width: 768px) {
   .card-media {
@@ -8786,11 +8796,15 @@ a.tool-media-screenshot:hover {
 @media (min-width: 768px) {
   .card-media-screenshot {
     position: absolute;
-    width: 140%;
+    width: 106%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+.data-map {
+  width: 100%;
+  height: 100%;
 }
 .card-media-map {
   width: 100%;
@@ -8844,10 +8858,6 @@ a.tool-media-screenshot:hover {
 }
 .card-body > *:last-child {
   margin-bottom: 0;
-}
-.data-map {
-  width: 100%;
-  height: 100%;
 }
 .account-masthead {
   *zoom: 1;
