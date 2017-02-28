@@ -89,8 +89,10 @@
 }
 
 .home-tools-list {
+  overflow: hidden;
   list-style: none;
-  margin: 0;
+  width: 100%;
+  margin: 0 0 40px 0;
   padding: 0;
 
   .tool-wrapper {
@@ -275,14 +277,7 @@ a.tool-media-screenshot {
 
 .card-inner {
   @media (min-width: 768px) {
-    display: flex;
     min-height: 320px;
-  }
-
-  > * {
-    @media (min-width: 768px) {
-      flex: 1 1 auto;
-    }
   }
 }
 
@@ -291,7 +286,6 @@ a.tool-media-screenshot {
   
   @media (min-width: 768px) {
     align-self: center;
-    width: 44%;
   }
 }
 
@@ -299,6 +293,7 @@ a.tool-media-screenshot {
   position: relative;
   overflow: hidden;
   margin: -1px;
+  height: 250px;
   
   img {
     position: relative;
@@ -316,10 +311,6 @@ a.tool-media-screenshot {
     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
     pointer-events: none;
     content: '';
-  }
-
-  @media (min-width: 768px) {
-    width: 56%;
   }
 }
 
