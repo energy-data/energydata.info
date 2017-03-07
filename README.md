@@ -10,6 +10,7 @@
 
 ### Initial provisioning
 1. Clone this repo
+2. `cd energydata.info`
 2. `git submodule update --init --recursive` 
 2. Copy `development.ini.sample` to `development.ini`
 3. Change variables in development.ini:
@@ -18,7 +19,9 @@
    - ckanext.s3.*
    - Configure smtp for email
 4. Start the VM with `vagrant up`
-5. `vagrant ssh` to ssh into the VM
+5. `vagrant ssh` to ssh into the VM.
+5. Fix the permissions: `sudo usermod -aG docker $(whoami) && newgrp docker`
+   (this should be done by build_box.sh, but currently fails)
 6. `source venv/bin/activate` which will allow you to use the datacats command
 7. `cd /vagrant`
 8. `datacats init` to initialize the environment and choose an admin password
