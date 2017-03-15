@@ -34,7 +34,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IFacets)
 
-    
+    # IPackageController
     def before_search(self, search_params):
         if search_params.has_key('facet.field') and ('vocab_country_names' not in search_params['facet.field']):
             search_params['facet.field'].append('vocab_country_names')
@@ -56,7 +56,23 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'country_code': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')(country_vocab)
-            ]
+            ],
+            'ref_system': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_extras')
+            ],
+            'release_date': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_extras')
+            ],
+            'start_date': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_extras')
+            ],
+            'end_date': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_extras')
+            ],
         })
         return schema
 
@@ -78,7 +94,19 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         schema.update({
             'country_code': [
                 toolkit.get_converter('convert_from_tags')(country_vocab),
-                toolkit.get_validator('ignore_missing')]
+                toolkit.get_validator('ignore_missing')],
+            'ref_system': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'release_date': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'start_date': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'end_date': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
         })
         return schema
 
@@ -91,6 +119,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
+        facets_dict.pop('tags')
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
