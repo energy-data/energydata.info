@@ -23,8 +23,10 @@
   {{ multiselect('topic', label=_('Topic'), options=h.topic_options(), selected=data.get('topic', []), error=errors.topic, attrs={'data-module': 'autocomplete', 'maximumSelectionSize': 3}) }}
 
   {# Country #}
-  <!-- Multiselect -->
   {{ multiselect('country_code', label=_('Country'), options=h.country_options(), selected=data.get('country_code', []), error=errors.country_code, attrs={'data-module': 'autocomplete'}) }}
+
+  {# Region #}
+  {{ multiselect('region', label=_('Region'), options=h.region_options(), selected=data.get('region', []), error=errors.region, attrs={'data-module': 'autocomplete'}) }}
 
   {{ super() }}
 

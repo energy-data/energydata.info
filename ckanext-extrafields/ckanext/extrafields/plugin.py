@@ -27,6 +27,9 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 'country_options': helpers.country_options,
                 'topics': helpers.topics,
                 'topic_options': helpers.topic_options,
+                'regions': helpers.regions,
+                'region_code_to_name': helpers.region_code_to_name,
+                'region_options': helpers.region_options,
                 }
 
     # IConfigurer
@@ -45,6 +48,10 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'country_code': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')(helpers.country_vocab)
+            ],
+            'region': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_tags')(helpers.region_vocab)
             ],
             'ref_system': [
                 toolkit.get_validator('ignore_missing'),
@@ -89,6 +96,10 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 toolkit.get_converter('convert_from_tags')(
                     helpers.country_vocab),
                 toolkit.get_validator('ignore_missing')],
+            'region': [
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.region_vocab),
+                toolkit.get_validator('ignore_missing')],
             'ref_system': [
                 toolkit.get_converter('convert_from_extras'),
                 toolkit.get_validator('ignore_missing')],
@@ -113,6 +124,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
+        facets_dict['vocab_regions'] = plugins.toolkit._('Region')
         facets_dict.pop('tags')
         facets_dict['vocab_topics'] = plugins.toolkit._('Topic')
         return facets_dict

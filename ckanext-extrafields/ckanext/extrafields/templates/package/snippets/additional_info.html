@@ -31,6 +31,22 @@
       </tr>
   {% endif %}
 
+  {% set region_codes = pkg_dict.get('region') %}
+  {% if region_codes %}
+      <tr rel="dc:relation" resource="_:country">
+        <th scope="row" class="dataset-label" property="rdfs:label">Region</th>
+        <td class="dataset-details" property="rdf:value">
+          {% for code in region_codes %}
+            {{ h.region_code_to_name(code) }}
+            {%- if not loop.last -%}
+              ;
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+  {% endif %}
+
+
   {% for printable_key, extra_key in (('Coordinate Reference System', 'ref_system'), ('Published year', 'release_date'), ('Start date', 'start_date'), ('End date', 'end_date')) %}
     {% set value = pkg_dict.get(extra_key) %}
     {% if value %}
