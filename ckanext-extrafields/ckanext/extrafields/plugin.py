@@ -57,7 +57,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             ],
             'status': [
                 toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_tags')(helpers.status_vocab)
+                toolkit.get_converter('convert_to_extras')
             ],
             'ref_system': [
                 toolkit.get_validator('ignore_missing'),
@@ -107,8 +107,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                     helpers.region_vocab),
                 toolkit.get_validator('ignore_missing')],
             'status': [
-                toolkit.get_converter('convert_from_tags')(
-                    helpers.status_vocab),
+                toolkit.get_converter('convert_from_extras'),
                 toolkit.get_validator('ignore_missing')],
             'ref_system': [
                 toolkit.get_converter('convert_from_extras'),
