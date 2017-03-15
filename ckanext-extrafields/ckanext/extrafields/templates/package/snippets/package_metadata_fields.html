@@ -2,20 +2,32 @@
 
 {% import 'macros/form.html' as form %}
 
+{# Multi-select control (based on select() in macros/form.html ) #}
+{% macro multiselect(name, id='', label='', options='', selected='', error='', classes=[], attrs={}, is_required=false) %}
+  {% set classes = (classes|list) %}
+  {% do classes.append('control-select') %}
+
+  {%- set extra_html = caller() if caller -%}
+  {% call form.input_block(id or name, label or name, error, classes, extra_html=extra_html, is_required=is_required) %}
+    <select multiple id="{{ id or name }}" name="{{ name }}" {{ form.attributes(attrs) }}>
+      {% for option in options %}
+        <option value="{{ option.value }}"{% if option.value in selected %} selected{% endif %}>{{ option.name or option.value }}</option>
+      {% endfor %}
+    </select>
+  {% endcall %}
+{% endmacro %}
+
 {% block package_metadata_fields_url %}
 
-  <div class="control-group">
-    <label class="control-label" for="field-country_code">{{ _("Country") }}</label>
-    <div class="controls">
-      <select multiple id="field-country_code" name="country_code" data-module="autocomplete">
-        {% for country_code in h.country_codes()  %}
-          <option value="{{ country_code }}" {% if country_code in data.get('country_code', []) %}selected="selected"{% endif %}>{{ h.country_code_to_name(country_code) }}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
+  {# Topic #}
+  {{ multiselect('topic', label=_('Topic'), options=h.topic_options(), selected=data.get('topic', []), error=errors.topic, attrs={'data-module': 'autocomplete', 'maximumSelectionSize': 3}) }}
+
+  {# Country #}
+  <!-- Multiselect -->
+  {{ multiselect('country_code', label=_('Country'), options=h.country_options(), selected=data.get('country_code', []), error=errors.country_code, attrs={'data-module': 'autocomplete'}) }}
 
   {{ super() }}
+
 
 {% endblock %}
 

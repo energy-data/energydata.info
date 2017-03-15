@@ -1,6 +1,36 @@
 {% ckan_extends %}
 
 {% block extras scoped %}
+  {% set topics = pkg_dict.get('topic') %}
+  {% if topics %}
+      <tr rel="dc:relation" resource="_:country">
+        <th scope="row" class="dataset-label" property="rdfs:label">Topic</th>
+        <td class="dataset-details" property="rdf:value">
+          {% for topic in topics %}
+            {{ topic }}
+            {%- if not loop.last -%}
+              ;
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+  {% endif %}
+
+  {% set country_codes = pkg_dict.get('country_code') %}
+  {% if country_codes %}
+      <tr rel="dc:relation" resource="_:country">
+        <th scope="row" class="dataset-label" property="rdfs:label">Country</th>
+        <td class="dataset-details" property="rdf:value">
+          {% for code in country_codes %}
+            {{ h.country_code_to_name(code) }}
+            {%- if not loop.last -%}
+              ;
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+  {% endif %}
+
   {% for printable_key, extra_key in (('Coordinate Reference System', 'ref_system'), ('Published year', 'release_date'), ('Start date', 'start_date'), ('End date', 'end_date')) %}
     {% set value = pkg_dict.get(extra_key) %}
     {% if value %}

@@ -1,31 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-import pycountry
+import helpers
 
-country_vocab = 'country_names'
-
-def country_names():
-    # Create the tag vocabulary if it doesn't exist
-    user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
-    context = {'user': user['name']}
-    try: # Check if the vocab exists
-        data = {'id': country_vocab}
-        toolkit.get_action('vocabulary_show')(context, data)
-    except toolkit.ObjectNotFound: # It doesn't exist, create the vocab
-        data = {'name': country_vocab}
-        vocab = toolkit.get_action('vocabulary_create')(context, data)
-        country_names = [country.alpha_3 for country in list(pycountry.countries)]
-        for name in country_names:
-            data = {'name': name, 'vocabulary_id': vocab['id']}
-            toolkit.get_action('tag_create')(context, data)
-    try:
-        countries = toolkit.get_action('tag_list')(data_dict={'vocabulary_id': country_vocab})
-        return countries
-    except toolkit.ObjectNotFound:
-        logging.debug('Could not find vocabulary')
-
-def country_code_to_name(country_code):
-    return pycountry.countries.get(alpha_3=country_code).name
 
 class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
@@ -40,9 +16,18 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             search_params['facet.field'].append('vocab_country_names')
         return search_params
 
+    def before_index(self, pkg_dict):
+        return pkg_dict
+
+
     # ITemplateHelpers
     def get_helpers(self):
-        return {'country_codes': country_names, 'country_code_to_name': country_code_to_name}
+        return {'country_codes': helpers.country_names,
+                'country_code_to_name': helpers.country_code_to_name,
+                'country_options': helpers.country_options,
+                'topics': helpers.topics,
+                'topic_options': helpers.topic_options,
+                }
 
     # IConfigurer
     def update_config(self, config_):
@@ -53,9 +38,13 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # IDatasetForm
     def _modify_package_schema(self, schema):
         schema.update({
+            'topic': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_tags')(helpers.topic_vocab)
+            ],
             'country_code': [
                 toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_tags')(country_vocab)
+                toolkit.get_converter('convert_to_tags')(helpers.country_vocab)
             ],
             'ref_system': [
                 toolkit.get_validator('ignore_missing'),
@@ -92,8 +81,13 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         schema['tags']['__extras'].append(toolkit.get_converter('free_tags_only'))
 
         schema.update({
+            'topic': [
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.topic_vocab),
+                toolkit.get_validator('ignore_missing')],
             'country_code': [
-                toolkit.get_converter('convert_from_tags')(country_vocab),
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.country_vocab),
                 toolkit.get_validator('ignore_missing')],
             'ref_system': [
                 toolkit.get_converter('convert_from_extras'),
@@ -120,6 +114,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def dataset_facets(self, facets_dict, package_type):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
         facets_dict.pop('tags')
+        facets_dict['vocab_topics'] = plugins.toolkit._('Topic')
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
