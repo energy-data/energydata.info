@@ -47,7 +47,7 @@
   {% endif %}
 
 
-  {% for printable_key, extra_key in (('Coordinate Reference System', 'ref_system'), ('Published year', 'release_date'), ('Start date', 'start_date'), ('End date', 'end_date')) %}
+  {% for printable_key, extra_key in (('Status', 'status'), ('Coordinate Reference System', 'ref_system'), ('Published year', 'release_date'), ('Start date', 'start_date'), ('End date', 'end_date')) %}
     {% set value = pkg_dict.get(extra_key) %}
     {% if value %}
       <tr rel="dc:relation" resource="_:extra{{ i }}">

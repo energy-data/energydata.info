@@ -28,6 +28,9 @@
   {# Region #}
   {{ multiselect('region', label=_('Region'), options=h.region_options(), selected=data.get('region', []), error=errors.region, attrs={'data-module': 'autocomplete'}) }}
 
+  {# Status #}
+  {{ form.select('status', label=_('Status'), options=h.status_options(), selected=data.get('status'), error=errors.status) }}
+
   {{ super() }}
 
 

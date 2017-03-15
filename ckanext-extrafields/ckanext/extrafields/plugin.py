@@ -30,6 +30,8 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 'regions': helpers.regions,
                 'region_code_to_name': helpers.region_code_to_name,
                 'region_options': helpers.region_options,
+                'statuses': helpers.statuses,
+                'status_options': helpers.status_options,
                 }
 
     # IConfigurer
@@ -52,6 +54,10 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'region': [
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_tags')(helpers.region_vocab)
+            ],
+            'status': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_tags')(helpers.status_vocab)
             ],
             'ref_system': [
                 toolkit.get_validator('ignore_missing'),
@@ -100,6 +106,10 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 toolkit.get_converter('convert_from_tags')(
                     helpers.region_vocab),
                 toolkit.get_validator('ignore_missing')],
+            'status': [
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.status_vocab),
+                toolkit.get_validator('ignore_missing')],
             'ref_system': [
                 toolkit.get_converter('convert_from_extras'),
                 toolkit.get_validator('ignore_missing')],
@@ -127,6 +137,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         facets_dict['vocab_regions'] = plugins.toolkit._('Region')
         facets_dict.pop('tags')
         facets_dict['vocab_topics'] = plugins.toolkit._('Topic')
+        facets_dict['vocab_statuses'] = plugins.toolkit._('Status')
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
