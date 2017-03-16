@@ -38,16 +38,19 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # IDatasetForm
     def _modify_package_schema(self, schema):
+        from validators import (not_both_empty, year, yyyy_or_dd_mon_yyyy,
+                                max_items)
         not_missing = toolkit.get_validator('not_missing')
         not_empty = toolkit.get_validator('not_empty')
         ignore_missing = toolkit.get_validator('ignore_missing')
         convert_to_tags = toolkit.get_converter('convert_to_tags')
         convert_to_extras = toolkit.get_converter('convert_to_extras')
         schema.update({
-            'title': [not_missing, not_empty, unicode],  # i.e. required, although still seems to populate it with the name
-            'notes': [not_missing, not_empty, unicode],  # i.e. required
+            'title': [not_empty, unicode],
+            'notes': [not_empty, unicode],
             'topic': [
                 ignore_missing,
+                max_items(3),
                 convert_to_tags(helpers.topic_vocab)
             ],
             'country_code': [
@@ -68,14 +71,17 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             ],
             'release_date': [
                 ignore_missing,
+                year,
                 convert_to_extras
             ],
             'start_date': [
                 ignore_missing,
+                yyyy_or_dd_mon_yyyy,
                 convert_to_extras
             ],
             'end_date': [
                 ignore_missing,
+                yyyy_or_dd_mon_yyyy,
                 convert_to_extras
             ],
             'group': [
@@ -156,19 +162,3 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
         return facets_dict
 
-
-def not_both_empty(other_key, other_key_displayable):
-
-    def callable(key, data, errors, context):
-        import ckan.lib.navl.dictization_functions as df
-        StopOnError = df.StopOnError
-
-        value = data.get(key)
-        other_value = data.get(key[:-1] + (other_key,))
-        if not (value or other_value):
-            errors[key].append(
-                plugins.toolkit._('Missing value (alternatively specify a %s)')
-                % other_key_displayable)
-            raise StopOnError
-
-    return callable
