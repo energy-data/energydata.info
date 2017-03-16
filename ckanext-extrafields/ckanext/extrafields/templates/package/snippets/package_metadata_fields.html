@@ -23,10 +23,18 @@
   {{ multiselect('topic', label=_('Topic'), options=h.topic_options(), selected=data.get('topic', []), error=errors.topic, attrs={'data-module': 'autocomplete', 'maximumSelectionSize': 3}) }}
 
   {# Country #}
-  {{ multiselect('country_code', label=_('Country'), options=h.country_options(), selected=data.get('country_code', []), error=errors.country_code, attrs={'data-module': 'autocomplete'}) }}
+  {% call multiselect('country_code', label=_('Country'), options=h.country_options(), selected=data.get('country_code', []), error=errors.country_code, attrs={'data-module': 'autocomplete'}) %}
+    <span class="info-block info-inline">
+      <span title="{{ _("Select at least one country or region") }}" class="control-required">*</span> Select at least one country or region
+    </span>
+  {% endcall %}
 
   {# Region #}
-  {{ multiselect('region', label=_('Region'), options=h.region_options(), selected=data.get('region', []), error=errors.region, attrs={'data-module': 'autocomplete'}) }}
+  {% call multiselect('region', label=_('Region'), options=h.region_options(), selected=data.get('region', []), error=errors.region, attrs={'data-module': 'autocomplete'}) %}
+    <span class="info-block info-inline">
+      <span title="{{ _("Select at least one country or region") }}" class="control-required">*</span> Select at least one country or region
+    </span>
+  {% endcall %}
 
   {# Status #}
   {{ form.select('status', label=_('Status'), options=h.status_options(), selected=data.get('status'), error=errors.status) }}
@@ -40,32 +48,32 @@
   <input id="field-maintainer" type="hidden" name="maintainer" value="{{data.maintainer}}" />
   <input id="field-maintainer-email" type="hidden" name="maintainer_email" value="{{data.maintainer_email}}" />
 
-  {% call form.input('release_date', label=_('Published year'), id='field-release_date', placeholder=_('2010'), value=data.release_date, error=errors.release_date, classes=['control-medium']) %}
+  {% call form.input('release_date', label=_('Published year'), id='field-release_date', placeholder=_('eg. 2010'), value=data.release_date, error=errors.release_date) %}
     <span class="info-block info-inline">
       Publish date of source data
     </span>
   {% endcall %}
 
-  {% call form.input('start_date', label=_('Start date'), id='field-start_date', placeholder=_('2008'), value=data.start_date, error=errors.start_date, classes=['control-medium']) %}
+  {% call form.input('start_date', label=_('Start date'), id='field-start_date', placeholder=_('eg. 2008'), value=data.start_date, error=errors.start_date) %}
     <span class="info-block info-inline">
       Earliest data point in the dataset. E.g. 15-Jul-2008 or 2008
     </span>
   {% endcall %}
 
-  {% call form.input('end_date', label=_('End year'), id='field-end_date', placeholder=_('2009'), value=data.end_date, error=errors.end_date, classes=['control-medium']) %}
+  {% call form.input('end_date', label=_('End year'), id='field-end_date', placeholder=_('eg. 2009'), value=data.end_date, error=errors.end_date) %}
     <span class="info-block info-inline">
       Latest or most recent data point in the dataset. E.g. 15-Jul-2009 or 2009
     </span>
   {% endcall %}
 
-  {% call form.input('ref_system', label=_('Coordinate Reference System'), id='field-ref_system', placeholder=_('WGS84'), value=data.ref_system, error=errors.ref_system, classes=['control-medium']) %}
+  {% call form.input('ref_system', label=_('Coordinate Reference System'), id='field-ref_system', placeholder=_('eg. WGS84'), value=data.ref_system, error=errors.ref_system) %}
     <span class="info-block info-inline">
       For geographic data, the name of the coordinate reference system used for the co-ordinates.
     </span>
   {% endcall %}
 
   {# Group #}
-  {% call form.input('group', label=_('Group'), id='field-group', value=data.group, error=errors.group, classes=['control-medium']) %}
+  {% call form.input('group', label=_('Group'), id='field-group', value=data.group, error=errors.group) %}
     <span class="info-block info-inline">
       To keep track of a group of datasets (e.g. from one project) give each dataset the same group name. They can then be found by searching for: group:"my group"
     </span>

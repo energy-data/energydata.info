@@ -38,42 +38,49 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # IDatasetForm
     def _modify_package_schema(self, schema):
+        not_missing = toolkit.get_validator('not_missing')
+        not_empty = toolkit.get_validator('not_empty')
+        ignore_missing = toolkit.get_validator('ignore_missing')
+        convert_to_tags = toolkit.get_converter('convert_to_tags')
+        convert_to_extras = toolkit.get_converter('convert_to_extras')
         schema.update({
+            'title': [not_missing, not_empty, unicode],  # i.e. required, although still seems to populate it with the name
+            'notes': [not_missing, not_empty, unicode],  # i.e. required
             'topic': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_tags')(helpers.topic_vocab)
+                ignore_missing,
+                convert_to_tags(helpers.topic_vocab)
             ],
             'country_code': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_tags')(helpers.country_vocab)
+                not_both_empty('region', 'region'),
+                convert_to_tags(helpers.country_vocab)
             ],
             'region': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_tags')(helpers.region_vocab)
+                not_both_empty('country_code', 'country'),
+                convert_to_tags(helpers.region_vocab)
             ],
             'status': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
+                ignore_missing,
+                convert_to_extras
             ],
             'ref_system': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
+                ignore_missing,
+                convert_to_extras
             ],
             'release_date': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
+                ignore_missing,
+                convert_to_extras
             ],
             'start_date': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
+                ignore_missing,
+                convert_to_extras
             ],
             'end_date': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
+                ignore_missing,
+                convert_to_extras
             ],
             'group': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')
+                ignore_missing,
+                convert_to_extras
             ],
         })
         return schema
@@ -148,3 +155,20 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def organization_facets(self, facets_dict, organization_type, package_type):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
         return facets_dict
+
+
+def not_both_empty(other_key, other_key_displayable):
+
+    def callable(key, data, errors, context):
+        import ckan.lib.navl.dictization_functions as df
+        StopOnError = df.StopOnError
+
+        value = data.get(key)
+        other_value = data.get(key[:-1] + (other_key,))
+        if not (value or other_value):
+            errors[key].append(
+                plugins.toolkit._('Missing value (alternatively specify a %s)')
+                % other_key_displayable)
+            raise StopOnError
+
+    return callable
