@@ -20,7 +20,7 @@
 {% block package_metadata_fields_url %}
 
   {# Topic #}
-  {{ multiselect('topic', label=_('Topic'), options=h.topic_options(), selected=data.get('topic', []), error=errors.topic, attrs={'data-module': 'autocomplete', 'maximumSelectionSize': 3}) }}
+  {{ multiselect('topic', label=_('Topic'), options=h.topic_options(), selected=data.get('topic', []), error=errors.topic, is_required=True, attrs={'data-module': 'autocomplete', 'maximumSelectionSize': 3}) }}
 
   {# Country #}
   {% call multiselect('country_code', label=_('Country'), options=h.country_options(), selected=data.get('country_code', []), error=errors.country_code, attrs={'data-module': 'autocomplete'}) %}

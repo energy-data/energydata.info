@@ -49,7 +49,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'title': [not_empty, unicode],
             'notes': [not_empty, unicode],
             'topic': [
-                ignore_missing,
+                not_empty,
                 max_items(3),
                 convert_to_tags(helpers.topic_vocab)
             ],
