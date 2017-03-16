@@ -16,10 +16,6 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             search_params['facet.field'].append('vocab_country_names')
         return search_params
 
-    def before_index(self, pkg_dict):
-        return pkg_dict
-
-
     # ITemplateHelpers
     def get_helpers(self):
         return {'country_codes': helpers.country_names,
@@ -75,6 +71,10 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 toolkit.get_validator('ignore_missing'),
                 toolkit.get_converter('convert_to_extras')
             ],
+            'group': [
+                toolkit.get_validator('ignore_missing'),
+                toolkit.get_converter('convert_to_extras')
+            ],
         })
         return schema
 
@@ -121,6 +121,9 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             'end_date': [
                 toolkit.get_converter('convert_from_extras'),
                 toolkit.get_validator('ignore_missing')],
+            'group': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
         })
         return schema
 
@@ -136,7 +139,6 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         facets_dict['vocab_regions'] = plugins.toolkit._('Region')
         facets_dict.pop('tags')
         facets_dict['vocab_topics'] = plugins.toolkit._('Topic')
-        facets_dict['vocab_statuses'] = plugins.toolkit._('Status')
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):

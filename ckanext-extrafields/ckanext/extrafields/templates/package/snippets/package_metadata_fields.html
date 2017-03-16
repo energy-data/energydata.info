@@ -33,10 +33,10 @@
 
   {{ super() }}
 
-
 {% endblock %}
 
 {% block package_metadata_fields_maintainer %}
+  {# Maintainer fields hidden #}
   <input id="field-maintainer" type="hidden" name="maintainer" value="{{data.maintainer}}" />
   <input id="field-maintainer-email" type="hidden" name="maintainer_email" value="{{data.maintainer_email}}" />
 
@@ -63,6 +63,14 @@
       For geographic data, the name of the coordinate reference system used for the co-ordinates.
     </span>
   {% endcall %}
+
+  {# Group #}
+  {% call form.input('group', label=_('Group'), id='field-group', value=data.group, error=errors.group, classes=['control-medium']) %}
+    <span class="info-block info-inline">
+      To keep track of a group of datasets (e.g. from one project) give each dataset the same group name. They can then be found by searching for: group:"my group"
+    </span>
+  {% endcall %}
+
 {% endblock %}
 
 {% block package_metadata_fields_version %}
