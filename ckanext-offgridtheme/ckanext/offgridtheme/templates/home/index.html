@@ -5,6 +5,7 @@
 {% block scripts %}
 {{ super() }}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/native-promise-only/0.8.1/npo.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.min.js"></script>
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoiZ3NkcG0iLCJhIjoiY2lqbmN5eG9mMDBndHVmbTU5Mmg1djF6MiJ9.QqFCD7tcmccysN8GUClW8w';
@@ -12,22 +13,29 @@
   var dataset_1 = 'https://test-offgrid-mvt.s3.amazonaws.com/tiles/9ed80b03-c9d0-4938-b261-0272569ab7ec-c62c2369-2a54-4536-a249-d920571b2b3f/data.tilejson';
   var dataset_2 = 'https://test-offgrid-mvt.s3.amazonaws.com/tiles/1cc8fa80-49ba-4e66-b696-f99843a5f540-9987da1a-123e-4d38-8986-f465c1864a88/data.tilejson';
 
-  var map_1 = new mapboxgl.Map({
-      container: 'ssa-aicd-electricity-map',
-      style: 'mapbox://styles/mapbox/light-v9',
-      center: [60, 2.867],
-      zoom: 1.5
-  })
+  if (!mapboxgl.supported()) {
+      document.getElementById('map1').innerHTML = 'Your browser does not support Mapbox GL';
+  } else {
+    var map_1 = new mapboxgl.Map({
+        container: 'map1',
+        style: 'mapbox://styles/mapbox/light-v9',
+        center: [60, 2.867],
+        zoom: 1.5
+    })
+    attachDataToMap(map_1, dataset_1)
+  }
 
-  var map_2 = new mapboxgl.Map({
-      container: 'kano-electricity-distribution-map',
-      style: 'mapbox://styles/mapbox/light-v9',
-      center: [60, 2.867],
-      zoom: 1.5
-  })
-
-  attachDataToMap(map_1, dataset_1)
-  attachDataToMap(map_2, dataset_2)
+  if (!mapboxgl.supported()) {
+      document.getElementById('map2').innerHTML = 'Your browser does not support Mapbox GL';
+  } else {
+    var map_2 = new mapboxgl.Map({
+        container: 'map2',
+        style: 'mapbox://styles/mapbox/light-v9',
+        center: [60, 2.867],
+        zoom: 1.5
+    })
+    attachDataToMap(map_2, dataset_2)
+  }
 
   function attachDataToMap(theMap, tilejson) {
     theMap.on('load', function () {
@@ -113,7 +121,7 @@
                   <div class="card-inner">
                     <div class="card-media">
                       <div class="card-media-map">
-                        <div id="ssa-aicd-electricity-map" class="data-map"></div>
+                        <div id="map1" class="data-map"></div>
                       </div>
                     </div>
                     <div class="card-copy">
@@ -137,7 +145,7 @@
                   <div class="card-inner">
                     <div class="card-media">
                       <div class="card-media-map">
-                        <div id="kano-electricity-distribution-map" class="data-map"></div>
+                        <div id="map2" class="data-map"></div>
                       </div>
                     </div>
                     <div class="card-copy">
