@@ -8,6 +8,9 @@
                   {% for item in items %}
                     {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
                     {% set label = h.country_code_to_name(item.display_name) if name == 'vocab_country_names' else item.display_name %}
+                    {% if name == 'vocab_regions' %}
+                      {% set label = h.region_code_to_name(item.display_name) %}
+                    {% endif %}
                     {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
                     {% set count = count_label(item['count']) if count_label else ('(%d)' % item['count']) %}
                       <li class="{{ nav_item_class or 'nav-item' }}{% if item.active %} active{% endif %}">
