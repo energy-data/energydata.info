@@ -1,31 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-import pycountry
+import helpers
 
-country_vocab = 'country_names'
-
-def country_names():
-    # Create the tag vocabulary if it doesn't exist
-    user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
-    context = {'user': user['name']}
-    try: # Check if the vocab exists
-        data = {'id': country_vocab}
-        toolkit.get_action('vocabulary_show')(context, data)
-    except toolkit.ObjectNotFound: # It doesn't exist, create the vocab
-        data = {'name': country_vocab}
-        vocab = toolkit.get_action('vocabulary_create')(context, data)
-        country_names = [country.alpha_3 for country in list(pycountry.countries)]
-        for name in country_names:
-            data = {'name': name, 'vocabulary_id': vocab['id']}
-            toolkit.get_action('tag_create')(context, data)
-    try:
-        countries = toolkit.get_action('tag_list')(data_dict={'vocabulary_id': country_vocab})
-        return countries
-    except toolkit.ObjectNotFound:
-        logging.debug('Could not find vocabulary')
-
-def country_code_to_name(country_code):
-    return pycountry.countries.get(alpha_3=country_code).name
 
 class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
@@ -34,7 +10,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IFacets)
 
-    
+    # IPackageController
     def before_search(self, search_params):
         if search_params.has_key('facet.field') and ('vocab_country_names' not in search_params['facet.field']):
             search_params['facet.field'].append('vocab_country_names')
@@ -42,7 +18,17 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # ITemplateHelpers
     def get_helpers(self):
-        return {'country_codes': country_names, 'country_code_to_name': country_code_to_name}
+        return {'country_codes': helpers.country_names,
+                'country_code_to_name': helpers.country_code_to_name,
+                'country_options': helpers.country_options,
+                'topics': helpers.topics,
+                'topic_options': helpers.topic_options,
+                'regions': helpers.regions,
+                'region_code_to_name': helpers.region_code_to_name,
+                'region_options': helpers.region_options,
+                'statuses': helpers.statuses,
+                'status_options': helpers.status_options,
+                }
 
     # IConfigurer
     def update_config(self, config_):
@@ -52,11 +38,56 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     # IDatasetForm
     def _modify_package_schema(self, schema):
+        from validators import (not_both_empty, year, yyyy_or_dd_mon_yyyy,
+                                max_items)
+        not_missing = toolkit.get_validator('not_missing')
+        not_empty = toolkit.get_validator('not_empty')
+        ignore_missing = toolkit.get_validator('ignore_missing')
+        convert_to_tags = toolkit.get_converter('convert_to_tags')
+        convert_to_extras = toolkit.get_converter('convert_to_extras')
         schema.update({
+            'title': [not_empty, unicode],
+            'notes': [not_empty, unicode],
+            'topic': [
+                not_empty,
+                max_items(3),
+                convert_to_tags(helpers.topic_vocab)
+            ],
             'country_code': [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_tags')(country_vocab)
-            ]
+                not_both_empty('region', 'region'),
+                convert_to_tags(helpers.country_vocab)
+            ],
+            'region': [
+                not_both_empty('country_code', 'country'),
+                convert_to_tags(helpers.region_vocab)
+            ],
+            'status': [
+                ignore_missing,
+                convert_to_extras
+            ],
+            'ref_system': [
+                ignore_missing,
+                convert_to_extras
+            ],
+            'release_date': [
+                ignore_missing,
+                year,
+                convert_to_extras
+            ],
+            'start_date': [
+                ignore_missing,
+                yyyy_or_dd_mon_yyyy,
+                convert_to_extras
+            ],
+            'end_date': [
+                ignore_missing,
+                yyyy_or_dd_mon_yyyy,
+                convert_to_extras
+            ],
+            'group': [
+                ignore_missing,
+                convert_to_extras
+            ],
         })
         return schema
 
@@ -76,9 +107,36 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         schema['tags']['__extras'].append(toolkit.get_converter('free_tags_only'))
 
         schema.update({
+            'topic': [
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.topic_vocab),
+                toolkit.get_validator('ignore_missing')],
             'country_code': [
-                toolkit.get_converter('convert_from_tags')(country_vocab),
-                toolkit.get_validator('ignore_missing')]
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.country_vocab),
+                toolkit.get_validator('ignore_missing')],
+            'region': [
+                toolkit.get_converter('convert_from_tags')(
+                    helpers.region_vocab),
+                toolkit.get_validator('ignore_missing')],
+            'status': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'ref_system': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'release_date': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'start_date': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'end_date': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
+            'group': [
+                toolkit.get_converter('convert_from_extras'),
+                toolkit.get_validator('ignore_missing')],
         })
         return schema
 
@@ -91,6 +149,9 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
+        facets_dict['vocab_regions'] = plugins.toolkit._('Region')
+        facets_dict.pop('tags')
+        facets_dict['vocab_topics'] = plugins.toolkit._('Topic')
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
@@ -100,3 +161,4 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
     def organization_facets(self, facets_dict, organization_type, package_type):
         facets_dict['vocab_country_names'] = plugins.toolkit._('Countries')
         return facets_dict
+
