@@ -18,7 +18,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
 
     def after_search(self, search_results, search_params):
         facets = search_results.get('search_facets')
-        if not facets:
+        if not facets or 'release_date' not in facets:
             return search_results
         
         for item in facets['release_date']['items']:
