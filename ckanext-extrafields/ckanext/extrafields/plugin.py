@@ -80,7 +80,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 convert_to_extras
             ],
             'release_date': [
-                ignore_missing,
+                not_empty,
                 year,
                 convert_to_extras
             ],
