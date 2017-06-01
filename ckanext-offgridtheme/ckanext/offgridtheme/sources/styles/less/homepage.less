@@ -34,6 +34,7 @@
 
 .home-header {
   &:extend(.antialiased);
+
   color: #fff;
   background: @emPrimaryColor;
   text-align: center;
@@ -89,7 +90,7 @@
 }
 
 .home-tools-list {
-  overflow: hidden;
+  &:extend(.clearfix all);
   list-style: none;
   width: 100%;
   margin: 0 0 40px 0;
@@ -283,7 +284,7 @@ a.tool-media-screenshot {
 
 .card-copy {
   padding: 20px;
-  
+
   @media (min-width: 768px) {
     align-self: center;
   }
@@ -294,7 +295,7 @@ a.tool-media-screenshot {
   overflow: hidden;
   margin: -1px;
   height: 250px;
-  
+
   img {
     position: relative;
     z-index: 1;
