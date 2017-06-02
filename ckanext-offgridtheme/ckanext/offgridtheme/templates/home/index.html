@@ -106,7 +106,7 @@
         <header class="fold-header">
           <div class="container">
             <div class="fold-headline">
-              <h1 class="fold-title">Latest Apps</h1>
+              <h1 class="fold-title">Featured Apps</h1>
             </div>
           </div>
         </header>
@@ -123,43 +123,30 @@
                   <div class="tool-copy">
                     <header class="tool-header">
                       <h1 class="tool-title"><a href="http://africagrid.energydata.info" target="_blank" title="Visit Africa Electricity Grids Explorer">Africa Electricity Grids Explorer</a></h1>
-                      <p class="tool-subtitle">Developed by the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
+                      <p class="tool-subtitle">By the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
                     </header>
-                    <div class="tool-body">
-                      <p>Explore the latest data on Sub-Saharan Africa's electricity grids and infrastructure.</p>
-                    </div>
-                    <div class="tool-cta">
-                      <a href="http://africagrid.energydata.info" title="Visit Africa Electricity Grids Explorer" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
-                    </div>
-                  </div>
                 </article>
               </li>
 
               <li class="tool-wrapper">
                 <article class="tool">
                   <div class="tool-media">
-                    <a href="http://globalsolaratlas.info/" title="Visit the Global Solar Atlas" target="_blank" class="tool-media-screenshot">
-                      <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-atlas.jpg" />
+                    <a href="http://global-climatescope.org/en/results/" title="Visit the Climatescope" class="tool-media-screenshot">
+                      <img alt="Tool screenshot" width="1440" height="768" src="/images/content/tool-screenshot-climatescope.jpg" />
                     </a>
                   </div>
                   <div class="tool-copy">
                     <header class="tool-header">
-                      <h1 class="tool-title"><a href="http://globalsolaratlas.info" target="_blank" title="Visit the Global Solar Atlas">Global Solar Atlas</a></h1>
-                      <p class="tool-subtitle">Developed by the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
+                      <h1 class="tool-title"><a href="http://global-climatescope.org/en/results/" title="Visit the Climatescope">Climatescope</a></h1>
+                      <p class="tool-subtitle">By <a href="https://about.bnef.com/">Bloomberg New Energy Finance</a></p>
                     </header>
-                    <div class="tool-body">
-                      <p>Access solar power potential globally and perform simple electricity output calculation for any given location.</p>
-                    </div>
-                    <div class="tool-cta">
-                      <a href="http://globalsolaratlas.info/" title="Visit the Global Solar Atlas" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
-                    </div>
                   </div>
                 </article>
               </li>
             </ol>
 
             <div class="fold-cta">
-              <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all apps</a>
+              <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="Visit page" class="btn btn-large btn-primary"><span>View all apps</span> <i class="icon-small icon-chevron-right"></i></a>
             </div>
 
           </div>

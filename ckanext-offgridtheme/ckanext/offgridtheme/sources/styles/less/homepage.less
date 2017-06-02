@@ -149,12 +149,16 @@
 }
 
 .tool-media-screenshot {
-  .border-radius(4px 4px 2px 2px);
+
   position: relative;
   overflow: hidden;
   display: block;
   min-height: 160px;
   background: @emBaseColorLighter;
+
+  box-shadow: 0 4px 16px 2px fade(@emBaseColor, 8%);
+  border-radius: @emGlobalRadius;
+  overflow: hidden;
 
   &::before {
     .box-shadow(0 1px 0 0 rgba(0,0,0,0.08));
@@ -276,6 +280,7 @@ a.tool-media-screenshot {
 
     .btn {
       margin-top: 8px;
+      min-width: 96px;
 
       @media (min-width: 768px) {
         margin-top: 20px;
