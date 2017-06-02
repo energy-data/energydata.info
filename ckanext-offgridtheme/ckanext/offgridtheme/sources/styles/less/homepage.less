@@ -34,13 +34,15 @@
 
 .home-header {
   &:extend(.antialiased);
+
   color: #fff;
-  background: @emPrimaryColor;
+  background: @emPrimaryColor url('/images/layout/home-hero-bg.svg') center bottom no-repeat;
+  background-size: cover;
   text-align: center;
-  padding: 40px 0;
+  padding: 48px 0;
 
   @media (min-width: 768px) {
-    padding: 120px 0;
+    padding: 96px 0;
   }
 
 }
@@ -50,7 +52,7 @@
   margin: 0 auto 20px auto;
 
   @media (min-width: 768px) {
-    margin-bottom: 40px;
+    margin-bottom: 56px;
   }
 }
 
@@ -65,18 +67,112 @@
   }
 }
 
-.home-cta {
-  word-spacing: -0.26rem;
-  > * {
-    display: inline-block;
-    vertical-align: top;
-    word-spacing: normal;
-    margin: 5px;
-    min-width: 100px;
+.hero-search {
+  max-width: 600px;
+  margin: 0 auto 32px auto;
 
-    @media (min-width: 768px) {
-      margin: 0 10px;
+  input[type="text"] {
+    .box-shadow(inset 0 0 0 1px rgba(0,0,0,0.08));
+    background: @emSecondaryColor;
+    border: 0;
+    line-height: 32px;
+    padding: 8px 16px 8px 44px;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 20px;
+
+    &::placeholder {
+      opacity: 0.64;
+      color: inherit;
     }
+
+    &:focus {
+      .box-shadow(inset 0 0 0 1px rgba(0,0,0,0.32));
+    }
+  }
+
+  .field .btn-search {
+    left: 12px;
+    right: auto;
+    margin: 0;
+    color: #fff;
+    transform: translate(0, -50%);
+    height: auto;
+    width: auto;
+
+    i {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    &:hover {
+      color: inherit;;
+      opacity: 0.64;
+    }
+  }
+}
+
+.stats-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+
+  @media (min-width: 512px) {
+    max-width: 600px;
+  }
+
+  li {
+    position: relative;
+    float: left;
+    width: 50%;
+    margin-bottom: 16px;
+
+    &::after {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      right: 0;
+      content: '';
+      opacity: 0.32;
+      transform: translate(0, -50%);
+      background: #fff;
+      width: 1px;
+      height: 24px;
+    }
+
+    @media (min-width: 512px) {
+      width: 25%;
+      margin-bottom: 0;
+    }
+  }
+
+  li:nth-child(2)::after {
+    display: none;
+
+    @media (min-width: 512px) {
+      display: block;
+    }
+  }
+
+  li:last-child::after {
+    display: none;
+  }
+
+  strong {
+    display: block;
+    font-size: 32px;
+    line-height: 1;
+    font-weight: @emFontBold;
+  }
+
+  span {
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: @emFontRegular;
   }
 }
 
@@ -89,7 +185,7 @@
 }
 
 .home-tools-list {
-  overflow: hidden;
+  &:extend(.clearfix all);
   list-style: none;
   width: 100%;
   margin: 0 0 40px 0;
@@ -147,12 +243,14 @@
 }
 
 .tool-media-screenshot {
-  .border-radius(4px 4px 2px 2px);
   position: relative;
   overflow: hidden;
   display: block;
   min-height: 160px;
   background: @emBaseColorLighter;
+  box-shadow: 0 4px 16px 2px fade(@emBaseColor, 8%);
+  border-radius: @emGlobalRadius;
+  overflow: hidden;
 
   &::before {
     .box-shadow(0 1px 0 0 rgba(0,0,0,0.08));
@@ -181,6 +279,7 @@
     bottom: 0;
     pointer-events: none;
     content: '';
+    border-radius: @emGlobalRadius;
   }
 }
 
@@ -242,12 +341,50 @@ a.tool-media-screenshot {
    ========================================================================== */
 
 .fold.home-contribute {
-  background: @emPrimaryColor;
+  &:extend(.antialiased);
+  background:  @emSecondaryColor url('/images/layout/home-contribute-bg.svg') center bottom no-repeat;
+  background-size: cover;
   color: #fff;
 
-  .fold-prose {
-    margin: 0 auto 20px auto;
-    max-width: 550px;
+  .fold-prose-block {
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 24px;
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 20px;
+      line-height: 28px;
+      margin-bottom: 20px;
+
+      @media (min-width: 768px) {
+        font-size: 28px;
+        line-height: 36px;
+      }
+    }
+
+    .btn {
+      margin-top: 8px;
+      min-width: 96px;
+
+      @media (min-width: 768px) {
+        margin-top: 20px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+      font-size: 20px;
+      line-height: 28px;
+    }
   }
 }
 
@@ -283,7 +420,7 @@ a.tool-media-screenshot {
 
 .card-copy {
   padding: 20px;
-  
+
   @media (min-width: 768px) {
     align-self: center;
   }
@@ -294,7 +431,7 @@ a.tool-media-screenshot {
   overflow: hidden;
   margin: -1px;
   height: 250px;
-  
+
   img {
     position: relative;
     z-index: 1;

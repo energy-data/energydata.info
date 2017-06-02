@@ -11,6 +11,10 @@ a {
   font-weight: @emFontBold;
   text-shadow: none;
   transition: all 0.16s ease 0s;
+
+  span + [class^="icon-"] {
+    margin: 0 0 0 4px;
+  }
 }
 
 .btn-rev-ghost {
@@ -36,5 +40,18 @@ a {
   &:focus {
     background: fade(@emPrimaryColor, 8%);
     color: @emPrimaryColor;
+  }
+}
+
+.btn-hidden-text {
+  padding-left: 6px;
+  padding-right: 6px;
+
+  [class^="icon-"] {
+    margin: 0;
+  }
+
+  > span {
+    &:extend(.visually-hidden);
   }
 }
