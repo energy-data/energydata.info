@@ -42,9 +42,9 @@ def package_count():
     return len(packages)
 
 def country_count():
-    packages = toolkit.get_action('package_search')(data_dict={})
+    packages = toolkit.get_action('current_package_list_with_resources')(data_dict={'limit': 1000000})
     uniques = set()
-    for package in packages['results']:
+    for package in packages:
         uniques.update(package['country_code'])
     return len(uniques)
     
