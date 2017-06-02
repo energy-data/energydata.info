@@ -244,13 +244,49 @@ a.tool-media-screenshot {
    ========================================================================== */
 
 .fold.home-contribute {
+  &:extend(.antialiased);
   background:  @emSecondaryColor url('/images/layout/home-contribute-bg.svg') center bottom no-repeat;
   background-size: cover;
   color: #fff;
 
-  .fold-prose {
-    margin: 0 auto 20px auto;
-    max-width: 550px;
+  .fold-prose-block {
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 24px;
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 20px;
+      line-height: 28px;
+      margin-bottom: 20px;
+
+      @media (min-width: 768px) {
+        font-size: 28px;
+        line-height: 36px;
+      }
+    }
+
+    .btn {
+      margin-top: 8px;
+
+      @media (min-width: 768px) {
+        margin-top: 20px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      margin-bottom: 0;
+      font-size: 20px;
+      line-height: 28px;
+    }
   }
 }
 

@@ -8724,9 +8724,43 @@ a.tool-media-screenshot:hover {
   background-size: cover;
   color: #fff;
 }
-.fold.home-contribute .fold-prose {
-  margin: 0 auto 20px auto;
-  max-width: 550px;
+.fold.home-contribute .fold-prose-block {
+  margin-bottom: 28px;
+  font-size: 16px;
+  line-height: 24px;
+}
+.fold.home-contribute .fold-prose-block > *:last-child {
+  margin-bottom: 0;
+}
+.fold.home-contribute .fold-prose-block:last-child {
+  margin-bottom: 0;
+}
+.fold.home-contribute .fold-prose-block h2 {
+  margin-top: 0;
+  font-size: 20px;
+  line-height: 28px;
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .fold.home-contribute .fold-prose-block h2 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+.fold.home-contribute .fold-prose-block .btn {
+  margin-top: 8px;
+}
+@media (min-width: 768px) {
+  .fold.home-contribute .fold-prose-block .btn {
+    margin-top: 20px;
+  }
+}
+@media (min-width: 768px) {
+  .fold.home-contribute .fold-prose-block {
+    margin-bottom: 0;
+    font-size: 20px;
+    line-height: 28px;
+  }
 }
 /* Fold: Datasets
    ========================================================================== */
@@ -10131,6 +10165,9 @@ a {
   text-shadow: none;
   transition: all 0.16s ease 0s;
 }
+.btn [class^="icon-"]:last-child {
+  margin: 0 0 0 4px;
+}
 .btn-rev-ghost {
   background: none;
   color: #fff;
@@ -10337,6 +10374,7 @@ a {
  */
 .antialiased,
 .home-header,
+.fold.home-contribute,
 .account-masthead,
 .masthead,
 .btn {

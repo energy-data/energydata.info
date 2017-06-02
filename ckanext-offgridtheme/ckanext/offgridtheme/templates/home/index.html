@@ -169,21 +169,24 @@
 
       <!-- Contribute -->
       <section class="fold home-contribute">
-        <header class="fold-header">
-          <div class="container">
-            <div class="fold-headline">
-              <h1 class="fold-title">Contribute</h1>
-            </div>
-          </div>
-        </header>
+
         <div class="fold-body">
           <div class="container">
-            <div class="fold-prose">
-              <p>Are you creating an application or visualization about energy, or have energy related data you'd like to share on energydata.info? Get in touch with our team.</p>
+            <div class="row">
+
+              <div class="fold-prose-block span6">
+                <h2>About</h2>
+                <p>A collaborative online platform for finding and sharing data and analytics that support the United Nations’ Sustainable Development Goal 7 of ensuring access to affordable, reliable, sustainable and modern energy for all.</p>
+                <p><a class="btn btn-primary" href="{{ h.url_for(controller='home', action='about') }}" title="About energydata.info"><span>Read more</span> <i class="icon-small icon-chevron-right"></i></a></p>
+              </div>
+
+              <div class="fold-prose-block span6">
+                <h2>Contribute</h2>
+                <p>Are you creating an application or visualization about energy, or have energy related data you'd like to share on energydata.info? Get in touch with our team.</p>
+                <p><a class="btn btn-primary" href="mailto:energydata@worldbankgroup.org" title="Send an email"><span>Write us</span> <i class="icon-small icon-envelope"></i></a></p>
+              </div>
             </div>
-            <div class="fold-cta">
-              <a href="mailto:energydata@worldbankgroup.org" title="Write us" class="btn btn-large btn-rev-ghost">Write us</a>
-            </div>
+
           </div>
         </div>
       </section>
