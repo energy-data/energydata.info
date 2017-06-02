@@ -69,7 +69,7 @@
 
 .hero-search {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 32px auto;
 
   input[type="text"] {
     .box-shadow(inset 0 0 0 1px rgba(0,0,0,0.08));
@@ -109,6 +109,70 @@
       color: inherit;;
       opacity: 0.64;
     }
+  }
+}
+
+.stats-list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  text-align: center;
+
+  @media (min-width: 512px) {
+    max-width: 600px;
+  }
+
+  li {
+    position: relative;
+    float: left;
+    width: 50%;
+    margin-bottom: 16px;
+
+    &::after {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      right: 0;
+      content: '';
+      opacity: 0.32;
+      transform: translate(0, -50%);
+      background: #fff;
+      width: 1px;
+      height: 24px;
+    }
+
+    @media (min-width: 512px) {
+      width: 25%;
+      margin-bottom: 0;
+    }
+  }
+
+  li:nth-child(2)::after {
+    display: none;
+
+    @media (min-width: 512px) {
+      display: block;
+    }
+  }
+
+  li:last-child::after {
+    display: none;
+  }
+
+  strong {
+    display: block;
+    font-size: 32px;
+    line-height: 1;
+    font-weight: @emFontBold;
+  }
+
+  span {
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: @emFontRegular;
   }
 }
 
