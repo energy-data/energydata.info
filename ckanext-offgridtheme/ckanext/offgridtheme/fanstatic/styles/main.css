@@ -8531,11 +8531,11 @@ h4 small {
   background: #009fda url('/images/layout/home-hero-bg.svg') center bottom no-repeat;
   background-size: cover;
   text-align: center;
-  padding: 40px 0;
+  padding: 48px 0;
 }
 @media (min-width: 768px) {
   .home-header {
-    padding: 120px 0;
+    padding: 96px 0;
   }
 }
 .home-headline {
@@ -8544,7 +8544,7 @@ h4 small {
 }
 @media (min-width: 768px) {
   .home-headline {
-    margin-bottom: 40px;
+    margin-bottom: 56px;
   }
 }
 .home-title {
@@ -8558,20 +8558,47 @@ h4 small {
     line-height: 52px;
   }
 }
-.home-cta {
-  word-spacing: -0.26rem;
+.hero-search {
+  max-width: 600px;
+  margin: 0 auto;
 }
-.home-cta > * {
-  display: inline-block;
-  vertical-align: top;
-  word-spacing: normal;
-  margin: 5px;
-  min-width: 100px;
+.hero-search input[type="text"] {
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  background: #0071bc;
+  border: 0;
+  line-height: 32px;
+  padding: 8px 16px 8px 44px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 20px;
 }
-@media (min-width: 768px) {
-  .home-cta > * {
-    margin: 0 10px;
-  }
+.hero-search input[type="text"]::placeholder {
+  opacity: 0.64;
+  color: inherit;
+}
+.hero-search input[type="text"]:focus {
+  -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32);
+  -moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32);
+}
+.hero-search .field .btn-search {
+  left: 12px;
+  right: auto;
+  margin: 0;
+  color: #fff;
+  transform: translate(0, -50%);
+  height: auto;
+  width: auto;
+}
+.hero-search .field .btn-search i {
+  font-size: 24px;
+  line-height: 1;
+}
+.hero-search .field .btn-search:hover {
+  color: inherit;
+  opacity: 0.64;
 }
 /* Fold: Featured Tools
    ========================================================================== */
@@ -8667,6 +8694,7 @@ h4 small {
   bottom: 0;
   pointer-events: none;
   content: '';
+  border-radius: 4px;
 }
 a.tool-media-screenshot {
   transition: all 0.16s ease 0s;
@@ -10165,7 +10193,7 @@ a {
   text-shadow: none;
   transition: all 0.16s ease 0s;
 }
-.btn [class^="icon-"]:last-child {
+.btn span + [class^="icon-"] {
   margin: 0 0 0 4px;
 }
 .btn-rev-ghost {
