@@ -3,25 +3,39 @@
 
     <div class="row">
 
-      <nav class="span8 footer-nav">
-        <ul class="footer-links-menu">
-          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="View Apps">Apps</a></li>
-          <li><a href="{{ h.url_for(controller='package', action='search') }}" title="View Fatasets">Datasets</a></li>
-          <li><a href="{{ h.url_for(controller='organization', action='index') }}" title="View Organizations">Organizations</a></li>
-          <li><a href="{{ h.url_for(controller='home', action='about') }}" title="About energydata.info">About</a></li>
-          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:TermsController', action='view') }}" title="Read Terms of Use">Terms of Use</a></li>
-          <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:PrivacyController', action='view') }}" title="View Privacy Policy">Privacy Policy</a></li>
-          <li><a href="https://github.com/energy-data" title="Follow us on GitHub" target="_blank"><i class="icon-large icon-github"></i> GitHub</a></li>
-        </ul>
+      <nav class="span12 footer-nav">
+        <section class="nav-section nav-section-connect">
+          <h2>Connect</h2>
+          <ul class="menu-connect">
+            <li><a class="btn btn-primary btn-hidden-text" href="https://github.com/energy-data" title="Follow us on GitHub" target="_blank"><i class="icon-large icon-github-alt"></i><span>GitHub</span></a></li>
+            <li><a class="btn btn-primary btn-hidden-text" href="mailto:energydata@worldbankgroup.org" title="Write us"><i class="icon-large icon-envelope"></i><span>Email</span></a></li>
+          </ul>
+        </section>
+        <section class="nav-section nav-section-browse">
+          <h2 class="visually-hidden">Browse</h2>
+          <ul class="menu-browse">
+            <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="View Apps">Apps</a></li>
+            <li><a href="{{ h.url_for(controller='package', action='search') }}" title="View Fatasets">Datasets</a></li>
+            <li><a href="{{ h.url_for(controller='organization', action='index') }}" title="View Organizations">Organizations</a></li>
+            <li><a href="{{ h.url_for(controller='home', action='about') }}" title="About energydata.info">About</a></li>
+            <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:TermsController', action='view') }}" title="Read Terms of Use">Terms of Use</a></li>
+            <li><a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:PrivacyController', action='view') }}" title="View Privacy Policy">Privacy Policy</a></li>
+          </ul>
+        </section>
       </nav>
 
-      <div class="span4 footer-attr">
+    </div>
+
+    <div class="row">
+
+      <div class="span12 footer-attr">
         <p class="attr-wbg-ifc"><a href="http://worldbank.org/" title="Visit page"><img alt="Logo" src="/images/content/wbg-ifc-logo.svg" width="430" height="96" /> <span>An innovation of the World Bank Group</span></a></p>
         <p class="attr-ds">
-          &#169; Copyright - Energydata.info<br/>
+          Energydata.info &#169; 2017<br/>
           Built by <a href="https://developmentseed.org/" title="Visit page">Development Seed</a>
         </p>
       </div>
+
     </div>
 
   </div>

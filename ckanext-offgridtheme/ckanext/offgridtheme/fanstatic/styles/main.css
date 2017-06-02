@@ -9156,41 +9156,77 @@ a.tool-media-screenshot:hover {
 .footer-nav {
   box-shadow: inset 0 -1px #e9ebf0;
   padding-bottom: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
   text-align: center;
 }
+.nav-section {
+  display: inline-block;
+}
+.nav-section h2 {
+  font-size: 12px;
+  line-height: 16px;
+  color: #838b8f;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 0 8px 0 0;
+  line-height: 30px;
+  vertical-align: top;
+  font-weight: 300;
+}
 @media (min-width: 768px) {
-  .footer-nav {
-    text-align: left;
-    box-shadow: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    max-width: 560px;
+  .nav-section {
+    display: table-cell;
   }
 }
-.footer-links-menu {
+.nav-section-connect {
+  margin: 0 0 20px 0;
+  white-space: nowrap;
+}
+@media (min-width: 768px) {
+  .nav-section-connect {
+    padding-right: 20px;
+    text-align: left;
+    margin: 0;
+  }
+}
+@media (min-width: 768px) {
+  .nav-section-browse {
+    text-align: right;
+    width: 100%;
+  }
+}
+.menu-connect,
+.menu-browse {
   list-style: none;
   padding: 0;
   margin: 0;
   word-spacing: -0.26rem;
+  display: inline-block;
 }
-.footer-links-menu li {
+.menu-connect li,
+.menu-browse li {
   display: inline-block;
   vertical-align: top;
   word-spacing: normal;
-  margin-right: 20px;
   font-size: 16px;
   line-height: 24px;
   font-weight: 600;
 }
-.footer-links-menu li:last-child {
+.menu-connect li:last-child,
+.menu-browse li:last-child {
   margin-right: 0;
 }
-.footer-links-menu a:link,
-.footer-links-menu a:visited {
+.menu-connect li {
+  margin-right: 8px;
+}
+.menu-browse li {
+  margin-right: 20px;
+}
+.menu-browse a:link,
+.menu-browse a:visited {
   color: inherit;
 }
-.footer-links-menu a:hover {
+.menu-browse a:hover {
   color: #009fda;
 }
 .footer-attr {
@@ -9205,7 +9241,7 @@ a.tool-media-screenshot:hover {
   }
 }
 .attr-wbg-ifc {
-  margin: 0 0 25px 0;
+  margin: 0 0 20px 0;
 }
 .attr-wbg-ifc a {
   display: block;
@@ -9219,8 +9255,18 @@ a.tool-media-screenshot:hover {
   height: auto;
   opacity: 0.8;
 }
+@media (min-width: 768px) {
+  .attr-wbg-ifc {
+    float: left;
+  }
+}
 .attr-ds {
   font-size: 0.75rem;
+}
+@media (min-width: 768px) {
+  .attr-ds {
+    float: right;
+  }
 }
 .table-selected td {
   background-color: #f5f5f5;
@@ -10107,6 +10153,13 @@ a {
   background: rgba(0, 159, 218, 0.08);
   color: #009fda;
 }
+.btn-hidden-text {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.btn-hidden-text [class^="icon-"] {
+  margin: 0;
+}
 /* ==========================================================================
    Folds
    ========================================================================== */
@@ -10307,6 +10360,7 @@ a {
 /* Hide only visually, but have it available for screenreaders */
 .visually-hidden,
 .attr-wbg-ifc span,
+.btn-hidden-text > span,
 .inpage-hub .inpage-title {
   border: 0 none;
   clip: rect(0px, 0px, 0px, 0px);

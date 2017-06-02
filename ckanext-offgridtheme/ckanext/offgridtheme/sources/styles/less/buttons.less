@@ -38,3 +38,16 @@ a {
     color: @emPrimaryColor;
   }
 }
+
+.btn-hidden-text {
+  padding-left: 6px;
+  padding-right: 6px;
+
+  [class^="icon-"] {
+    margin: 0;
+  }
+
+  > span {
+    &:extend(.visually-hidden);
+  }
+}
