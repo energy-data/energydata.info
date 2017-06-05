@@ -42,10 +42,6 @@
   }
 }
 
-.dataset-resources {
-  margin-top: 8px;
-}
-
 .dataset-resources li {
   display: inline;
 }
@@ -57,6 +53,52 @@
 .dataset-heading .popular {
   top: 0;
 }
+
+.dl-horizontal {
+  &:extend(.clearfix all);
+  margin: 20px 0;
+  padding: 0;
+
+  dt, dd {
+    line-height: 18px;
+  }
+
+  dt {
+    font-size: 12px;
+    color: #838b8f;
+    text-transform: uppercase;
+    font-weight: @emFontLight;
+  }
+  
+  dd {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+}
+
+
+
+@media (min-width: 768px) {
+  .dl-horizontal {   
+    dt, dd {
+      float: left;
+    }
+    
+    dt {
+      width: 32%;
+      clear: left;
+      padding-right: 8px;
+    }
+    
+    dd {
+      width: 68%;
+      margin-left: 32%;
+      margin-top: -18px;
+      padding-left: 8px;
+    }
+  }
+}
+
 
 // Resource List
 

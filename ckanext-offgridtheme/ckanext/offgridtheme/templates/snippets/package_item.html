@@ -3,54 +3,51 @@
 {% set regions = package.region %}
 {% set publish_year = package.release_date %}
 
-{% block notes %}
-  {% if notes %}
-    <div>{{ notes|urlize }}</div>
-  {% else %}
-    <p class="empty">{{ _("This dataset has no description") }}</p>
-  {% endif %}
-  {% if countries %} 
-  {% set country_length = countries|length %}
-  <br>
-  <tr rel="dc:relation" resource="_:country">
-    <th scope="row" class="dataset-label" property="rdfs:label"><em>Countries:</em></th>
-    <td class="dataset-details" property="rdf:value">
-      {% if country_length <= 5 %}
-        {% for code in countries %}
-          {{h.country_code_to_name(code)}}
-          {%- if not loop.last -%}
-          ,
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        {% for index in [0, 1, 2, 3, 4] %}
-          {{h.country_code_to_name(countries[index])}}
-          {%- if not loop.last -%}
-          ,
-          {% endif %}
-        {% endfor %}
-        <span>+ {{ country_length - 5 }}</span>
-      {% endif %}
-    </td>
-  </tr>
-  {% endif %}
-  {% if regions %} 
-  <br>
-  <tr rel="dc:relation" resource="_:region">
-    <th scope="row" class="dataset-label" property="rdfs:label"><em>Regions:</em></th>
-    <td class="dataset-details" property="rdf:value">
-      {% for code in regions %}
-        {{h.region_code_to_name(code)}}
-        {%- if not loop.last -%}
-        ,
+
+{% block resources_outer %}
+  <dl class="dl-horizontal">
+    {% if countries %} 
+    {% set country_length = countries|length %}
+      <dt scope="row" class="dataset-label" property="rdfs:label">Countries:</dt>
+      <dd class="dataset-details" property="rdf:value">
+        {% if country_length <= 5 %}
+          {% for code in countries %}
+            {{h.country_code_to_name(code)}}
+            {%- if not loop.last -%}
+            ,
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% for index in [0, 1, 2, 3, 4] %}
+            {{h.country_code_to_name(countries[index])}}
+            {%- if not loop.last -%}
+            ,
+            {% endif %}
+          {% endfor %}
+          <span>+ {{ country_length - 5 }}</span>
         {% endif %}
+      </dd>
+    {% endif %}
+    {% if regions %} 
+      <dt scope="row" class="dataset-label" property="rdfs:label">Regions:</dt>
+      <dd class="dataset-details" property="rdf:value">
+        {% for code in regions %}
+          {{h.region_code_to_name(code)}}
+          {%- if not loop.last -%}
+          ,
+          {% endif %}
+        {% endfor %}
+      </dd>
+    {% endif %}
+    {% if publish_year %} 
+      <dt>Published Year:</dt> 
+      <dd>{{ publish_year }}</dd>
+    {% endif %}
+    <dt>Formats:</dt>
+    <dd class="dataset-resources">
+      {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+        <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a>
       {% endfor %}
-    </td>
-  </tr>
-  {% endif %}
-  {% if publish_year %} 
-  <div><em>Published Year:</em> {{ publish_year }}</div>
-
-  {% endif %}
-
+    </dd>
+  </dl>
 {% endblock %}
