@@ -30,22 +30,30 @@
         </form>
 
         <div class="home-stats">
-          <ul class="stats-list">
+          <ul class="stats-list">            
             <li>
-              <strong>{{ h.custom_theme_package_count()}}</strong>
-              <span>Datasets</span>
+              <a href="{{ h.url_for(controller='package', action='search') }}" title="View the datasets"> 
+                <strong>{{ h.custom_theme_package_count()}}</strong>
+                <span>Datasets</span>
+              </a>
             </li>
             <li>
-              <strong>{{ h.custom_theme_org_count() }}</strong>
-              <span>Organizations</span>
+              <a href="{{ h.url_for(controller='organization', action='index') }}" }}" title="View the organizations">
+                <strong>{{ h.custom_theme_org_count() }}</strong>
+                <span>Organizations</span>
+              </a>
             </li>
             <li>
-              <strong>{{ h.custom_theme_country_count() }}</strong>
-              <span>Countries</span>
+              <a href="{{ h.url_for(controller='package', action='search') }}"" title="Filter datasets by country">
+                <strong>{{ h.custom_theme_country_count() }}</strong>
+                <span>Countries</span>
+              </a>
             </li>
             <li>
-              <strong>7</strong>
-              <span>Apps</span>
+              <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="View the energy apps">
+                <strong>7</strong>
+                <span>Apps</a></span>
+              </a>
             </li>
           </ul>
         </div>

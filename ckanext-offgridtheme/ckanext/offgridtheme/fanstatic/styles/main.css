@@ -8613,6 +8613,9 @@ h4 small {
     max-width: 600px;
   }
 }
+.stats-list a {
+  color: #fff;
+}
 .stats-list li {
   position: relative;
   float: left;
