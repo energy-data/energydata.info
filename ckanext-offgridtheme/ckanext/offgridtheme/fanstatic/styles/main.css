@@ -8613,6 +8613,9 @@ h4 small {
     max-width: 600px;
   }
 }
+.stats-list a {
+  color: #fff;
+}
 .stats-list li {
   position: relative;
   float: left;
@@ -9092,6 +9095,7 @@ a.tool-media-screenshot:hover {
   border-radius: 2px;
 }
 .header-text-logo {
+  margin-top: 10px;
   text-transform: uppercase;
 }
 .header-text-logo > a {
@@ -9102,13 +9106,13 @@ a.tool-media-screenshot:hover {
 }
 .site-title {
   font-size: 20px;
-  line-height: 24px;
+  line-height: 38px;
   margin: 0;
 }
 @media (min-width: 448px) {
   .site-title {
     font-size: 24px;
-    line-height: 28px;
+    line-height: 38px;
   }
 }
 .site-subtitle {
