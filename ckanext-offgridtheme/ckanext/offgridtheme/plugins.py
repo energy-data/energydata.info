@@ -33,6 +33,22 @@ def exclude_orgs_from_template(orgs):
     orgs = [org for org in orgs if not is_excluded(org['name'])]
     return orgs
 
+def org_count(): 
+    orgs = toolkit.get_action('organization_list')(data_dict={})
+    return len(orgs)
+
+def package_count():
+    packages = toolkit.get_action('package_list')(data_dict={})
+    return len(packages)
+
+def country_count():
+    packages = toolkit.get_action('current_package_list_with_resources')(data_dict={'limit': 1000000})
+    uniques = set()
+    for package in packages:
+        uniques.update(package['country_code'])
+    return len(uniques)
+    
+
 def resource_url_fix(resource_url, same_domain):
     '''
         Returns the resource URL relative to the config file if the URL is on
@@ -74,7 +90,10 @@ class CustomTheme(SingletonPlugin, toolkit.DefaultDatasetForm):
         return {
             'custom_theme_most_recent_datasets': most_recent_datasets,
             'custom_theme_resource_url_fix': resource_url_fix,
-            'custom_theme_exclude_orgs': exclude_orgs_from_template
+            'custom_theme_exclude_orgs': exclude_orgs_from_template,
+            'custom_theme_org_count': org_count,
+            'custom_theme_package_count': package_count,
+            'custom_theme_country_count': country_count
         }
 
     def get_actions(self):

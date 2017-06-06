@@ -7,79 +7,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/native-promise-only/0.8.1/npo.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.2/fetch.min.js"></script>
-<script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoiZ3NkcG0iLCJhIjoiY2lqbmN5eG9mMDBndHVmbTU5Mmg1djF6MiJ9.QqFCD7tcmccysN8GUClW8w';
-
-  var dataset_1 = 'https://test-offgrid-mvt.s3.amazonaws.com/tiles/4bf91e42-9850-488a-aa0e-7c703dc607ed-50085530-18a0-47b5-b5ec-4a18c100c770/data.tilejson';
-  var dataset_2 = 'https://test-offgrid-mvt.s3.amazonaws.com/tiles/1cc8fa80-49ba-4e66-b696-f99843a5f540-80f56f17-4786-45ac-9b63-c9cee45ab0e2/data.tilejson';
-
-  if (!mapboxgl.supported()) {
-      document.getElementById('map1').innerHTML = 'Your browser does not support Mapbox GL';
-  } else {
-    var map_1 = new mapboxgl.Map({
-        container: 'map1',
-        style: 'mapbox://styles/mapbox/light-v9',
-        center: [60, 2.867],
-        zoom: 1.5
-    })
-    attachDataToMap(map_1, dataset_1)
-  }
-
-  if (!mapboxgl.supported()) {
-      document.getElementById('map2').innerHTML = 'Your browser does not support Mapbox GL';
-  } else {
-    var map_2 = new mapboxgl.Map({
-        container: 'map2',
-        style: 'mapbox://styles/mapbox/light-v9',
-        center: [60, 2.867],
-        zoom: 1.5
-    })
-    attachDataToMap(map_2, dataset_2)
-  }
-
-  function attachDataToMap(theMap, tilejson) {
-    theMap.on('load', function () {
-      fetch(tilejson)
-      .then(function (response) {
-        return response.json()
-      }).then(function (tilejson) {
-        layer = tilejson;
-        layer.type = 'vector'
-        theMap.addSource('data', layer)
-        theMap.fitBounds([[layer.bounds[0], layer.bounds[1]], [layer.bounds[2], layer.bounds[3]]], {padding: 20})
-      })
-    })
-
-    theMap.on('source.load', function (e) {
-      if (!theMap.getSource('data')) return
-      theMap.addLayer({
-        'id': 'data',
-        'type': 'line',
-        'source': 'data',
-        'source-layer': 'data_layer',
-        'layout': {
-          'line-join': 'round',
-          'line-cap': 'round'
-        },
-        'paint': {
-          'line-color': 'rgb(34, 166, 245)',
-          'line-width': 1
-        }
-      })
-      theMap.addLayer({
-        'id': 'points',
-        'type': 'circle',
-        'source': 'data',
-        'source-layer': 'data_layer',
-        'filter': ['==', '$type', 'Point'],
-        'paint': {
-          'circle-color': '#ff69b4',
-          'circle-radius': 2
-        }
-      })
-    })
-  }
-</script>
 
 {% endblock %}
 
@@ -93,91 +20,54 @@
         <div class="home-headline">
           <h1 class="home-title">Open data and analytics for a sustainable energy future.</h1>
         </div>
-        <div class="home-cta">
-          <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View apps</a>
-          <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-rev-ghost">View data</a>
+
+        <form class="section hero-search simple-input" action="{% url_for controller='package', action='search' %}" method="get">
+          <div class="field">
+            <label for="field-sitewide-search">{% block header_site_search_label %}{{ _('Search Datasets') }}{% endblock %}</label>
+            <input id="field-sitewide-search" type="text" name="q" placeholder="{{ _('Search datasets') }}" />
+            <button class="btn-search" type="submit"><i class="icon-search"></i></button>
+          </div>
+        </form>
+
+        <div class="home-stats">
+          <ul class="stats-list">            
+            <li>
+              <a href="{{ h.url_for(controller='package', action='search') }}" title="View the datasets"> 
+                <strong>{{ h.custom_theme_package_count()}}</strong>
+                <span>Datasets</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ h.url_for(controller='organization', action='index') }}" }}" title="View the organizations">
+                <strong>{{ h.custom_theme_org_count() }}</strong>
+                <span>Organizations</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ h.url_for(controller='package', action='search') }}"" title="Filter datasets by country">
+                <strong>{{ h.custom_theme_country_count() }}</strong>
+                <span>Countries</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="View the energy apps">
+                <strong>7</strong>
+                <span>Apps</a></span>
+              </a>
+            </li>
+          </ul>
         </div>
+
       </div>
     </header>
     <div class="home-body">
-
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.32.1/mapbox-gl.css' rel='stylesheet' />
-
-      <!-- Datasets -->
-      <section class="fold home-featured-datasets">
-        <header class="fold-header">
-          <div class="container">
-            <div class="fold-headline">
-              <h1 class="fold-title">Featured Datasets</h1>
-            </div>
-          </div>
-        </header>
-        <div class="fold-body">
-          <div class="container">
-            <ol class="home-tools-list">
-              <li class="tool-wrapper">
-                <article class="card card-dataset">
-                  <div class="card-inner">
-                    <div class="card-media">
-                      <div class="card-media-map">
-                        <div id="map1" class="data-map"></div>
-                      </div>
-                    </div>
-                    <div class="card-copy">
-                      <header class="card-header">
-                        <h1 class="card-title"><a href="https://energydata.info/dataset/eastern-africa-power-pool-renewable-energy-zones-solar-pv" title="View dataset">East Africa - Renewable Energy Zones Solar PV (2015)</a></h1>
-                        <p class="card-subtitle">Published by <a href="https://energydata.info/organization/world-bank-grou" title="View organization">Lawrence Berkeley National Laboratory</a></p>
-                      </header>
-                      <div class="card-body">
-                        <p>This spatial vector dataset shows areas of identified high quality potential for Solar Photovoltaic (PV) development divided into large contiguous areas called "zones." This dataset contains zones for the Eastern Africa Power Pool (EAPP) region.</p>
-                      </div>
-                      <div class="dataset-cta">
-                        <a href="https://energydata.info/dataset/eastern-africa-power-pool-renewable-energy-zones-solar-pv" title="View datset" class="btn btn-medium btn-primary-ghost">View dataset</a>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </li>
-
-              <li class="tool-wrapper">
-                <article class="card card-dataset">
-                  <div class="card-inner">
-                    <div class="card-media">
-                      <div class="card-media-map">
-                        <div id="map2" class="data-map"></div>
-                      </div>
-                    </div>
-                    <div class="card-copy">
-                      <header class="card-header">
-                        <h1 class="card-title"><a href="https://energydata.info/dataset/kano-electricity-distribution-plc-kedco-mv-lines-2016" title="View dataset">Nigeria - Kano Electricity Distribution Company - Grid Map (2016)</a></h1>
-                        <p class="card-subtitle">Published by <a href="https://energydata.info/organization/columbia-university-earth-institute" title="View organization">Columbia University Earth Institute</a></p>
-                      </header>
-                      <div class="card-body">
-                        <p>Data collected as input to the geospatial least-cost planning for universal electricity access by 2030 developed as part of the ESMAP funded World Bank Nigeria Electricity Access Project (NEAP).</p>
-                      </div>
-                      <div class="dataset-cta">
-                        <a href="https://energydata.info/dataset/kano-electricity-distribution-plc-kedco-mv-lines-2016" title="View datset" class="btn btn-medium btn-primary-ghost">View dataset</a>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </li>
-            </ol>
-            <div class="fold-cta">
-              <a href="{{ h.url_for(controller='package', action='search') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all datasets</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!--/ Datasets -->
 
       <!-- Apps -->
       <section class="fold home-featured-tools">
         <header class="fold-header">
           <div class="container">
             <div class="fold-headline">
-              <h1 class="fold-title">Latest Apps</h1>
+              <h1 class="fold-title">Featured Apps</h1>
             </div>
           </div>
         </header>
@@ -194,15 +84,8 @@
                   <div class="tool-copy">
                     <header class="tool-header">
                       <h1 class="tool-title"><a href="http://africagrid.energydata.info" target="_blank" title="Visit Africa Electricity Grids Explorer">Africa Electricity Grids Explorer</a></h1>
-                      <p class="tool-subtitle">Developed by the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
+                      <p class="tool-subtitle">By the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
                     </header>
-                    <div class="tool-body">
-                      <p>Explore the latest data on Sub-Saharan Africa's electricity grids and infrastructure.</p>
-                    </div>
-                    <div class="tool-cta">
-                      <a href="http://africagrid.energydata.info" title="Visit Africa Electricity Grids Explorer" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
-                    </div>
-                  </div>
                 </article>
               </li>
 
@@ -216,21 +99,15 @@
                   <div class="tool-copy">
                     <header class="tool-header">
                       <h1 class="tool-title"><a href="http://globalsolaratlas.info" target="_blank" title="Visit the Global Solar Atlas">Global Solar Atlas</a></h1>
-                      <p class="tool-subtitle">Developed by the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
+                      <p class="tool-subtitle">By the <a href="http://worldbank.org" target="_blank">World Bank Group</a></p>
                     </header>
-                    <div class="tool-body">
-                      <p>Access solar power potential globally and perform simple electricity output calculation for any given location.</p>
-                    </div>
-                    <div class="tool-cta">
-                      <a href="http://globalsolaratlas.info/" title="Visit the Global Solar Atlas" target="_blank" class="btn btn-medium btn-primary-ghost">View app</a>
-                    </div>
                   </div>
                 </article>
               </li>
             </ol>
 
             <div class="fold-cta">
-              <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="Visit page" class="btn btn-large btn-primary-ghost">View all apps</a>
+              <a href="{{ h.url_for(controller='ckanext.offgridtheme.controller:AppsController', action='view') }}" title="Visit page" class="btn btn-large btn-primary"><span>View all apps</span> <i class="icon-small icon-chevron-right"></i></a>
             </div>
 
           </div>
@@ -240,21 +117,24 @@
 
       <!-- Contribute -->
       <section class="fold home-contribute">
-        <header class="fold-header">
-          <div class="container">
-            <div class="fold-headline">
-              <h1 class="fold-title">Contribute</h1>
-            </div>
-          </div>
-        </header>
+
         <div class="fold-body">
           <div class="container">
-            <div class="fold-prose">
-              <p>Are you creating an application or visualization about energy, or have energy related data you'd like to share on energydata.info? Get in touch with our team.</p>
+            <div class="row">
+
+              <div class="fold-prose-block span6">
+                <h2>About</h2>
+                <p>A collaborative online platform for finding and sharing data and analytics that support the United Nations’ Sustainable Development Goal 7 of ensuring access to affordable, reliable, sustainable and modern energy for all.</p>
+                <p><a class="btn btn-primary" href="{{ h.url_for(controller='home', action='about') }}" title="About energydata.info"><span>Read more</span> <i class="icon-small icon-chevron-right"></i></a></p>
+              </div>
+
+              <div class="fold-prose-block span6">
+                <h2>Contribute</h2>
+                <p>Are you creating an application or visualization about energy, or have energy related data you'd like to share on energydata.info? Get in touch with our team.</p>
+                <p><a class="btn btn-primary" href="mailto:energydata@worldbankgroup.org" title="Send an email"><span>Write us</span> <i class="icon-small icon-envelope"></i></a></p>
+              </div>
             </div>
-            <div class="fold-cta">
-              <a href="mailto:energydata@worldbankgroup.org" title="Write us" class="btn btn-large btn-rev-ghost">Write us</a>
-            </div>
+
           </div>
         </div>
       </section>
