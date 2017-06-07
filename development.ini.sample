@@ -107,6 +107,7 @@ ckan.views.default_views = image_view text_view recline_view mvt_view
 ckanext.mvt.s3.bucket = s3://BUCKET
 ckanext.mvt.s3.access_key = ACCESS_KEY
 ckanext.mvt.s3.secret_key = SECRET_KEY
+ckanext.mvt.max_size = 524288000
 # The Mapbox config for the baselayers. It's possible to specify a list of map styles and labels, separated by space
 ckanext.mvt.mapbox.account = MAPBOX_ORGANIZATION
 ckanext.mvt.mapbox.key = MAPBOX_KEY
