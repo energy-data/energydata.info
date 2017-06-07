@@ -16,6 +16,16 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
             search_params['facet.field'].append('vocab_country_names')
         return search_params
 
+    def after_search(self, search_results, search_params):
+        facets = search_results.get('search_facets')
+        if not facets or 'release_date' not in facets:
+            return search_results
+        
+        for item in facets['release_date']['items']:
+            item['display_name'] = item['display_name'][:4] # Take first 4 characters
+
+        return search_results
+
     # ITemplateHelpers
     def get_helpers(self):
         return {'country_codes': helpers.country_names,
@@ -70,7 +80,7 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
                 convert_to_extras
             ],
             'release_date': [
-                ignore_missing,
+                not_empty,
                 year,
                 convert_to_extras
             ],
@@ -152,6 +162,23 @@ class ExtrafieldsPlugin(plugins.SingletonPlugin, toolkit.DefaultDatasetForm):
         facets_dict['vocab_regions'] = plugins.toolkit._('Region')
         facets_dict.pop('tags')
         facets_dict['vocab_topics'] = plugins.toolkit._('Topic')
+        facets_dict['release_date'] = plugins.toolkit._('Published Date')
+        
+        order = [
+            'vocab_country_names', 
+            'vocab_regions', 
+            'release_date',
+            'vocab_topics', 
+            'organization', 
+            'groups',
+            'res_format', 
+            'license_id'
+        ]
+        # Ensure order
+        for key in order:
+            data = facets_dict[key]
+            facets_dict.pop(key)
+            facets_dict[key] = data
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):

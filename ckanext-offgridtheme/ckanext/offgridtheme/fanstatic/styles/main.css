@@ -164,11 +164,14 @@ textarea {
   }
 }
 .clearfix,
+.dl-horizontal,
 .home-tools-list {
   *zoom: 1;
 }
 .clearfix:before,
 .clearfix:after,
+.dl-horizontal:before,
+.dl-horizontal:after,
 .home-tools-list:before,
 .home-tools-list:after {
   display: table;
@@ -176,6 +179,7 @@ textarea {
   line-height: 0;
 }
 .clearfix:after,
+.dl-horizontal:after,
 .home-tools-list:after {
   clear: both;
 }
@@ -7224,9 +7228,6 @@ textarea {
 .dataset-private.pull-right {
   margin-right: 0;
 }
-.dataset-resources {
-  margin-top: 8px;
-}
 .dataset-resources li {
   display: inline;
 }
@@ -7235,6 +7236,41 @@ textarea {
 }
 .dataset-heading .popular {
   top: 0;
+}
+.dl-horizontal {
+  margin: 20px 0;
+  padding: 0;
+}
+.dl-horizontal dt,
+.dl-horizontal dd {
+  line-height: 18px;
+}
+.dl-horizontal dt {
+  font-size: 12px;
+  color: #838b8f;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.dl-horizontal dd {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+@media (min-width: 768px) {
+  .dl-horizontal dt,
+  .dl-horizontal dd {
+    float: left;
+  }
+  .dl-horizontal dt {
+    width: 32%;
+    clear: left;
+    padding-right: 8px;
+  }
+  .dl-horizontal dd {
+    width: 68%;
+    margin-left: 32%;
+    margin-top: -18px;
+    padding-left: 8px;
+  }
 }
 .resource-list {
   margin: 0;
@@ -10538,12 +10574,15 @@ a {
    ========================================================================== */
 .clearfix::before,
 .clearfix::after,
+.dl-horizontal::before,
+.dl-horizontal::after,
 .home-tools-list::before,
 .home-tools-list::after {
   content: " ";
   display: table;
 }
 .clearfix::after,
+.dl-horizontal::after,
 .home-tools-list::after {
   clear: both;
 }
