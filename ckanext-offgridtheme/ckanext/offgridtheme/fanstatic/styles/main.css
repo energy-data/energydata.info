@@ -8631,6 +8631,7 @@ h4 small {
 .hero-search .field .btn-search i {
   font-size: 24px;
   line-height: 1;
+  width: 24px;
 }
 .hero-search .field .btn-search:hover {
   color: inherit;
