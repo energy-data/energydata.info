@@ -38,8 +38,8 @@ def org_count():
     return len(orgs)
 
 def package_count():
-    packages = toolkit.get_action('package_list')(data_dict={})
-    return len(packages)
+    packages = toolkit.get_action('package_search')(data_dict={})
+    return packages['count']
 
 def country_count():
     packages = toolkit.get_action('current_package_list_with_resources')(data_dict={'limit': 1000000})
