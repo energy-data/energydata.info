@@ -7207,12 +7207,11 @@ textarea {
 }
 .dataset-heading {
   font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 8px;
-  line-height: 1.3;
+  margin: 0;
+  line-height: 24px;
 }
 .dataset-heading a {
-  color: #333;
+  color: inherit;
 }
 .dataset-heading .label {
   position: relative;
@@ -7236,6 +7235,25 @@ textarea {
 }
 .dataset-heading .popular {
   top: 0;
+}
+.dataset-details {
+  margin: 8px 0 8px 0;
+  font-size: 0;
+  color: rgba(0, 34, 68, 0.48);
+}
+.dataset-details dt,
+.dataset-details dd {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 14px;
+}
+.dataset-details dt {
+  margin: 0 4px 0 0;
+  font-weight: 600;
+}
+.dataset-details dd {
+  margin: 0 12px 0 0;
+  font-weight: 400;
 }
 .dl-horizontal {
   margin: 20px 0;
@@ -7271,6 +7289,17 @@ textarea {
     margin-top: -18px;
     padding-left: 8px;
   }
+}
+.dataset-resource-list {
+  margin: 16px 0 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0;
+}
+.dataset-resource-list li {
+  display: inline-block;
+  margin: 0 4px 4px 0;
+  line-height: 0;
 }
 .resource-list {
   margin: 0;
