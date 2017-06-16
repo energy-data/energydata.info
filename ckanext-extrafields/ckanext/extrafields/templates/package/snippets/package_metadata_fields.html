@@ -50,7 +50,7 @@
 
   {% call form.input('release_date', label=_('Published year'), id='field-release_date', placeholder=_('eg. 2010'), value=data.release_date, error=errors.release_date) %}
     <span class="info-block info-inline">
-      Publish date of source data
+      <span title="{{ _("Specify a publish date of the source data") }}" class="control-required">*</span> Publish date of source data
     </span>
   {% endcall %}
 
