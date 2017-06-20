@@ -3,51 +3,107 @@
 {% set regions = package.region %}
 {% set publish_year = package.release_date %}
 
+{% set truncate = truncate or 180 %}
+{% set truncate_title = truncate_title or 80 %}
+{% set title = package.title or package.name %}
+{% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
 
-{% block resources_outer %}
-  <dl class="dl-horizontal">
-    {% if countries %} 
-    {% set country_length = countries|length %}
-      <dt scope="row" class="dataset-label" property="rdfs:label">Countries:</dt>
-      <dd class="dataset-details" property="rdf:value">
-        {% if country_length <= 5 %}
-          {% for code in countries %}
-            {{h.country_code_to_name(code)}}
-            {%- if not loop.last -%}
-            ,
-            {% endif %}
-          {% endfor %}
-        {% else %}
-          {% for index in [0, 1, 2, 3, 4] %}
-            {{h.country_code_to_name(countries[index])}}
-            {%- if not loop.last -%}
-            ,
-            {% endif %}
-          {% endfor %}
-          <span>+ {{ country_length - 5 }}</span>
-        {% endif %}
-      </dd>
-    {% endif %}
-    {% if regions %} 
-      <dt scope="row" class="dataset-label" property="rdfs:label">Regions:</dt>
-      <dd class="dataset-details" property="rdf:value">
-        {% for code in regions %}
-          {{h.region_code_to_name(code)}}
-          {%- if not loop.last -%}
-          ,
+{% block package_item %}
+  <li class="{{ item_class or "dataset-item" }}">
+    {% block content %}
+      <div class="dataset-content">
+        {% block heading %}
+          <h3 class="dataset-heading">
+            {% block heading_private %}
+              {% if package.private %}
+                <span class="dataset-private label label-inverse">
+                  <i class="icon-lock"></i>
+                  {{ _('Private') }}
+                </span>
+              {% endif %}
+            {% endblock %}
+            {% block heading_title %}
+              {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+            {% endblock %}
+            {% block heading_meta %}
+              {% if package.get('state', '').startswith('draft') %}
+                <span class="label label-info">{{ _('Draft') }}</span>
+              {% elif package.get('state', '').startswith('deleted') %}
+                <span class="label label-important">{{ _('Deleted') }}</span>
+              {% endif %}
+              {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
+            {% endblock %}
+          </h3>
+        {% endblock %}
+
+        <dl class="dataset-details">
+          {% if countries %}
+          {% set country_length = countries|length %}
+            <dt scope="row" class="dataset-label" property="rdfs:label">Countries:</dt>
+            <dd class="dataset-details" property="rdf:value">
+              {% if country_length <= 5 %}
+                {% for code in countries %}
+                  {{h.country_code_to_name(code)}}
+                  {%- if not loop.last -%}
+                  ,
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {% for index in [0, 1, 2, 3, 4] %}
+                  {{h.country_code_to_name(countries[index])}}
+                  {%- if not loop.last -%}
+                  ,
+                  {% endif %}
+                {% endfor %}
+                <span>+ {{ country_length - 5 }}</span>
+              {% endif %}
+            </dd>
           {% endif %}
-        {% endfor %}
-      </dd>
-    {% endif %}
-    {% if publish_year %} 
-      <dt>Published Year:</dt> 
-      <dd>{{ publish_year }}</dd>
-    {% endif %}
-    <dt>Formats:</dt>
-    <dd class="dataset-resources">
-      {% for resource in h.dict_list_reduce(package.resources, 'format') %}
-        <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a>
-      {% endfor %}
-    </dd>
-  </dl>
+          {% if regions %}
+            <dt scope="row" class="dataset-label" property="rdfs:label">Regions:</dt>
+            <dd class="dataset-details" property="rdf:value">
+              {% for code in regions %}
+                {{h.region_code_to_name(code)}}
+                {%- if not loop.last -%}
+                ,
+                {% endif %}
+              {% endfor %}
+            </dd>
+          {% endif %}
+          {% if publish_year %}
+            <dt>Published Year:</dt>
+            <dd>{{ publish_year }}</dd>
+          {% endif %}
+        </dl>
+
+        {% block banner %}
+          {% if banner %}
+            <span class="banner">{{ _('Popular') }}</span>
+          {% endif %}
+        {% endblock %}
+        {% block notes %}
+          {% if notes %}
+            <div>{{ notes|urlize }}</div>
+          {% else %}
+            <p class="empty">{{ _("This dataset has no description") }}</p>
+          {% endif %}
+        {% endblock %}
+
+        {% block resources %}
+          {% if package.resources and not hide_resources %}
+
+            {% block resources_outer %}
+            <ul class="dataset-resource-list">
+              {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+              <li><a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a></li>
+              {% endfor %}
+            </ul>
+            {% endblock %}
+
+          {% endif %}
+        {% endblock %}
+
+      </div>
+    {% endblock %}
+  </li>
 {% endblock %}
