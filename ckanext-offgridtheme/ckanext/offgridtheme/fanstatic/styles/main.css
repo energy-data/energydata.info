@@ -7236,22 +7236,22 @@ textarea {
 .dataset-heading .popular {
   top: 0;
 }
-.dataset-details {
+dl.dataset-details {
   margin: 8px 0 8px 0;
   font-size: 0;
   color: rgba(0, 34, 68, 0.48);
 }
-.dataset-details dt,
-.dataset-details dd {
+dl.dataset-details dt,
+dl.dataset-details dd {
   display: inline-block;
   font-size: 12px;
   line-height: 14px;
 }
-.dataset-details dt {
+dl.dataset-details dt {
   margin: 0 4px 0 0;
   font-weight: 600;
 }
-.dataset-details dd {
+dl.dataset-details dd {
   margin: 0 12px 0 0;
   font-weight: 400;
 }
